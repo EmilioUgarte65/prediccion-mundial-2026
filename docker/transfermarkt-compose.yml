@@ -1,0 +1,12 @@
+# #2 — Valor de mercado: API local de Transfermarkt (felipeall/transfermarkt-api)
+# IMPORTANTE: tu web usa el puerto 8000, así que esta API va en el 8011.
+# Levantar:   docker compose -f docker/transfermarkt-compose.yml up -d
+# Probar:     http://localhost:8011/clubs/418/players   (418 = Real Madrid, ejemplo)
+# Apagar:     docker compose -f docker/transfermarkt-compose.yml down
+services:
+  transfermarkt-api:
+    image: felipeall/transfermarkt-api:latest
+    container_name: transfermarkt-api
+    ports:
+      - "8011:8000"
+    restart: unless-stopped

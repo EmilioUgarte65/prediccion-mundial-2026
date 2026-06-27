@@ -1,0 +1,52 @@
+
+========== [2026-06-27 11:45:00] Inicio ==========
+Already up to date.
+[cache] Planteles 2026 (Football-Data.org): ya existe (squads_2026.csv), se omite.
+[cache] xG + tarjetas + faltas (StatsBomb 2018/22): ya existe (sb_match_stats.csv), se omite.
+[cache] Trayectoria por jugador (cache local): ya existe (player_trajectory.csv), se omite.
+[bajar] Cuotas de mercado (The Odds API)...
+OK -> C:\Users\carlo\Pictures\Desarollos para usuarios\Emilio\Predictivo\data_user\champion_odds.csv  (36 equipos)
+OK -> C:\Users\carlo\Pictures\Desarollos para usuarios\Emilio\Predictivo\data_user\odds.csv  (15 partidos con cuotas)
+
+Probabilidades implícitas del mercado (des-vigorizadas):
+  2026-06-27        Croatia   52% X  30%   18% Ghana         
+  2026-06-27         Panama    5% X  11%   84% England       
+  2026-06-27       Colombia   27% X  25%   48% Portugal      
+  2026-06-27       DR Congo   57% X  25%   19% Uzbekistan    
+  2026-06-28        Algeria   26% X  46%   28% Austria       
+  2026-06-28         Jordan    5% X  11%   85% Argentina     
+  2026-06-28   South Africa   18% X  27%   55% Canada        
+  2026-06-29         Brazil   57% X  25%   18% Japan         
+  2026-06-29        Germany   70% X  19%   11% Paraguay      
+  2026-06-30    Netherlands   45% X  30%   25% Morocco       
+  2026-06-30    Ivory Coast   26% X  27%   47% Norway        
+  2026-06-30         France   74% X  17%    9% Sweden        
+  2026-07-02  United States   69% X  20%   11% Bosnia and Herzegovina
+  2026-07-03      Australia   29% X  32%   38% Egypt         
+  2026-07-03      Argentina   83% X  12%    5% Cape Verde    
+[bajar] Clima por sede (Open-Meteo, gratis)...
+OK -> C:\Users\carlo\Pictures\Desarollos para usuarios\Emilio\Predictivo\data_user\weather.csv  (160 días-sede)
+
+Listo. Ahora corre:  python build.py   (lee solo de data_user/, sin API)
+Cargando datos y entrenando modelo...
+  Dixon-Coles rho ajustado: -0.120
+  Lesiones cargadas para 15 selecciones.
+  Ánimo (NLP) cargado para 19 selecciones.
+  xG externo cargado para 43 selecciones (peso 0.35).
+  Cuotas de mercado cargadas para 15 partidos (peso 0.6).
+Grupos: 60 partidos jugados, 12 por jugar.
+Simulando cuadro más probable (4000 sims/partido)...
+Monte Carlo desde el estado actual (10000 torneos)...
+
+OK -> C:\Users\carlo\Pictures\Desarollos para usuarios\Emilio\Predictivo\web\data\predictions.json
+Campeón previsto: Spain
+Top 8 (prob. de campeón):
+  Argentina             16.3%  (clasifica  100%, Final 26.7%)
+  France                 9.6%  (clasifica  100%, Final 16.6%)
+  Spain                 15.4%  (clasifica  100%, Final 25.1%)
+  England                8.1%  (clasifica  100%, Final 14.8%)
+  Portugal               7.3%  (clasifica  100%, Final 14.1%)
+  Brazil                 3.0%  (clasifica  100%, Final  6.2%)
+  Netherlands            1.8%  (clasifica  100%, Final  4.6%)
+  Germany                2.7%  (clasifica  100%, Final  7.2%)
+[2026-06-27 11:53:53] Fin.

@@ -1,0 +1,446 @@
+{
+  "updated": "2026-06-27",
+  "teams": [
+    {
+      "team": "Croatia",
+      "xg": 15.1,
+      "n": 9,
+      "top": [
+        {
+          "player": "Luka Modrić",
+          "wc_xg": 4.53,
+          "wc_goals": 5
+        },
+        {
+          "player": "Ivan Perišić",
+          "wc_xg": 2.87,
+          "wc_goals": 4
+        },
+        {
+          "player": "Andrej Kramarić",
+          "wc_xg": 2.73,
+          "wc_goals": 4
+        }
+      ]
+    },
+    {
+      "team": "England",
+      "xg": 13.2,
+      "n": 5,
+      "top": [
+        {
+          "player": "Harry Kane",
+          "wc_xg": 7.14,
+          "wc_goals": 9
+        },
+        {
+          "player": "Marcus Rashford",
+          "wc_xg": 2.75,
+          "wc_goals": 4
+        },
+        {
+          "player": "John Stones",
+          "wc_xg": 1.94,
+          "wc_goals": 2
+        }
+      ]
+    },
+    {
+      "team": "Netherlands",
+      "xg": 5.1,
+      "n": 6,
+      "top": [
+        {
+          "player": "Memphis Depay",
+          "wc_xg": 1.18,
+          "wc_goals": 1
+        },
+        {
+          "player": "Wout Weghorst",
+          "wc_xg": 1.05,
+          "wc_goals": 3
+        },
+        {
+          "player": "Virgil van Dijk",
+          "wc_xg": 0.98,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Germany",
+      "xg": 4.4,
+      "n": 7,
+      "top": [
+        {
+          "player": "Kai Havertz",
+          "wc_xg": 1.16,
+          "wc_goals": 2
+        },
+        {
+          "player": "Jamal Musiala",
+          "wc_xg": 1.15,
+          "wc_goals": 0
+        },
+        {
+          "player": "Leon Goretzka",
+          "wc_xg": 0.74,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Canada",
+      "xg": 3.5,
+      "n": 7,
+      "top": [
+        {
+          "player": "Alphonso Davies",
+          "wc_xg": 0.93,
+          "wc_goals": 1
+        },
+        {
+          "player": "Jonathan David",
+          "wc_xg": 0.81,
+          "wc_goals": 0
+        },
+        {
+          "player": "Tajon Buchanan",
+          "wc_xg": 0.71,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Senegal",
+      "xg": 3.4,
+      "n": 7,
+      "top": [
+        {
+          "player": "Ismaïla Sarr",
+          "wc_xg": 2.1,
+          "wc_goals": 1
+        },
+        {
+          "player": "Sadio Mané",
+          "wc_xg": 0.75,
+          "wc_goals": 1
+        },
+        {
+          "player": "Kalidou Koulibaly",
+          "wc_xg": 0.23,
+          "wc_goals": 1
+        }
+      ]
+    },
+    {
+      "team": "Iran",
+      "xg": 3.0,
+      "n": 6,
+      "top": [
+        {
+          "player": "Mehdi Taremi",
+          "wc_xg": 1.85,
+          "wc_goals": 2
+        },
+        {
+          "player": "Saman Ghoddos",
+          "wc_xg": 0.5,
+          "wc_goals": 0
+        },
+        {
+          "player": "Ramin Rezaeian",
+          "wc_xg": 0.24,
+          "wc_goals": 1
+        }
+      ]
+    },
+    {
+      "team": "Japan",
+      "xg": 2.9,
+      "n": 7,
+      "top": [
+        {
+          "player": "Ao Tanaka",
+          "wc_xg": 0.87,
+          "wc_goals": 1
+        },
+        {
+          "player": "Ritsu Doan",
+          "wc_xg": 0.58,
+          "wc_goals": 2
+        },
+        {
+          "player": "Daizen Maeda",
+          "wc_xg": 0.54,
+          "wc_goals": 1
+        }
+      ]
+    },
+    {
+      "team": "Argentina",
+      "xg": 2.7,
+      "n": 3,
+      "top": [
+        {
+          "player": "Julián Álvarez",
+          "wc_xg": 1.91,
+          "wc_goals": 4
+        },
+        {
+          "player": "Alexis Mac Allister",
+          "wc_xg": 0.5,
+          "wc_goals": 1
+        },
+        {
+          "player": "Lisandro Martínez",
+          "wc_xg": 0.33,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "United States",
+      "xg": 2.5,
+      "n": 6,
+      "top": [
+        {
+          "player": "Christian Pulisic",
+          "wc_xg": 1.14,
+          "wc_goals": 1
+        },
+        {
+          "player": "Haji Wright",
+          "wc_xg": 0.66,
+          "wc_goals": 1
+        },
+        {
+          "player": "Weston McKennie",
+          "wc_xg": 0.38,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Switzerland",
+      "xg": 1.9,
+      "n": 8,
+      "top": [
+        {
+          "player": "Remo Freuler",
+          "wc_xg": 0.54,
+          "wc_goals": 1
+        },
+        {
+          "player": "Granit Xhaka",
+          "wc_xg": 0.34,
+          "wc_goals": 1
+        },
+        {
+          "player": "Christian Fassnacht",
+          "wc_xg": 0.32,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Belgium",
+      "xg": 1.9,
+      "n": 5,
+      "top": [
+        {
+          "player": "Kevin De Bruyne",
+          "wc_xg": 0.73,
+          "wc_goals": 1
+        },
+        {
+          "player": "Thomas Meunier",
+          "wc_xg": 0.58,
+          "wc_goals": 1
+        },
+        {
+          "player": "Amadou Onana",
+          "wc_xg": 0.29,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "France",
+      "xg": 1.6,
+      "n": 5,
+      "top": [
+        {
+          "player": "Adrien Rabiot",
+          "wc_xg": 0.73,
+          "wc_goals": 1
+        },
+        {
+          "player": "Ousmane Dembélé",
+          "wc_xg": 0.45,
+          "wc_goals": 0
+        },
+        {
+          "player": "Ibrahima Konaté",
+          "wc_xg": 0.18,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Egypt",
+      "xg": 1.6,
+      "n": 1,
+      "top": [
+        {
+          "player": "Mohamed Salah",
+          "wc_xg": 1.6,
+          "wc_goals": 2
+        }
+      ]
+    },
+    {
+      "team": "Australia",
+      "xg": 1.3,
+      "n": 4,
+      "top": [
+        {
+          "player": "Mathew Leckie",
+          "wc_xg": 0.84,
+          "wc_goals": 1
+        },
+        {
+          "player": "Jackson Irvine",
+          "wc_xg": 0.33,
+          "wc_goals": 0
+        },
+        {
+          "player": "Harry Souttar",
+          "wc_xg": 0.07,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Morocco",
+      "xg": 0.8,
+      "n": 6,
+      "top": [
+        {
+          "player": "Nayef Aguerd",
+          "wc_xg": 0.25,
+          "wc_goals": 0
+        },
+        {
+          "player": "Azzedine Ounahi",
+          "wc_xg": 0.24,
+          "wc_goals": 0
+        },
+        {
+          "player": "Noussair Mazraoui",
+          "wc_xg": 0.15,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "South Korea",
+      "xg": 0.7,
+      "n": 2,
+      "top": [
+        {
+          "player": "Gue-Sung Cho",
+          "wc_xg": 0.71,
+          "wc_goals": 2
+        },
+        {
+          "player": "Seung-Ho Paik",
+          "wc_xg": 0.02,
+          "wc_goals": 1
+        }
+      ]
+    },
+    {
+      "team": "Ghana",
+      "xg": 0.2,
+      "n": 3,
+      "top": [
+        {
+          "player": "Antoine Semenyo",
+          "wc_xg": 0.12,
+          "wc_goals": 0
+        },
+        {
+          "player": "Jordan Ayew",
+          "wc_xg": 0.07,
+          "wc_goals": 0
+        },
+        {
+          "player": "Alidu Seidu",
+          "wc_xg": 0.02,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Qatar",
+      "xg": 0.2,
+      "n": 1,
+      "top": [
+        {
+          "player": "Mohammed Muntari",
+          "wc_xg": 0.18,
+          "wc_goals": 1
+        }
+      ]
+    },
+    {
+      "team": "Tunisia",
+      "xg": 0.1,
+      "n": 1,
+      "top": [
+        {
+          "player": "Anis Ben Slimane",
+          "wc_xg": 0.1,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Spain",
+      "xg": 0.0,
+      "n": 1,
+      "top": [
+        {
+          "player": "Aymeric Laporte",
+          "wc_xg": 0.04,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Brazil",
+      "xg": 0.0,
+      "n": 1,
+      "top": [
+        {
+          "player": "Danilo Luiz da Silva",
+          "wc_xg": 0.03,
+          "wc_goals": 0
+        }
+      ]
+    },
+    {
+      "team": "Saudi Arabia",
+      "xg": 0.0,
+      "n": 1,
+      "top": [
+        {
+          "player": "Abdulelah Al Amri",
+          "wc_xg": 0.04,
+          "wc_goals": 0
+        }
+      ]
+    }
+  ]
+}

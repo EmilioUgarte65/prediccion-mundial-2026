@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Predicción Mundial 2026 — XGBoost + Ratings</title>
+  <meta name="description" content="Modelo predictivo del Mundial 2026 con XGBoost y ratings Elo + ataque/defensa. Cuadro de eliminatorias, minutos de gol y avance por fase." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="head-inner">
+        <div class="brand">
+          <div class="trophy" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1206" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9a6 6 0 0 0 12 0V4H6z"/><path d="M6 5H3v2a3 3 0 0 0 3 3"/>
+              <path d="M18 5h3v2a3 3 0 0 1-3 3"/><path d="M12 15v4"/><path d="M8 21h8"/><path d="M9 19h6"/>
+            </svg>
+          </div>
+          <div>
+            <h1>Mundial 2026 · Predictivo</h1>
+            <p>XGBoost + Ratings (Elo y ataque/defensa) · Simulación Monte Carlo</p>
+          </div>
+        </div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-panel="bracket" role="tab"><span>◆</span> Camino al título</button>
+        <button class="tab" data-panel="groups" role="tab"><span>◆</span> Grupos</button>
+        <button class="tab" data-panel="favs" role="tab"><span>◆</span> Favoritos</button>
+        <button class="tab" data-panel="stats" role="tab"><span>◆</span> Estadísticas</button>
+        <button class="tab" data-panel="valid" role="tab"><span>◆</span> Validación</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel active" id="bracket" role="tabpanel">
+      <h2 class="section-title">Cuadro de eliminatorias — escenario más probable</h2>
+      <p class="section-sub">El favorito de cada cruce avanza. Toca un partido para ver el marcador previsto, los minutos de gol y cómo va quedando.</p>
+      <div class="bracket-scroll full-bleed">
+        <div class="bracket" id="bracketEl"></div>
+      </div>
+    </section>
+
+    <section class="panel" id="groups" role="tabpanel">
+      <h2 class="section-title">Fase de grupos</h2>
+      <p class="section-sub" id="groupsSub">Posiciones actuales con resultados reales. Clasifican 1º y 2º de cada grupo más los 8 mejores terceros.</p>
+
+      <div id="groupPlayedWrap">
+        <h3 class="block-title" style="font-size:.85rem;margin:6px 0 12px">Mis predicciones de grupos (ya jugados) vs realidad</h3>
+        <div class="adv-wrap"><table class="bt-table" id="groupPlayedEl"></table></div>
+      </div>
+
+      <div id="groupPredWrap">
+        <h3 class="block-title" style="font-size:.85rem;margin:18px 0 12px">Partidos de grupo por jugar — predicción del modelo</h3>
+        <div class="gp-grid" id="groupPredsEl"></div>
+      </div>
+
+      <div class="legend">
+        <span><i style="background:var(--win)"></i>Clasificado directo (1º/2º)</span>
+        <span><i style="background:var(--accent)"></i>Mejor tercero (clasificado)</span>
+        <span><i style="background:var(--muted)"></i>Jornada por jugar (provisional)</span>
+      </div>
+      <div class="groups-grid" id="groupsEl"></div>
+    </section>
+
+    <section class="panel" id="valid" role="tabpanel">
+      <h2 class="section-title">Validación — predicción antes del partido vs realidad</h2>
+      <p class="section-sub">Backtest <i>walk-forward</i>: cada partido se predijo solo con información previa (Elo y forma actualizados partido a partido; XGBoost y goles entrenados solo con datos previos al Mundial). Se evalúa desde el 2º partido de cada selección.</p>
+      <div class="metric-cards" id="btMetrics"></div>
+      <div id="btSplit"></div>
+      <div class="adv-wrap" style="margin-top:22px">
+        <table class="bt-table" id="btTable"></table>
+      </div>
+      <div id="timingVal"></div>
+    </section>
+
+    <section class="panel" id="favs" role="tabpanel">
+      <h2 class="section-title">Favoritos — probabilidad de avance por fase</h2>
+      <p class="section-sub">Resultado de simular el torneo completo miles de veces con el modelo.</p>
+      <div class="adv-wrap">
+        <table class="adv" id="advEl"></table>
+      </div>
+    </section>
+
+    <section class="panel" id="stats" role="tabpanel">
+      <h2 class="section-title">Estadísticas del torneo</h2>
+      <p class="section-sub">Líderes individuales del Mundial 2026 (goles, asistencias, tiros, distancia, vallas invictas) y rendimiento/fatiga por jugador.</p>
+      <div class="stats-grid" id="statsEl"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Datos: <a href="https://github.com/martj42/international_results" target="_blank" rel="noopener">martj42/international_results</a>.
+      Modelo: ratings Elo + ataque/defensa (Poisson) como features de XGBoost (resultado y goles), tiempos de gol por distribución empírica y simulación Monte Carlo de las eliminatorias.</p>
+      <p id="footMeta" class="mono"></p>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+Cargando datos y entrenando modelo...
+  Dixon-Coles rho ajustado: -0.120
+  Lesiones cargadas para 15 selecciones.
+  Ánimo (NLP) cargado para 19 selecciones.
+  xG externo cargado para 43 selecciones (peso 0.35).
+  Cuotas de mercado cargadas para 15 partidos (peso 0.6).
+Grupos: 60 partidos jugados, 12 por jugar.
+Simulando cuadro más probable (4000 sims/partido)...
+Monte Carlo desde el estado actual (10000 torneos)...
+
+OK -> C:\Users\carlo\Pictures\Desarollos para usuarios\Emilio\Predictivo\web\data\predictions.json
+Campeón previsto: Spain
+Top 8 (prob. de campeón):
+  Argentina             17.2%  (clasifica  100%, Final 27.2%)
+  France                 9.4%  (clasifica  100%, Final 16.4%)
+  Spain                 15.9%  (clasifica  100%, Final 25.6%)
+  England                7.9%  (clasifica  100%, Final 14.2%)
+  Portugal               6.8%  (clasifica  100%, Final 13.2%)
+  Brazil                 3.1%  (clasifica  100%, Final  6.6%)
+  Germany                2.9%  (clasifica  100%, Final  7.4%)
+  Colombia               5.1%  (clasifica  100%, Final 11.1%)

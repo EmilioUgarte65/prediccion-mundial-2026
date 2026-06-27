@@ -1,0 +1,438 @@
+season,date,minute,team,player,type,result,is_home
+2018,2018-07-06,46,Belgium,Toby Alderweireld,yellow,A,0
+2018,2018-07-06,70,Belgium,Thomas Meunier,yellow,A,0
+2018,2018-07-06,84,Brazil,Fernando Luiz Roza,yellow,A,1
+2018,2018-07-06,89,Brazil,Fágner Conserva Lemos,yellow,A,1
+2018,2018-07-02,39,Japan,Gaku Shibasaki,yellow,H,0
+2018,2018-06-24,9,Panama,Armando Enrique Cooper Whitaker,yellow,H,0
+2018,2018-06-24,22,England,Ruben Loftus-Cheek,yellow,H,1
+2018,2018-06-24,43,Panama,Fidel Escobar Mendieta,yellow,H,0
+2018,2018-06-24,71,Panama,Michael Amir Murillo Bermudez,yellow,H,0
+2018,2018-06-19,11,Poland,Grzegorz Krychowiak,yellow,A,1
+2018,2018-06-19,48,Senegal,Salif Sané,yellow,A,0
+2018,2018-06-22,32,Serbia,Sergej Milinković-Savić,yellow,A,1
+2018,2018-06-22,38,Serbia,Luka Milivojević,yellow,A,1
+2018,2018-06-22,46,Serbia,Nemanja Matić,yellow,A,1
+2018,2018-06-22,86,Serbia,Aleksandar Mitrović,yellow,A,1
+2018,2018-06-22,90,Switzerland,Xherdan Shaqiri,yellow,A,0
+2018,2018-06-18,11,South Korea,Shin-Wook Kim,yellow,H,0
+2018,2018-06-18,54,South Korea,Hee-Chan Hwang,yellow,H,0
+2018,2018-06-18,60,Sweden,Viktor Claesson,yellow,H,1
+2018,2018-06-17,39,Mexico,Héctor Alfredo Moreno Herrera,yellow,A,0
+2018,2018-06-17,82,Germany,Thomas Müller,yellow,A,1
+2018,2018-06-17,83,Germany,Mats Hummels,yellow,A,1
+2018,2018-06-17,89,Mexico,Héctor Miguel Herrera López,yellow,A,0
+2018,2018-06-20,78,Iran,Vahid Amiri,yellow,A,1
+2018,2018-06-20,91,Iran,Omid Ebrahimi,yellow,A,1
+2018,2018-06-21,15,France,Blaise Matuidi,yellow,H,1
+2018,2018-06-21,22,Peru,José Paolo Guerrero Gonzáles,yellow,H,0
+2018,2018-06-21,79,Peru,Pedro Jesús Aquino Sánchez,yellow,H,0
+2018,2018-06-21,85,France,Paul Pogba,yellow,H,1
+2018,2018-06-21,8,Argentina,Nicolás Alejandro Tagliafico,yellow,A,1
+2018,2018-06-21,38,Croatia,Ante Rebić,yellow,A,0
+2018,2018-06-21,50,Argentina,Gabriel Iván Mercado,yellow,A,1
+2018,2018-06-21,57,Croatia,Mario Mandžukić,yellow,A,0
+2018,2018-06-21,66,Croatia,Šime Vrsaljko,yellow,A,0
+2018,2018-06-21,84,Argentina,Nicolás Hernán Otamendi,yellow,A,1
+2018,2018-06-21,86,Argentina,Marcos Javier Acuña,yellow,A,1
+2018,2018-06-21,93,Croatia,Marcelo Brozović,yellow,A,0
+2018,2018-07-03,40,Colombia,Wílmar Enrique Barrios Terán,yellow,D,1
+2018,2018-07-03,51,Colombia,Santiago Arias Naranjo,yellow,D,1
+2018,2018-07-03,53,Colombia,Carlos Alberto Sánchez Moreno,yellow,D,1
+2018,2018-07-03,55,England,Jordan Brian Henderson,yellow,D,0
+2018,2018-07-03,62,Colombia,Radamel Falcao García Zárate,yellow,D,1
+2018,2018-07-03,63,Colombia,Carlos Arturo Bacca Ahumada,yellow,D,1
+2018,2018-07-03,68,England,Jesse Lingard,yellow,D,0
+2018,2018-07-03,117,Colombia,Juan Guillermo Cuadrado Bello,yellow,D,1
+2018,2018-06-28,43,Tunisia,Ferjani Sassi,yellow,A,0
+2018,2018-06-28,70,Tunisia,Anice Badri,yellow,A,0
+2018,2018-06-28,77,Panama,Ricardo Guardia Avila,yellow,A,1
+2018,2018-06-28,91,Tunisia,Ghilane Chalali,yellow,A,0
+2018,2018-06-28,65,Japan,Tomoaki Makino,yellow,A,1
+2018,2018-06-26,11,Croatia,Marko Pjaca,yellow,A,0
+2018,2018-06-26,57,Iceland,Emil Hallfreðsson,yellow,A,1
+2018,2018-06-26,62,Iceland,Alfreð Finnbogason,yellow,A,1
+2018,2018-06-26,83,Iceland,Birkir Már Sævarsson,yellow,A,1
+2018,2018-06-19,56,Egypt,Mahmoud Ibrahim Hassan,yellow,H,0
+2018,2018-06-19,70,Russia,Denis Cheryshev,yellow,H,1
+2018,2018-06-19,83,Russia,Fyodor Smolov,yellow,H,1
+2018,2018-06-28,18,Belgium,Youri Tielemans,yellow,A,0
+2018,2018-06-28,32,Belgium,Leander Dendoncker,yellow,A,0
+2018,2018-07-03,29,Sweden,Mikael Lustig,yellow,H,1
+2018,2018-07-03,60,Switzerland,Valon Behrami,yellow,H,0
+2018,2018-07-03,67,Switzerland,Granit Xhaka,yellow,H,0
+2018,2018-07-03,92,Switzerland,Michael Lang,red,H,0
+2018,2018-06-25,53,Iran,Sardar Azmoun,yellow,D,1
+2018,2018-06-25,63,Portugal,Ricardo Andrade Quaresma Bernardo,yellow,D,0
+2018,2018-06-25,79,Portugal,Cristiano Ronaldo dos Santos Aveiro,yellow,D,0
+2018,2018-06-20,39,Morocco,Medhi Amine El Mouttaqi Benatia,yellow,H,0
+2018,2018-06-20,91,Portugal,Adrien Sebastian Perruchet Silva,yellow,H,1
+2018,2018-07-11,46,Croatia,Mario Mandžukić,yellow,H,1
+2018,2018-07-11,53,England,Kyle Walker,yellow,H,0
+2018,2018-07-11,94,Croatia,Ante Rebić,yellow,H,1
+2018,2018-06-22,80,Brazil,Neymar da Silva Santos Junior,yellow,H,1
+2018,2018-06-22,81,Brazil,Philippe Coutinho Correia,yellow,H,1
+2018,2018-06-22,83,Costa Rica,Johnny Acosta Zamora,yellow,H,0
+2018,2018-06-15,94,Egypt,Ahmed Elsayed Ali Elsayed Hegazy,yellow,A,1
+2018,2018-06-23,56,South Korea,Young-Gwon Kim,yellow,A,1
+2018,2018-06-23,62,South Korea,Yong Lee,yellow,A,1
+2018,2018-06-23,79,South Korea,Woo-Young Jung,yellow,A,1
+2018,2018-06-18,13,Belgium,Thomas Meunier,yellow,H,1
+2018,2018-06-18,17,Panama,Erick Javier Davis Grajales,yellow,H,0
+2018,2018-06-18,45,Panama,Edgar Yoel Bárcenas Herrera,yellow,H,0
+2018,2018-06-18,48,Panama,Armando Enrique Cooper Whitaker,yellow,H,0
+2018,2018-06-18,50,Panama,Michael Amir Murillo Bermudez,yellow,H,0
+2018,2018-06-18,56,Panama,Aníbal Cesis Godoy,yellow,H,0
+2018,2018-06-18,59,Belgium,Jan Vertonghen,yellow,H,1
+2018,2018-06-18,87,Belgium,Kevin De Bruyne,yellow,H,1
+2018,2018-06-24,60,Poland,Jan Bednarek,yellow,A,1
+2018,2018-06-24,83,Poland,Jacek Góralski,yellow,A,1
+2018,2018-06-15,16,Spain,Sergio Busquets i Burgos,yellow,D,0
+2018,2018-06-15,26,Portugal,Bruno Miguel Borges Fernandes,yellow,D,1
+2018,2018-06-27,31,Serbia,Adem Ljajić,yellow,A,1
+2018,2018-06-27,47,Serbia,Nemanja Matić,yellow,A,1
+2018,2018-06-27,70,Serbia,Aleksandar Mitrović,yellow,A,1
+2018,2018-06-23,51,Sweden,Albin Ekdal,yellow,H,0
+2018,2018-06-23,70,Germany,Jérôme Boateng,yellow,H,1
+2018,2018-06-23,80,Germany,Jérôme Boateng,red,H,1
+2018,2018-06-23,96,Sweden,Sebastian Larsson,yellow,H,0
+2018,2018-06-18,32,England,Kyle Walker,yellow,A,0
+2018,2018-06-30,18,Argentina,Nicolás Alejandro Tagliafico,yellow,H,0
+2018,2018-06-30,42,Argentina,Javier Alejandro Mascherano,yellow,H,0
+2018,2018-06-30,49,Argentina,Éver Maximiliano David Banega,yellow,H,0
+2018,2018-06-30,71,France,Blaise Matuidi,yellow,H,1
+2018,2018-06-30,92,Argentina,Nicolás Hernán Otamendi,yellow,H,0
+2018,2018-06-30,93,France,Olivier Giroud,yellow,H,1
+2018,2018-07-01,113,Denmark,Mathias Jørgensen Jatta,yellow,D,0
+2018,2018-06-22,43,Nigeria,Brian Oladapo Idowu,yellow,H,1
+2018,2018-06-16,29,Croatia,Ivan Rakitić,yellow,H,1
+2018,2018-06-16,69,Nigeria,William Troost-Ekong,yellow,H,0
+2018,2018-06-16,88,Croatia,Marcelo Brozović,yellow,H,1
+2018,2018-06-26,9,Australia,Mile Jedinak,yellow,A,1
+2018,2018-06-26,44,Peru,Víctor Yoshimar Yotún Flores,yellow,A,0
+2018,2018-06-26,59,Australia,Daniel Arzani,yellow,A,1
+2018,2018-06-26,78,Peru,Christopher Paolo César Hurtado Huertas,yellow,A,0
+2018,2018-06-26,87,Australia,Mark Milligan,yellow,A,1
+2018,2018-06-28,44,Colombia,Johan Andrés Mojica Palacio,yellow,A,0
+2018,2018-06-28,49,Senegal,M'Baye Babacar Niang,yellow,A,1
+2018,2018-06-27,28,Costa Rica,Joel Nathaniel Campbell Samuels,yellow,D,0
+2018,2018-06-27,74,Switzerland,Denis Lemi Zakaria Lako Lado,yellow,D,1
+2018,2018-06-27,82,Switzerland,Fabian Lukas Schär,yellow,D,1
+2018,2018-06-27,88,Costa Rica,Kendall Jamaal Waston Manley,yellow,D,0
+2018,2018-06-16,12,Australia,Mathew Leckie,yellow,H,0
+2018,2018-06-16,53,Australia,Josh Risdon,yellow,H,0
+2018,2018-06-16,75,France,Corentin Tolisso,yellow,H,1
+2018,2018-06-16,86,Australia,Aziz Eraltay Behich,yellow,H,0
+2018,2018-06-25,26,Russia,Igor Smolnikov,yellow,H,0
+2018,2018-06-25,35,Russia,Igor Smolnikov,red,H,0
+2018,2018-06-25,58,Uruguay,Rodrigo Bentancur Colmán,yellow,H,1
+2018,2018-07-02,37,Mexico,Edson Omar Álvarez Velázquez,yellow,H,0
+2018,2018-07-02,41,Brazil,Filipe Luís Kasmirski,yellow,H,1
+2018,2018-07-02,54,Mexico,Héctor Miguel Herrera López,yellow,H,0
+2018,2018-07-02,58,Brazil,Carlos Henrique Casimiro,yellow,H,1
+2018,2018-07-02,76,Mexico,Raúl Alonso Jiménez Rodríguez,yellow,H,0
+2018,2018-07-02,91,Mexico,José Andrés Guardado Hernández,yellow,H,0
+2018,2018-06-21,35,Denmark,Yussuf Yurary Poulsen,yellow,D,1
+2018,2018-06-21,84,Denmark,Pione Sisto Ifolo Emirmija,yellow,D,1
+2018,2018-06-17,20,Costa Rica,Francisco Javier Calvo Quesada,yellow,A,1
+2018,2018-06-17,55,Costa Rica,David Alberto Guzmán Pérez,yellow,A,1
+2018,2018-06-17,58,Serbia,Branislav Ivanović,yellow,A,0
+2018,2018-06-17,97,Serbia,Aleksandar Prijović,yellow,A,0
+2018,2018-07-06,32,France,Lucas Hernández Pi,yellow,A,0
+2018,2018-07-06,37,Uruguay,Rodrigo Bentancur Colmán,yellow,A,1
+2018,2018-07-06,68,France,Kylian Mbappé Lottin,yellow,A,0
+2018,2018-07-06,68,Uruguay,Cristian Gabriel Rodríguez Barrotti,yellow,A,1
+2018,2018-07-15,26,France,N''Golo Kanté,yellow,H,1
+2018,2018-07-15,91,Croatia,Šime Vrsaljko,yellow,H,0
+2018,2018-07-01,39,Spain,Gerard Piqué Bernabéu,yellow,D,1
+2018,2018-07-01,53,Russia,Ilya Kutepov,yellow,D,0
+2018,2018-07-01,70,Russia,Roman Zobnin,yellow,D,0
+2018,2018-06-23,13,Tunisia,Ferjani Sassi,yellow,H,0
+2018,2018-06-16,37,Peru,Renato Fabrizio Tapia Cortijo,yellow,A,1
+2018,2018-06-16,85,Denmark,Thomas Delaney,yellow,A,0
+2018,2018-06-16,92,Denmark,Yussuf Yurary Poulsen,yellow,A,0
+2018,2018-06-25,20,Morocco,Karim El Ahmadi Al Aroos,yellow,D,0
+2018,2018-06-25,28,Morocco,Nordin Amrabat,yellow,D,0
+2018,2018-06-25,30,Morocco,Manuel Marouan da Costa Trinidade,yellow,D,0
+2018,2018-06-25,30,Morocco,Mbark Boussoufa,yellow,D,0
+2018,2018-06-25,88,Morocco,Munir Mohand Mohamedi,yellow,D,0
+2018,2018-06-25,93,Morocco,Achraf Hakimi Mouh,yellow,D,0
+2018,2018-06-17,46,Brazil,Carlos Henrique Casimiro,yellow,D,1
+2018,2018-06-17,64,Switzerland,Fabian Lukas Schär,yellow,D,0
+2018,2018-06-17,67,Switzerland,Valon Behrami,yellow,D,0
+2018,2018-06-26,31,Nigeria,Leon Aderemi Balogun,yellow,A,1
+2018,2018-06-26,48,Argentina,Javier Alejandro Mascherano,yellow,A,0
+2018,2018-06-26,63,Argentina,Éver Maximiliano David Banega,yellow,A,0
+2018,2018-06-26,90,Nigeria,John Michael Nchekwube Obinna,yellow,A,1
+2018,2018-06-26,93,Argentina,Lionel Andrés Messi Cuccittini,yellow,A,0
+2018,2018-06-30,92,Portugal,Cristiano Ronaldo dos Santos Aveiro,yellow,H,0
+2018,2018-06-15,9,Iran,Masoud Shojaei Soleimani,yellow,A,0
+2018,2018-06-15,33,Morocco,Karim El Ahmadi Al Aroos,yellow,A,1
+2018,2018-06-15,46,Iran,Alireza Jahanbakhsh,yellow,A,0
+2018,2018-06-15,91,Iran,Karim Ansarifard,yellow,A,0
+2018,2018-06-14,87,Russia,Aleksandr Golovin,yellow,H,1
+2018,2018-06-14,92,Saudi Arabia,Taisir Jabir Al Jassim,yellow,H,0
+2018,2018-06-27,0,Mexico,Jesús Daniel Gallardo Vasconcelos,yellow,A,1
+2018,2018-06-27,24,Sweden,Sebastian Larsson,yellow,A,0
+2018,2018-06-27,59,Mexico,Héctor Alfredo Moreno Herrera,yellow,A,1
+2018,2018-06-27,84,Mexico,Miguel Arturo Layún Prado,yellow,A,1
+2018,2018-06-27,87,Sweden,Mikael Lustig,yellow,A,0
+2018,2018-07-07,86,England,Harry Maguire,yellow,A,0
+2018,2018-07-07,87,Sweden,John Guidetti,yellow,A,1
+2018,2018-07-07,93,Sweden,Sebastian Larsson,yellow,A,1
+2018,2018-06-27,7,South Korea,Woo-Young Jung,yellow,H,1
+2018,2018-06-27,22,South Korea,Jae-Sung Lee,yellow,H,1
+2018,2018-06-27,47,South Korea,Seon-Min Moon,yellow,H,1
+2018,2018-06-27,64,South Korea,Heung-Min Son,yellow,H,1
+2018,2018-06-19,2,Colombia,Carlos Alberto Sánchez Moreno,red,A,1
+2018,2018-06-19,63,Colombia,Wílmar Enrique Barrios Terán,yellow,A,1
+2018,2018-06-19,85,Colombia,James David Rodríguez Rubio,yellow,A,1
+2018,2018-07-10,62,Belgium,Eden Hazard,yellow,H,0
+2018,2018-07-10,70,Belgium,Toby Alderweireld,yellow,H,0
+2018,2018-07-10,86,France,N'Golo Kanté,yellow,H,1
+2018,2018-07-10,91,France,Kylian Mbappé Lottin,yellow,H,1
+2018,2018-07-10,93,Belgium,Jan Vertonghen,yellow,H,0
+2018,2018-07-14,51,England,John Stones,yellow,H,0
+2018,2018-07-14,77,England,Harry Maguire,yellow,H,0
+2018,2018-07-14,93,Belgium,Axel Witsel,yellow,H,1
+2018,2018-07-07,34,Croatia,Dejan Lovren,yellow,D,0
+2018,2018-07-07,37,Croatia,Ivan Strinić,yellow,D,0
+2018,2018-07-07,100,Croatia,Domagoj Vida,yellow,D,0
+2018,2018-07-07,108,Russia,Yury Gazinskiy,yellow,D,1
+2018,2018-07-07,112,Croatia,Josip Pivarić,yellow,D,0
+2018,2018-06-26,46,Denmark,Mathias Jørgensen Jatta,yellow,D,1
+2018,2018-06-24,58,Senegal,M'Baye Babacar Niang,yellow,D,0
+2018,2018-06-24,67,Japan,Takashi Inui,yellow,D,1
+2018,2018-06-24,89,Senegal,Youssouf Sabaly,yellow,D,0
+2018,2018-06-24,90,Senegal,Cheikh N'Doye,yellow,D,0
+2018,2018-06-24,93,Japan,Makoto Hasebe,yellow,D,1
+2018,2018-06-25,46,Egypt,Ali Gabr,yellow,H,0
+2018,2018-06-25,85,Egypt,Ahmed Fathy Abdel Meneim Ibrahim,yellow,H,0
+2022,2022-12-01,6,Canada,David Junior Hoilett,yellow,A,1
+2022,2022-12-01,25,Canada,Jonathan Osorio,yellow,A,1
+2022,2022-12-01,46,Canada,Sam Adekugbe,yellow,A,1
+2022,2022-12-01,83,Canada,Steven de Sousa Vitoria,yellow,A,1
+2022,2022-11-21,24,Iran,Alireza Jahanbakhsh,yellow,H,0
+2022,2022-11-21,47,Iran,Morteza Pouraliganji,yellow,H,0
+2022,2022-12-01,65,Belgium,Leander Dendoncker,yellow,D,0
+2022,2022-11-25,56,Ecuador,Jhegson Sebastián Méndez Carabalí,yellow,D,0
+2022,2022-12-01,38,Japan,Ko Itakura,yellow,H,1
+2022,2022-12-01,43,Japan,Shogo Taniguchi,yellow,H,1
+2022,2022-12-01,44,Japan,Maya Yoshida,yellow,H,1
+2022,2022-11-29,42,United States,Tyler Adams,yellow,A,0
+2022,2022-11-29,76,Iran,Seyed Majid Hosseini,yellow,A,1
+2022,2022-11-29,82,Iran,Mohammad Hossein Kanani Zadegan,yellow,A,1
+2022,2022-11-29,95,Iran,Abolfazl Jalali,yellow,A,1
+2022,2022-11-23,77,Morocco,Sofyan Amrabat,yellow,D,1
+2022,2022-11-25,47,Wales,Joe Rodon,yellow,A,1
+2022,2022-11-25,83,Wales,Wayne Hennessey,red,A,1
+2022,2022-11-25,94,Iran,Ramin Rezaeian,yellow,A,0
+2022,2022-11-25,94,Iran,Alireza Jahanbakhsh,yellow,A,0
+2022,2022-11-30,27,Tunisia,Wajdi Kechrida,yellow,H,1
+2022,2022-11-29,28,Wales,Daniel James,yellow,A,1
+2022,2022-11-29,60,Wales,Aaron Ramsey,yellow,A,1
+2022,2022-11-24,35,Cameroon,Ngoran Suiru Fai Collins,yellow,H,0
+2022,2022-11-24,63,Switzerland,Nico Elvedi,yellow,H,1
+2022,2022-11-24,82,Switzerland,Manuel Obafemi Akanji,yellow,H,1
+2022,2022-11-24,44,Ghana,Mohammed Kudus,yellow,H,0
+2022,2022-11-24,48,Ghana,André Ayew Pelé,yellow,H,0
+2022,2022-11-24,56,Ghana,Alidu Seidu,yellow,H,0
+2022,2022-11-24,89,Portugal,Danilo Luís Hélio Pereira,yellow,H,1
+2022,2022-11-24,90,Ghana,Iñaki Williams Arthuer,yellow,H,0
+2022,2022-11-24,94,Portugal,Bruno Miguel Borges Fernandes,yellow,H,1
+2022,2022-11-21,55,Netherlands,Matthijs de Ligt,yellow,A,0
+2022,2022-11-21,93,Senegal,Nampalys Mendy,yellow,A,1
+2022,2022-11-21,95,Senegal,Idrissa Gana Gueye,yellow,A,1
+2022,2022-11-21,10,United States,Sergino Dest,yellow,D,1
+2022,2022-11-21,12,United States,Weston McKennie,yellow,D,1
+2022,2022-11-21,39,Wales,Gareth Frank Bale,yellow,D,0
+2022,2022-11-21,46,Wales,Chris Mepham,yellow,D,0
+2022,2022-11-21,50,United States,Tim Ream,yellow,D,1
+2022,2022-11-21,99,United States,Kellyn Kai Perry-Acosta,yellow,D,1
+2022,2022-11-26,14,Poland,Jakub Piotr Kiwior,yellow,H,1
+2022,2022-11-26,15,Poland,Matty Cash,yellow,H,1
+2022,2022-11-26,18,Poland,Arkadiusz Milik,yellow,H,1
+2022,2022-11-26,19,Saudi Arabia,Abdulelah Saad Hameed Al-Malki,yellow,H,0
+2022,2022-11-26,48,Saudi Arabia,Abdulelah Al Amri,yellow,H,0
+2022,2022-11-29,51,Netherlands,Nathan Aké,yellow,H,1
+2022,2022-11-26,19,Denmark,Andreas Christensen,yellow,H,0
+2022,2022-11-26,22,Denmark,Andreas Evald Cornelius,yellow,H,0
+2022,2022-11-26,42,France,Jules Koundé,yellow,H,1
+2022,2022-11-22,23,Denmark,Rasmus Nissen Kristensen,yellow,D,1
+2022,2022-11-22,77,Denmark,Mathias Jensen,yellow,D,1
+2022,2022-11-22,84,Tunisia,Taha Yassine Khenissi,yellow,D,0
+2022,2022-11-22,28,Mexico,Jorge Eduardo Sánchez Ramos,yellow,D,1
+2022,2022-11-22,53,Mexico,Héctor Alfredo Moreno Herrera,yellow,D,1
+2022,2022-11-22,75,Poland,Przemysław Frankowski,yellow,D,0
+2022,2022-11-25,19,Qatar,Ismaeel Mohammad Mohammad,yellow,A,1
+2022,2022-11-25,29,Senegal,Boulaye Dia,yellow,A,0
+2022,2022-11-25,46,Qatar,Homam Alamin Ahmed,yellow,A,1
+2022,2022-11-25,51,Senegal,Ismail Jakobs,yellow,A,0
+2022,2022-11-25,86,Senegal,Pathé Ismaël Ciss,yellow,A,0
+2022,2022-11-25,90,Qatar,Assim Omer Al Haj Madibo,yellow,A,1
+2022,2022-11-23,7,Belgium,Yannick Ferreira Carrasco,yellow,H,1
+2022,2022-11-23,52,Belgium,Thomas Meunier,yellow,H,1
+2022,2022-11-23,55,Belgium,Amadou Onana,yellow,H,1
+2022,2022-11-23,80,Canada,Alphonso Davies,yellow,H,0
+2022,2022-11-23,82,Canada,Alistair Johnston,yellow,H,0
+2022,2022-11-28,49,Switzerland,Fabian Rieder,yellow,H,0
+2022,2022-11-28,51,Brazil,Frederico Rodrigues Santos,yellow,H,1
+2022,2022-12-09,42,Argentina,Marcos Javier Acuña,yellow,D,0
+2022,2022-12-09,42,Netherlands,Jurriën David Norman Timber,yellow,D,1
+2022,2022-12-09,44,Argentina,Cristian Gabriel Romero,yellow,D,0
+2022,2022-12-09,46,Netherlands,Wout Weghorst,yellow,D,1
+2022,2022-12-09,75,Netherlands,Memphis Depay,yellow,D,1
+2022,2022-12-09,75,Argentina,Lisandro Martínez,yellow,D,0
+2022,2022-12-09,87,Netherlands,Steven Berghuis,yellow,D,1
+2022,2022-12-09,87,Argentina,Leandro Daniel Paredes,yellow,D,0
+2022,2022-12-09,99,Argentina,Lionel Andrés Messi Cuccittini,yellow,D,0
+2022,2022-12-09,101,Argentina,Nicolás Hernán Otamendi,yellow,D,0
+2022,2022-12-09,102,Netherlands,Steven Bergwijn,yellow,D,1
+2022,2022-12-09,108,Argentina,Gonzalo Ariel Montiel,yellow,D,0
+2022,2022-12-09,111,Argentina,Germán Alejandro Pezzella,yellow,D,0
+2022,2022-12-09,127,Netherlands,Denzel Dumfries,yellow,D,1
+2022,2022-12-09,127,Netherlands,Denzel Dumfries,red,D,1
+2022,2022-12-09,127,Netherlands,Noa Lang,yellow,D,1
+2022,2022-12-01,75,Costa Rica,Óscar Esau Duarte Gaitán,yellow,A,1
+2022,2022-11-27,40,Costa Rica,Anthony Daniel Contreras Enríquez,yellow,A,0
+2022,2022-11-27,43,Japan,Miki Yamane,yellow,A,1
+2022,2022-11-27,60,Costa Rica,Celso Borges Mora,yellow,A,0
+2022,2022-11-27,69,Costa Rica,Francisco Javier Calvo Quesada,yellow,A,0
+2022,2022-11-27,83,Japan,Ko Itakura,yellow,A,1
+2022,2022-11-27,92,Japan,Wataru Endo,yellow,A,1
+2022,2022-12-18,51,Argentina,Enzo Fernandez,yellow,D,1
+2022,2022-12-18,54,France,Adrien Rabiot,yellow,D,0
+2022,2022-12-18,86,France,Marcus Thuram,yellow,D,0
+2022,2022-12-18,94,France,Olivier Giroud,yellow,D,0
+2022,2022-12-18,97,Argentina,Marcos Javier Acuña,yellow,D,1
+2022,2022-12-18,113,Argentina,Leandro Daniel Paredes,yellow,D,1
+2022,2022-12-18,115,Argentina,Gonzalo Ariel Montiel,yellow,D,1
+2022,2022-12-18,124,Argentina,Damián Emiliano Martínez,yellow,D,1
+2022,2022-12-17,68,Morocco,Azzedine Ounahi,yellow,H,0
+2022,2022-12-17,83,Morocco,Selim Amallah,yellow,H,0
+2022,2022-12-02,14,Switzerland,Silvan Widmer,yellow,A,0
+2022,2022-12-02,33,Switzerland,Ruben Vargas,yellow,A,0
+2022,2022-12-02,46,Serbia,Sergej Milinković-Savić,yellow,A,1
+2022,2022-12-02,55,Serbia,Strahinja Pavlović,yellow,A,1
+2022,2022-12-02,66,Serbia,Predrag Rajković,yellow,A,1
+2022,2022-12-02,80,Serbia,Nemanja Gudelj,yellow,A,1
+2022,2022-12-02,81,Serbia,Aleksandar Mitrović,yellow,A,1
+2022,2022-12-02,94,Serbia,Nikola Milenković,yellow,A,1
+2022,2022-12-02,94,Switzerland,Granit Xhaka,yellow,A,0
+2022,2022-12-02,98,Switzerland,Fabian Lukas Schär,yellow,A,0
+2022,2022-12-02,99,Serbia,Saša Lukić,yellow,A,1
+2022,2022-12-03,14,Australia,Jackson Irvine,yellow,H,0
+2022,2022-12-03,37,Australia,Miloš Degenek,yellow,H,0
+2022,2022-11-30,3,Australia,Aziz Eraltay Behich,yellow,H,1
+2022,2022-11-30,56,Australia,Miloš Degenek,yellow,H,1
+2022,2022-11-30,74,Denmark,Robert Skov,yellow,H,0
+2022,2022-11-24,5,Serbia,Strahinja Pavlović,yellow,H,0
+2022,2022-11-24,48,Serbia,Nemanja Gudelj,yellow,H,0
+2022,2022-11-24,63,Serbia,Saša Lukić,yellow,H,0
+2022,2022-11-26,25,Tunisia,Aïssa Bilal Laïdouni,yellow,A,1
+2022,2022-11-26,63,Tunisia,Ali Abdi,yellow,A,1
+2022,2022-11-26,91,Tunisia,Ferjani Sassi,yellow,A,1
+2022,2022-11-29,65,Senegal,Idrissa Gana Gueye,yellow,A,0
+2022,2022-11-24,55,Uruguay,José Martín Cáceres Silva,yellow,D,1
+2022,2022-11-24,87,South Korea,Gue-Sung Cho,yellow,D,0
+2022,2022-12-10,69,Morocco,Achraf Dari,yellow,H,1
+2022,2022-12-10,86,Portugal,Vitor Machado Ferreira,yellow,H,0
+2022,2022-12-10,90,Morocco,Walid Cheddira,yellow,H,1
+2022,2022-12-10,92,Morocco,Walid Cheddira,red,H,1
+2022,2022-11-30,14,Mexico,Edson Omar Álvarez Velázquez,yellow,A,0
+2022,2022-11-30,27,Saudi Arabia,Saleh Khalid Al Shehri,yellow,A,1
+2022,2022-11-30,33,Saudi Arabia,Ali Al Hassan,yellow,A,1
+2022,2022-11-30,51,Saudi Arabia,Hassan Mohammed Al-Tambakti,yellow,A,1
+2022,2022-11-30,80,Saudi Arabia,Abdullah Mohammed Madu,yellow,A,1
+2022,2022-11-30,90,Saudi Arabia,Abdulelah Al Amri,yellow,A,1
+2022,2022-11-30,96,Saudi Arabia,Hattan Babhir,yellow,A,1
+2022,2022-11-30,48,Argentina,Marcos Javier Acuña,yellow,A,0
+2022,2022-11-30,77,Poland,Grzegorz Krychowiak,yellow,A,1
+2022,2022-11-26,21,Mexico,Néstor Alejandro Araújo Razo,yellow,H,0
+2022,2022-11-26,42,Argentina,Gonzalo Ariel Montiel,yellow,H,1
+2022,2022-11-26,49,Mexico,Érick Gabriel Gutiérrez Galaviz,yellow,H,0
+2022,2022-11-26,65,Mexico,Héctor Miguel Herrera López,yellow,H,0
+2022,2022-11-26,88,Mexico,Roberto Carlos Alvarado Hernández,yellow,H,0
+2022,2022-12-06,42,Switzerland,Fabian Lukas Schär,yellow,H,0
+2022,2022-12-06,58,Switzerland,Eray Ervin Cömert,yellow,H,0
+2022,2022-12-04,75,Senegal,Kalidou Koulibaly,yellow,H,0
+2022,2022-12-13,31,Croatia,Dominik Livaković,yellow,H,0
+2022,2022-12-13,31,Croatia,Mateo Kovačić,yellow,H,0
+2022,2022-12-13,67,Argentina,Cristian Gabriel Romero,yellow,H,1
+2022,2022-12-13,70,Argentina,Nicolás Hernán Otamendi,yellow,H,1
+2022,2022-12-10,42,France,Antoine Griezmann,yellow,A,0
+2022,2022-12-10,45,France,Ousmane Dembélé,yellow,A,0
+2022,2022-12-10,79,France,Theo Bernard François Hernández,yellow,A,0
+2022,2022-12-10,88,England,Harry Maguire,yellow,A,1
+2022,2022-12-14,26,Morocco,Sofiane Boufal,yellow,H,0
+2022,2022-12-09,24,Brazil,Danilo Luiz da Silva,yellow,D,0
+2022,2022-12-09,30,Croatia,Marcelo Brozović,yellow,D,1
+2022,2022-12-09,67,Brazil,Carlos Henrique Casimiro,yellow,D,0
+2022,2022-12-09,76,Brazil,Marcos Aoás Corrêa,yellow,D,0
+2022,2022-12-09,116,Croatia,Bruno Petković,yellow,D,1
+2022,2022-12-06,75,Spain,Aymeric Laporte,yellow,D,0
+2022,2022-12-06,89,Morocco,Romain Saïss,yellow,D,1
+2022,2022-12-05,89,Croatia,Mateo Kovačić,yellow,D,0
+2022,2022-12-05,115,Croatia,Borna Barišić,yellow,D,0
+2022,2022-12-05,43,South Korea,Woo-Young Jung,yellow,H,0
+2022,2022-12-04,30,France,Aurélien Djani Tchouaméni,yellow,H,1
+2022,2022-12-04,46,Poland,Bartosz Bereszyński,yellow,H,0
+2022,2022-12-04,87,Poland,Matty Cash,yellow,H,0
+2022,2022-12-03,59,Netherlands,Teun Koopmeiners,yellow,H,1
+2022,2022-12-03,86,Netherlands,Frenkie de Jong,yellow,H,1
+2022,2022-11-28,5,Uruguay,Rodrigo Bentancur Colmán,yellow,H,0
+2022,2022-11-28,37,Portugal,Rúben Diogo Da Silva Neves,yellow,H,1
+2022,2022-11-28,43,Uruguay,Mathías Olivera Miramontes,yellow,H,0
+2022,2022-11-28,76,Portugal,João Félix Sequeira,yellow,H,1
+2022,2022-11-28,88,Portugal,Rúben Santos Gato Alves Dias,yellow,H,1
+2022,2022-11-27,36,Germany,Thilo Kehrer,yellow,D,0
+2022,2022-11-27,43,Spain,Sergio Busquets i Burgos,yellow,D,1
+2022,2022-11-27,56,Germany,Leon Goretzka,yellow,D,0
+2022,2022-11-27,59,Germany,Joshua Kimmich,yellow,D,0
+2022,2022-11-28,23,Cameroon,Nicolas Alexis Julio N'Koulou Ndoubena,yellow,D,1
+2022,2022-11-28,29,Cameroon,Christian Mougang Bassogog,yellow,D,1
+2022,2022-11-28,48,Serbia,Luka Jović,yellow,D,0
+2022,2022-11-28,92,Serbia,Nikola Milenković,yellow,D,0
+2022,2022-11-27,27,Belgium,Amadou Onana,yellow,A,1
+2022,2022-11-27,94,Morocco,Abdelhamid Sabiri,yellow,A,0
+2022,2022-11-20,14,Qatar,Saad Abdullah Al Sheeb,yellow,A,1
+2022,2022-11-20,21,Qatar,Almoez Ali Zainalabiddin Abdulla,yellow,A,1
+2022,2022-11-20,28,Ecuador,Moisés Isaac Caicedo Corozo,yellow,A,0
+2022,2022-11-20,35,Qatar,Karim Boudiaf,yellow,A,1
+2022,2022-11-20,55,Ecuador,Jhegson Sebastián Méndez Carabalí,yellow,A,0
+2022,2022-11-20,76,Qatar,Akram Hassan Afif,yellow,A,1
+2022,2022-11-22,66,Saudi Arabia,Abdulelah Saad Hameed Al-Malki,yellow,A,0
+2022,2022-11-22,74,Saudi Arabia,Ali Albulayhi,yellow,A,0
+2022,2022-11-22,78,Saudi Arabia,Salem Mohammed Al Dawsari,yellow,A,0
+2022,2022-11-22,81,Saudi Arabia,Saud Abdullah Abdul Hamid,yellow,A,0
+2022,2022-11-22,87,Saudi Arabia,Nawaf Shaker Al Abid,yellow,A,0
+2022,2022-11-22,91,Saudi Arabia,Mohammed Khalil Al Owais,yellow,A,0
+2022,2022-11-28,19,Ghana,Daniel Amartey,yellow,A,0
+2022,2022-11-28,26,South Korea,Woo-Young Jung,yellow,A,1
+2022,2022-11-28,72,Ghana,Tariq Lamptey,yellow,A,0
+2022,2022-11-28,76,South Korea,Young-Gwon Kim,yellow,A,1
+2022,2022-12-02,18,Uruguay,Darwin Gabriel Núñez Ribeiro,yellow,A,0
+2022,2022-12-02,59,Uruguay,Luis Alberto Suárez Díaz,yellow,A,0
+2022,2022-12-02,85,Ghana,Kamaldeen Sulemana,yellow,A,1
+2022,2022-12-02,86,Uruguay,Sebastián Coates Nión,yellow,A,0
+2022,2022-12-02,98,Ghana,Alidu Seidu,yellow,A,1
+2022,2022-12-02,100,Uruguay,José María Giménez de Vargas,yellow,A,0
+2022,2022-12-02,100,Uruguay,Edinson Roberto Cavani Gómez,yellow,A,0
+2022,2022-11-23,67,Costa Rica,Francisco Javier Calvo Quesada,yellow,H,0
+2022,2022-11-23,96,Costa Rica,Joel Nathaniel Campbell Samuels,yellow,H,0
+2022,2022-11-27,51,Canada,Tajon Buchanan,yellow,H,0
+2022,2022-11-27,55,Croatia,Dejan Lovren,yellow,H,1
+2022,2022-11-27,84,Canada,Kamal Miller,yellow,H,0
+2022,2022-11-27,84,Croatia,Luka Modrić,yellow,H,1
+2022,2022-12-02,5,Cameroon,Nouhou Tolo,yellow,H,1
+2022,2022-12-02,6,Brazil,Éder Gabriel Militão,yellow,H,0
+2022,2022-12-02,27,Cameroon,Pierre Kunde Malong,yellow,H,1
+2022,2022-12-02,31,Cameroon,Ngoran Suiru Fai Collins,yellow,H,1
+2022,2022-12-02,80,Cameroon,Vincent Paté Aboubakar,yellow,H,1
+2022,2022-12-02,84,Brazil,Bruno Guimarães Rodriguez Moura,yellow,H,0
+2022,2022-12-02,92,Cameroon,Vincent Paté Aboubakar,red,H,1
+2022,2022-11-22,54,Australia,Mitchell Thomas Duke,yellow,H,0
+2022,2022-11-22,79,Australia,Jackson Irvine,yellow,H,0
+2022,2022-11-22,93,Australia,Aaron Mooy,yellow,H,0
+2022,2022-12-02,35,South Korea,Kang-In Lee,yellow,H,1
+2022,2022-12-02,92,South Korea,Hee-Chan Hwang,yellow,H,1

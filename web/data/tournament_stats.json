@@ -1,0 +1,58 @@
+{
+  "updated": "2026-06-26",
+  "source": "Estadísticas oficiales del torneo (aportadas)",
+  "categories": [
+    {
+      "key": "goals", "title": "⚽ Goleadores", "unit": "goles",
+      "rows": [
+        {"player": "Lionel Messi", "team": "Argentina", "value": 5},
+        {"player": "Vinícius Júnior", "team": "Brazil", "value": 4},
+        {"player": "Alexander Isak", "team": "Sweden", "value": 3},
+        {"player": "Deniz Undav", "team": "Germany", "value": 3},
+        {"player": "Jonathan David", "team": "Canada", "value": 3},
+        {"player": "Brian Brobbey", "team": "Netherlands", "value": 3},
+        {"player": "Johan Manzambi", "team": "Switzerland", "value": 3}
+      ]
+    },
+    {
+      "key": "assists", "title": "👟 Asistencias (xA)", "unit": "asist.",
+      "rows": [
+        {"player": "Alexander Isak", "team": "Sweden", "value": 3},
+        {"player": "Bruno Guimarães", "team": "Brazil", "value": 3},
+        {"player": "Roberto Alvarado", "team": "Mexico", "value": 2},
+        {"player": "Breel Embolo", "team": "Switzerland", "value": 2},
+        {"player": "Nathan Saliba", "team": "Canada", "value": 2},
+        {"player": "Julio Enciso", "team": "Paraguay", "value": 2},
+        {"player": "Florian Wirtz", "team": "Germany", "value": 2},
+        {"player": "Joshua Kimmich", "team": "Germany", "value": 2}
+      ]
+    },
+    {
+      "key": "shots", "title": "🎯 Volumen de tiros", "unit": "tiros",
+      "rows": [
+        {"player": "Arda Güler", "team": "Turkey", "value": 11},
+        {"player": "Hakan Çalhanoğlu", "team": "Turkey", "value": 11},
+        {"player": "Jonathan David", "team": "Canada", "value": 11},
+        {"player": "Viktor Gyökeres", "team": "Sweden", "value": 10}
+      ]
+    },
+    {
+      "key": "distance", "title": "🏃 Distancia recorrida", "unit": "km",
+      "rows": [
+        {"player": "Lewis Ferguson", "team": "Scotland", "value": 24.53},
+        {"player": "Andrés Cubas", "team": "Paraguay", "value": 24.36},
+        {"player": "Neil El Aynaoui", "team": "Morocco", "value": 24.06},
+        {"player": "Hakan Çalhanoğlu", "team": "Turkey", "value": 24.00}
+      ]
+    },
+    {
+      "key": "clean_sheets", "title": "🧤 Vallas invictas", "unit": "partidos",
+      "rows": [
+        {"player": "Raúl Rangel", "team": "Mexico", "value": 3},
+        {"player": "Emiliano Martínez", "team": "Argentina", "value": 2},
+        {"player": "Unai Simón", "team": "Spain", "value": 2},
+        {"player": "Guillermo Ochoa", "team": "Mexico", "value": 2}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "updated": "2026-06-26",
+  "veterans": [
+    {
+      "player": "Cristiano Ronaldo",
+      "team": "Portugal",
+      "age": 41,
+      "career_goals": 123,
+      "goals_2024_26": 15,
+      "fatigue": "media"
+    },
+    {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "age": 39,
+      "career_goals": 68,
+      "goals_2024_26": 11,
+      "fatigue": "media"
+    },
+    {
+      "player": "Romelu Lukaku",
+      "team": "Belgium",
+      "age": 33,
+      "career_goals": 64,
+      "goals_2024_26": 4,
+      "fatigue": "alta"
+    },
+    {
+      "player": "Edin Džeko",
+      "team": "Bosnia-Herzegovina",
+      "age": 40,
+      "career_goals": 58,
+      "goals_2024_26": 8,
+      "fatigue": "media"
+    },
+    {
+      "player": "Mohamed Salah",
+      "team": "Egypt",
+      "age": 34,
+      "career_goals": 34,
+      "goals_2024_26": 11,
+      "fatigue": "media"
+    },
+    {
+      "player": "Neymar",
+      "team": "Brazil",
+      "age": 34,
+      "career_goals": 33,
+      "goals_2024_26": 0,
+      "fatigue": "alta"
+    },
+    {
+      "player": "Mehdi Taremi",
+      "team": "Iran",
+      "age": 33,
+      "career_goals": 33,
+      "goals_2024_26": 11,
+      "fatigue": "media"
+    },
+    {
+      "player": "Chris Wood",
+      "team": "New Zealand",
+      "age": 34,
+      "career_goals": 30,
+      "goals_2024_26": 9,
+      "fatigue": "media"
+    },
+    {
+      "player": "Ivan Perišić",
+      "team": "Croatia",
+      "age": 37,
+      "career_goals": 30,
+      "goals_2024_26": 5,
+      "fatigue": "media"
+    },
+    {
+      "player": "Kevin De Bruyne",
+      "team": "Belgium",
+      "age": 34,
+      "career_goals": 30,
+      "goals_2024_26": 9,
+      "fatigue": "media"
+    },
+    {
+      "player": "Andrej Kramarić",
+      "team": "Croatia",
+      "age": 35,
+      "career_goals": 28,
+      "goals_2024_26": 8,
+      "fatigue": "media"
+    },
+    {
+      "player": "Enner Valencia",
+      "team": "Ecuador",
+      "age": 36,
+      "career_goals": 26,
+      "goals_2024_26": 6,
+      "fatigue": "alta"
+    },
+    {
+      "player": "Luka Modrić",
+      "team": "Croatia",
+      "age": 40,
+      "career_goals": 24,
+      "goals_2024_26": 3,
+      "fatigue": "alta"
+    },
+    {
+      "player": "Sadio Mané",
+      "team": "Senegal",
+      "age": 34,
+      "career_goals": 24,
+      "goals_2024_26": 6,
+      "fatigue": "media"
+    },
+    {
+      "player": "James Rodríguez",
+      "team": "Colombia",
+      "age": 34,
+      "career_goals": 23,
+      "goals_2024_26": 3,
+      "fatigue": "alta"
+    },
+    {
+      "player": "Raúl Jiménez",
+      "team": "Mexico",
+      "age": 35,
+      "career_goals": 21,
+      "goals_2024_26": 4,
+      "fatigue": "alta"
+    },
+    {
+      "player": "Jordan Ayew",
+      "team": "Ghana",
+      "age": 34,
+      "career_goals": 16,
+      "goals_2024_26": 9,
+      "fatigue": "media"
+    },
+    {
+      "player": "Riyad Mahrez",
+      "team": "Algeria",
+      "age": 35,
+      "career_goals": 16,
+      "goals_2024_26": 4,
+      "fatigue": "alta"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+"""Datos REALES del Mundial 2026 desde football-data.org (infrautilizada).
+
+Baja: goleadores reales, árbitros por partido y resultados.
+Guarda data_user/scorers_real_2026.csv y data_user/referees_real_2026.csv.
+"""
+from __future__ import annotations
+
+import csv
+import json
+import os
+import urllib.request
+
+ROOT = os.path.dirname(os.path.dirname(__file__))
+KEY = json.load(open(os.path.join(ROOT, "config", "api_keys.json"),
+                    encoding="utf-8"))["football_data_org"]
+
+
+def get(path):
+    req = urllib.request.Request("https://api.football-data.org/v4/" + path,
+                                 headers={"X-Auth-Token": KEY})
+    return json.load(urllib.request.urlopen(req, timeout=30))
+
+
+def main():
+    # Goleadores reales
+    sc = get("competitions/WC/scorers?limit=30")["scorers"]
+    srows = [{"player": s["player"]["name"], "team": s["team"]["name"],
+              "goals": s.get("goals") or 0, "assists": s.get("assists") or 0,
+              "penalties": s.get("penalties") or 0} for s in sc]
+    p = os.path.join(ROOT, "data_user", "scorers_real_2026.csv")
+    with open(p, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=list(srows[0].keys()))
+        w.writeheader(); w.writerows(srows)
+    print(f"OK -> {p} ({len(srows)} goleadores reales)")
+
+    # Árbitros por partido jugado
+    ms = get("competitions/WC/matches")["matches"]
+    rrows = []
+    for m in ms:
+        if m["status"] != "FINISHED":
+            continue
+        refs = m.get("referees", [])
+        main_ref = refs[0]["name"] if refs else ""
+        rrows.append({"home": m["homeTeam"]["name"], "away": m["awayTeam"]["name"],
+                      "stage": m.get("stage", ""), "group": m.get("group") or "",
+                      "referee": main_ref,
+                      "ref_country": refs[0].get("nationality", "") if refs else ""})
+    p2 = os.path.join(ROOT, "data_user", "referees_real_2026.csv")
+    with open(p2, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=list(rrows[0].keys()))
+        w.writeheader(); w.writerows(rrows)
+    nref = sum(1 for r in rrows if r["referee"])
+    print(f"OK -> {p2} ({len(rrows)} partidos, {nref} con árbitro)")
+
+
+if __name__ == "__main__":
+    main()
