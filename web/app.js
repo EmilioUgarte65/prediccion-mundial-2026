@@ -71,6 +71,15 @@ let TVAL = null;          // validación de minutos de gol
 let REAL = null;          // datos reales 2026 (goleadores/árbitros)
 let TMODEL = "ens";       // modelo elegido para comparar en el modal del torneo
 let CURRENT_MT = null;    // partido abierto en el modal
+let BMODEL = "ens";       // modelo que arma el CUADRO de eliminatorias
+
+function activeBracket() {
+  return (DATA.brackets && DATA.brackets[BMODEL]) || DATA.bracket;
+}
+function setBModel(m) {
+  BMODEL = m; TMODEL = m;  // el modal hereda el mismo modelo
+  renderBracket();
+}
 let VALID_MODEL = "ens";  // modelo mostrado en la tabla de validación
 const VMODELS = {
   ens:  { p: "e",  n: "🔀 Ensemble" },
@@ -113,7 +122,7 @@ function init() {
 }
 
 function allMatches() {
-  return [...Object.values(DATA.bracket).flat(), ...(DATA.group_predictions || [])];
+  return [...Object.values(activeBracket()).flat(), ...(DATA.group_predictions || [])];
 }
 function openFromHash() {
   const m = location.hash.match(/^#match-(\d+)/);
@@ -144,11 +153,24 @@ const BR_RIGHT = { r32: [76, 78, 79, 80, 86, 88, 85, 87], r16: [91, 92, 95, 96],
 
 function mById(round) {
   const m = {};
-  (DATA.bracket[round] || []).forEach(x => { m[x.match] = x; });
+  (activeBracket()[round] || []).forEach(x => { m[x.match] = x; });
   return m;
 }
 
+function bracketModelSelHTML() {
+  if (!DATA.brackets) return "";
+  const champ = (DATA.champions && DATA.champions[BMODEL]) || "";
+  const btns = ["ens", "xgb", "stat", "elo"].map(m =>
+    `<button class="mdl-btn${m === BMODEL ? " on" : ""}" onclick="setBModel('${m}')">${VMODELS[m].n}</button>`).join("");
+  return `<div class="bmsel">
+    <span class="bmsel-lbl">Modelo del cuadro:</span> ${btns}
+    ${champ ? `<span class="bmsel-champ">🏆 Campeón: <b>${esName(champ)}</b></span>` : ""}
+  </div>`;
+}
+
 function renderBracket() {
+  const sel = document.getElementById("bracketModelSel");
+  if (sel) sel.innerHTML = bracketModelSelHTML();
   const R32 = mById("R32"), R16 = mById("R16"), QF = mById("QF"),
         SF = mById("SF"), FIN = mById("Final");
   const el = document.getElementById("bracketEl");

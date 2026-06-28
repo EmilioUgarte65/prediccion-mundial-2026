@@ -621,21 +621,24 @@ def predict_group_match(engine, m, timing, rng):
     }
 
 
-def predict_ko_match(engine, a, b, timing, rng, n=N_MATCH):
+def predict_ko_match(engine, a, b, timing, rng, n=N_MATCH, model="ens"):
     lh, la = engine.lambdas(a, b, True)
-    wins_a = 0
     res = {"regular": 0, "ET": 0, "pens": 0}
     pen_total = 0; pen_a = 0
     for _ in range(n):
         w, gh, ga, decided = engine.sim_ko_match(a, b, rng)
-        if w == a:
-            wins_a += 1
         res[decided] += 1
         if decided == "pens":
             pen_total += 1
             if w == a:
                 pen_a += 1
-    pA = wins_a / n
+    # Quién avanza según el MODELO elegido: P(A avanza) = P(gana A) + P(empate)·P(A en penales)
+    mb = engine.outcome_by_model(a, b, True)
+    p1, px, p2 = mb[model]
+    pp = engine.pen_prob(a, b)
+    adv_a = p1 + px * pp
+    adv_b = p2 + px * (1 - pp)
+    pA = adv_a / (adv_a + adv_b) if (adv_a + adv_b) else 0.5
     favorite = a if pA >= 0.5 else b
     # Marcador representativo DETERMINISTA: el más probable donde gana el favorito
     # (coherente con el top-5 y sin ruido de simulación).
@@ -648,7 +651,7 @@ def predict_ko_match(engine, a, b, timing, rng, n=N_MATCH):
     pen_win_a = round(pen_a / pen_total, 3) if pen_total else round(engine.pen_prob(a, b), 3)
     return {
         "teamA": a, "teamB": b, "pA": round(pA, 4), "pB": round(1 - pA, 4),
-        "models": engine.outcome_by_model(a, b, True),
+        "models": mb,
         "winner": favorite, "scoreA": int(scoreA), "scoreB": int(scoreB),
         "decided": decided, "penA": penA, "penB": penB,
         "xgA": round(float(lh), 2), "xgB": round(float(la), 2),
@@ -668,30 +671,45 @@ def predict_ko_match(engine, a, b, timing, rng, n=N_MATCH):
     }
 
 
-def predicted_bracket(engine, r32_teams, timing, seed=7):
+def predicted_bracket(engine, r32_teams, timing, seed=7, model="ens"):
     rng = np.random.default_rng(seed)
     br = {"R32": [], "R16": [], "QF": [], "SF": [], "Final": [], "third": []}
     winners = {}
     for mid in sorted(R32_STRUCTURE):
         a, b = r32_teams[mid]
-        p = predict_ko_match(engine, a, b, timing, rng)
+        p = predict_ko_match(engine, a, b, timing, rng, model=model)
         p["match"] = mid; p["round"] = "R32"; br["R32"].append(p)
         winners[mid] = p["winner"]
     for feed, name in ((R16_FEED, "R16"), (QF_FEED, "QF"),
                        (SF_FEED, "SF"), (FINAL_FEED, "Final")):
         for mid in sorted(feed):
             fa, fb = feed[mid]
-            p = predict_ko_match(engine, winners[fa], winners[fb], timing, rng)
+            p = predict_ko_match(engine, winners[fa], winners[fb], timing, rng, model=model)
             p["match"] = mid; p["round"] = name; br[name].append(p)
             winners[mid] = p["winner"]
     sf = {p["match"]: p for p in br["SF"]}
     losers = [(p["teamB"] if p["winner"] == p["teamA"] else p["teamA"])
               for p in sf.values()]
     if len(losers) == 2:
-        p = predict_ko_match(engine, losers[0], losers[1], timing, rng)
+        p = predict_ko_match(engine, losers[0], losers[1], timing, rng, model=model)
         p["match"] = 103; p["round"] = "third"; br["third"].append(p)
     champ = br["Final"][0]["winner"] if br["Final"] else None
     return br, champ
+
+
+def r32_for_model(group_preds, played_df, groups, model):
+    """Clasificados a 16vos según las predicciones de grupo del MODELO elegido."""
+    pred_rows = []
+    for gp in group_preds:
+        o = int(np.argmax(gp["models"][model]))
+        sa, sb = most_likely_score(gp["xgA"], gp["xgB"], outcome=o)
+        pred_rows.append({"home_team": gp["teamA"], "away_team": gp["teamB"],
+                          "home_score": sa, "away_score": sb})
+    combined = pd.concat([
+        played_df[["home_team", "away_team", "home_score", "away_score"]],
+        pd.DataFrame(pred_rows)], ignore_index=True)
+    fs = compute_standings(combined, groups)
+    return resolve_r32_teams(qualifiers(fs))
 
 
 # ------------------------- standings para mostrar -------------------------
@@ -765,8 +783,14 @@ def main():
     qual = qualifiers(final_standings)
     r32_teams, third_assign = resolve_r32_teams(qual)
 
-    print(f"Simulando cuadro más probable ({N_MATCH} sims/partido)...")
-    bracket, champion = predicted_bracket(engine, r32_teams, timing)
+    # --- Un cuadro por CADA modelo (para el selector en la pantalla de eliminatorias) ---
+    print(f"Simulando el cuadro con cada modelo ({N_MATCH} sims/partido)...")
+    brackets = {}; champions = {}
+    for mk in ("ens", "xgb", "stat", "elo"):
+        r32_m, _ = r32_for_model(group_preds, played_df, groups, mk)
+        brackets[mk], champions[mk] = predicted_bracket(engine, r32_m, timing, model=mk)
+        print(f"  {mk}: campeón {champions[mk]}")
+    bracket, champion = brackets["ens"], champions["ens"]
 
     print(f"Monte Carlo desde el estado actual ({N_SIMS} torneos)...")
     base_stats, _ = base_group_stats(played_df, groups)
@@ -814,6 +838,8 @@ def main():
         "third_assignment": {str(k): v for k, v in third_assign.items()},
         "elo": {t: round(float(elo.get(t, 1500)), 1) for t in team_group},
         "bracket": bracket,
+        "brackets": brackets,        # un cuadro por modelo (ens/xgb/stat/elo)
+        "champions": champions,      # campeón previsto por modelo
         "advancement": adv_list,
     }
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)

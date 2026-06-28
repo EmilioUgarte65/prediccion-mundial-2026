@@ -438,6 +438,11 @@ table.adv tbody tr:hover { background: var(--surface); }
 .mdl-btn.on { background: var(--primary); color: #fff; border-color: var(--primary); }
 .mdl-note { font-size: .72rem; color: var(--muted); margin: 8px 0 0; }
 .mdl-note b { color: var(--accent); }
+.bmsel { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 16px;
+  padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r2); }
+.bmsel-lbl { font-size: .8rem; color: var(--muted); font-family: 'Fira Code', monospace; }
+.bmsel-champ { margin-left: auto; font-size: .85rem; }
+.bmsel-champ b { color: var(--accent); }
 .ts-note { font-size: .7rem; color: var(--muted); margin: 10px 0 0; line-height: 1.5; }
 .ts-chart { display: flex; flex-direction: column; gap: 5px; }
 .tsb-row { display: grid; grid-template-columns: 96px 1fr 48px; align-items: center; gap: 8px; }
@@ -565,6 +570,25 @@ footer a { color: var(--primary); }
   .tsb-row { grid-template-columns: 72px 1fr 40px; }
   .legend, .ts-legend, .tl-legend { gap: 10px; font-size: .7rem; }
   .cards-row { flex-wrap: wrap; }
+  /* ---- BRACKET compacto en móvil ---- */
+  :root { --gap: 13px; }
+  .bracket2 { min-width: 720px; min-height: 480px; padding: 12px 6px; border-radius: 14px; }
+  .bcol-head { font-size: .54rem; letter-spacing: 1px; margin-bottom: 8px; }
+  .brow { padding: 5px 7px; font-size: .66rem; gap: 5px; grid-template-columns: 16px 1fr auto; }
+  .bcard.mirror .brow { grid-template-columns: auto 1fr 16px; }
+  .bscore { font-size: .68rem; min-width: 11px; }
+  .btag { font-size: .48rem; }
+  .center-col { flex: 0 0 132px; padding: 0 3px; gap: 6px; }
+  .center-col .bcard { min-width: 118px; }
+  .trophy-big svg { width: 40px; height: 40px; }
+  .final-label { font-size: .8rem; letter-spacing: 2px; }
+  .champ-box { width: 126px; padding: 9px 8px; margin-top: 4px; }
+  .champ-name { font-size: .85rem; }
+  .champ-flag .fl-lg, .champ-flag { font-size: 1.6rem; }
+  .bmsel { font-size: .7rem; padding: 8px 10px; gap: 6px; }
+  .bmsel-champ { margin-left: 0; width: 100%; }
+  .bracket-scroll::after { content: "← desliza para ver todo el cuadro →"; display:block;
+    text-align:center; color: var(--muted); font-size:.62rem; padding-top:6px; font-family:'Fira Code',monospace; }
 }
 /* Móvil chico */
 @media (max-width: 420px) {
@@ -575,6 +599,10 @@ footer a { color: var(--primary); }
   .sb-score { font-size: 1.5rem; }
   .sb-team .sflag { font-size: 1.6rem; }
   .trophy { width: 36px; height: 36px; }
+  .bracket2 { min-width: 660px; }
+  .brow { font-size: .62rem; padding: 4px 6px; }
+  .center-col { flex: 0 0 118px; }
+  .center-col .bcard { min-width: 104px; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
