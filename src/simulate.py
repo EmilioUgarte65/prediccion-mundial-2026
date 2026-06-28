@@ -597,12 +597,14 @@ def predict_group_match(engine, m, timing, rng):
     proba = engine.outcome_blended(a, b, neutral)   # modelo + mercado (si hay cuotas)
     lh, la = engine.lambdas(a, b, neutral)
     sa, sb = most_likely_score(lh, la, outcome=int(proba.argmax()))
+    mb = engine.outcome_by_model(a, b, neutral)
+    mb["ens"] = [round(float(x), 4) for x in proba]  # ens del modal = producción (con mercado)
     return {
         "match": m.get("id"), "round": "group", "group": m["group"],
         "date": m["date"], "teamA": a, "teamB": b,
         "p1": round(float(proba[0]), 4), "px": round(float(proba[1]), 4),
         "p2": round(float(proba[2]), 4), "pred": LBL[int(proba.argmax())],
-        "models": engine.outcome_by_model(a, b, neutral),
+        "models": mb,
         "scoreA": sa, "scoreB": sb, "xgA": round(float(lh), 2),
         "xgB": round(float(la), 2),
         "timeline": timeline_from_score(sa, sb, timing, rng),

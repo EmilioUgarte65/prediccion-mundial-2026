@@ -14,7 +14,18 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 from simulate import main  # noqa: E402
 
 if __name__ == "__main__":
-    # Regenera el modelo bottom-up (ataque+defensa por jugador) antes de simular
+    # 1) Baja resultados reales y goleadores del torneo (football-data.org)
+    try:
+        import update_results_live
+        update_results_live.main()
+    except Exception as e:  # noqa: BLE001
+        print(f"(aviso: no se actualizaron resultados en vivo: {e})")
+    try:
+        import fetch_footballdata_live
+        fetch_footballdata_live.main()
+    except Exception as e:  # noqa: BLE001
+        print(f"(aviso: no se actualizaron goleadores/árbitros: {e})")
+    # 2) Regenera el modelo bottom-up (ataque+defensa por jugador) antes de simular
     try:
         import players_model
         players_model.main()

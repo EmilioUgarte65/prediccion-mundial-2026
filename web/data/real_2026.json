@@ -1,5 +1,4 @@
 {
-  "updated": "2026-06-27",
   "scorers": [
     {
       "player": "Lionel Messi",
@@ -50,6 +49,12 @@
       "assists": 0
     },
     {
+      "player": "Harry Kane",
+      "team": "England",
+      "goals": 3,
+      "assists": 0
+    },
+    {
       "player": "Johan Manzambi",
       "team": "Switzerland",
       "goals": 3,
@@ -64,12 +69,6 @@
     {
       "player": "Matheus Cunha",
       "team": "Brazil",
-      "goals": 3,
-      "assists": 0
-    },
-    {
-      "player": "Brian Brobbey",
-      "team": "Netherlands",
       "goals": 3,
       "assists": 0
     }
@@ -100,5 +99,5 @@
       "matches": 2
     }
   ],
-  "n_ref_matches": 64
+  "n_ref_matches": 66
 }

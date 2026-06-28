@@ -59,7 +59,15 @@ def main():
         rows = pair_rows.get(key, [])
         if not rows:
             unmatched += 1; miss.append(f"{h} vs {a}"); continue
-        i = rows[0]
+        # elegir la fila correcta: la de fecha más cercana al partido real
+        # (evita asignar el marcador al partido equivocado si el par se repite)
+        fd = pd.to_datetime(m.get("utcDate", ""), errors="coerce")
+        if pd.notna(fd) and len(rows) > 1:
+            i = min(rows, key=lambda k: abs((pd.to_datetime(df.at[k, "date"],
+                    errors="coerce") - fd).days if pd.notna(pd.to_datetime(
+                    df.at[k, "date"], errors="coerce")) else 9999))
+        else:
+            i = rows[0]
         # orientar el marcador según cómo está el partido en el CSV
         if norm(df.at[i, "home_team"]) == norm(h):
             hs, as_ = ft["home"], ft["away"]

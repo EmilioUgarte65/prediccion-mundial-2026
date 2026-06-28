@@ -52,6 +52,19 @@ def main():
     nref = sum(1 for r in rrows if r["referee"])
     print(f"OK -> {p2} ({len(rrows)} partidos, {nref} con árbitro)")
 
+    # JSON para la web (goleadores + árbitros más frecuentes)
+    from collections import Counter
+    top = [{"player": s["player"]["name"], "team": s["team"]["name"],
+            "goals": s.get("goals") or 0, "assists": s.get("assists") or 0}
+           for s in sc[:12]]
+    rc = Counter(r["referee"] for r in rrows if r["referee"])
+    busy = [{"referee": k, "matches": v} for k, v in rc.most_common(6)]
+    webp = os.path.join(ROOT, "web", "data", "real_2026.json")
+    with open(webp, "w", encoding="utf-8") as f:
+        json.dump({"scorers": top, "referees": busy, "n_ref_matches": nref},
+                  f, ensure_ascii=False, indent=2)
+    print(f"OK -> {webp}")
+
 
 if __name__ == "__main__":
     main()

@@ -20,6 +20,21 @@ SRC = os.path.join(ROOT, "data_user", "fbref_masivo_2026.csv")
 SRC2 = os.path.join(ROOT, "data_user", "fbref_players_2026.csv")
 OUT = os.path.join(ROOT, "data_user", "team_player_attack.csv")
 
+# Mapeo de nombres FBref/football-data -> nombres canónicos que usa el motor
+# (de get_wc2026_fixtures). Corrige el bug donde 8 equipos no recibían la señal.
+CANON = {
+    "Türkiye": "Turkey", "Turkiye": "Turkey",
+    "Bosnia & Herz.": "Bosnia and Herzegovina",
+    "Bosnia-Herzegovina": "Bosnia and Herzegovina",
+    "Congo DR": "DR Congo", "Cabo Verde": "Cape Verde",
+    "Côte d'Ivoire": "Ivory Coast", "Cote d'Ivoire": "Ivory Coast",
+    "Korea Republic": "South Korea", "IR Iran": "Iran", "Czechia": "Czech Republic",
+}
+
+
+def canon(name):
+    return CANON.get(str(name).strip(), str(name).strip())
+
 
 def _num(df, *cands):
     for c in cands:
@@ -34,11 +49,13 @@ def _real_goals_by_team():
     if not os.path.exists(p):
         return {}
     d = pd.read_csv(p)
+    d["team"] = d["team"].map(canon)
     return d.groupby("team")["goals"].sum().to_dict()
 
 
 def main():
     df = pd.read_csv(SRC if os.path.exists(SRC) else SRC2)
+    df["team"] = df["team"].map(canon)   # normalizar a nombres del motor
     mins = _num(df, "Playing Time_Min")
     gls = _num(df, "Performance_Gls")
     ast = _num(df, "Performance_Ast")

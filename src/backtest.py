@@ -41,9 +41,27 @@ def detect_editions(results, min_year=MIN_YEAR):
     return eds
 
 
-def most_likely_score(lh, la, maxg=8):
+_RHO = -0.05  # corrección Dixon-Coles (igual que simulate.py y el JS)
+
+
+def most_likely_score(lh, la, maxg=8, outcome=None):
+    """Marcador más probable (Poisson + Dixon-Coles). Si outcome in {0,1,2}
+    restringe al resultado (0=gana local, 1=empate, 2=gana visita)."""
     grid = np.outer(poisson.pmf(np.arange(maxg + 1), lh),
                     poisson.pmf(np.arange(maxg + 1), la))
+    r = _RHO
+    grid[0, 0] *= 1 - lh * la * r
+    grid[0, 1] *= 1 + lh * r
+    grid[1, 0] *= 1 + la * r
+    grid[1, 1] *= 1 - r
+    if outcome is not None:
+        ii, jj = np.indices(grid.shape)
+        if outcome == 0:
+            grid = np.where(ii > jj, grid, -1)
+        elif outcome == 2:
+            grid = np.where(ii < jj, grid, -1)
+        else:
+            grid = np.where(ii == jj, grid, -1)
     i, j = np.unravel_index(grid.argmax(), grid.shape)
     return int(i), int(j)
 
@@ -86,7 +104,8 @@ def backtest_one(results, elo, start, end):
         sp = stat.outcome_from_lambdas(feats.loc[idx, "lam_h"], feats.loc[idx, "lam_a"])
         ep = elom.outcome_probs(r["home_elo"], r["away_elo"], bool(r["neutral"]))
         ens = (px + sp + ep) / 3.0
-        pscore = most_likely_score(lh, la)
+        # marcador CONDICIONADO al resultado más probable (coherente con el ganador)
+        pscore = most_likely_score(lh, la, outcome=int(ens.argmax()))
         real = 0 if r["home_score"] > r["away_score"] else (
                2 if r["home_score"] < r["away_score"] else 1)
         rows.append({
@@ -95,9 +114,10 @@ def backtest_one(results, elo, start, end):
             "s1": round(float(sp[0]), 4), "sx": round(float(sp[1]), 4), "s2": round(float(sp[2]), 4),
             "el1": round(float(ep[0]), 4), "elx": round(float(ep[1]), 4), "el2": round(float(ep[2]), 4),
             "e1": round(float(ens[0]), 4), "ex": round(float(ens[1]), 4), "e2": round(float(ens[2]), 4),
-            "pred": LABELS[int(px.argmax())], "pred_score": list(pscore),
+            "lh": round(float(lh), 3), "la": round(float(la), 3),
+            "pred": LABELS[int(ens.argmax())], "pred_score": list(pscore),
             "real_score": [int(r["home_score"]), int(r["away_score"])], "real": LABELS[real],
-            "hit": bool(int(px.argmax()) == real),
+            "hit": bool(int(ens.argmax()) == real),
             "exact": bool(pscore == (int(r["home_score"]), int(r["away_score"]))),
             "eligible": bool(nh >= 1 and na >= 1),
             "elo_home": round(float(r["home_elo"]), 0), "elo_away": round(float(r["away_elo"]), 0),

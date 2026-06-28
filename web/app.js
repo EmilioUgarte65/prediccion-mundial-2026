@@ -275,7 +275,7 @@ function renderGroupPlayed() {
   let hit = 0, tot = 0;
   let body = "";
   ms.forEach(m => {
-    const top = Math.max(m.p1, m.px, m.p2);
+    const top = Math.max(m.e1, m.ex, m.e2);  // ensemble (coherente con m.pred y m.hit)
     const ok = m.hit;
     if (m.eligible) { tot++; hit += ok ? 1 : 0; }
     body += `<tr class="${ok ? "row-hit" : "row-miss"}">
@@ -407,6 +407,28 @@ function renderBacktest() {
   renderBtTable();
 }
 
+function _pois(k, lam) {  // Poisson pmf
+  let p = Math.exp(-lam);
+  for (let i = 1; i <= k; i++) p *= lam / i;
+  return p;
+}
+function modalScore(lh, la, outcome) {  // marcador más probable condicionado al resultado
+  const RHO = -0.05, MG = 8;
+  let best = [1, 0], bestp = -1;
+  for (let i = 0; i <= MG; i++) for (let j = 0; j <= MG; j++) {
+    if (outcome === 0 && !(i > j)) continue;
+    if (outcome === 2 && !(i < j)) continue;
+    if (outcome === 1 && i !== j) continue;
+    let p = _pois(i, lh) * _pois(j, la);
+    if (i === 0 && j === 0) p *= 1 - lh * la * RHO;
+    else if (i === 0 && j === 1) p *= 1 + lh * RHO;
+    else if (i === 1 && j === 0) p *= 1 + la * RHO;
+    else if (i === 1 && j === 1) p *= 1 - RHO;
+    if (p > bestp) { bestp = p; best = [i, j]; }
+  }
+  return best;
+}
+
 function renderBtTable() {
   const tEl = document.getElementById("btTable");
   if (!tEl || !BT) return;
@@ -439,9 +461,12 @@ function renderBtTable() {
   elig.forEach(x => {
     const pv = [x[pref + "1"], x[pref + "x"], x[pref + "2"]];
     const top = Math.max(...pv);
-    const pred = labels[pv.indexOf(top)];
+    const pi = pv.indexOf(top);
+    const pred = labels[pi];
     const hit = pred === x.real;
-    const exact = hit && x.pred_score[0] === x.real_score[0] && x.pred_score[1] === x.real_score[1];
+    // marcador SIEMPRE coherente con el ganador previsto (recalculado con λ)
+    const sc = (x.lh != null) ? modalScore(x.lh, x.la, pi) : x.pred_score;
+    const exact = hit && sc[0] === x.real_score[0] && sc[1] === x.real_score[1];
     const mini = labels.map((k, i) =>
       `<span class="mini ${pv[i] === top ? "hot" : ""}">${k} ${pct(pv[i])}</span>`).join("");
     const status = exact ? `<span class="ok exact">Exacto</span>`
@@ -453,7 +478,7 @@ function renderBtTable() {
       <td class="l">${flag(x.home)} ${esName(x.home)} <span class="vs">vs</span> ${flag(x.away)} ${esName(x.away)}</td>
       <td class="mono">${pred}</td>
       <td class="mini-cell">${mini}</td>
-      <td class="mono">${x.pred_score[0]}-${x.pred_score[1]}</td>
+      <td class="mono">${sc[0]}-${sc[1]}</td>
       <td class="mono real">${x.real_score[0]}-${x.real_score[1]}</td>
       <td>${status}</td></tr>`;
   });
@@ -582,6 +607,14 @@ function setTModel(m) { TMODEL = m; if (CURRENT_MT) openModal(CURRENT_MT); }
 function openModal(mt) {
   CURRENT_MT = mt;
   const isGroup = mt.round === "group";
+  // Coherencia total: ganador + marcador + chart salen del MISMO modelo elegido
+  let dispPred = mt.pred, dispA = mt.scoreA, dispB = mt.scoreB, dispMdl = null;
+  if (isGroup && mt.models && mt.xgA != null) {
+    dispMdl = mt.models[TMODEL] || mt.models.ens;
+    const oi = dispMdl.indexOf(Math.max(...dispMdl));
+    dispPred = ["1", "X", "2"][oi];
+    [dispA, dispB] = modalScore(mt.xgA, mt.xgB, oi);
+  }
   const subhead = isGroup
       ? `Tiempo reglamentario`
       : (mt.decided === "pens" ? `Definido en penales (${mt.penA}-${mt.penB})`
@@ -590,17 +623,18 @@ function openModal(mt) {
       ? `Grupo ${mt.group} · ${mt.date}`
       : `${ROUND_LABELS[mt.round]} · Partido ${mt.match}`;
   const resultLine = isGroup
-      ? `<div style="text-align:center"><span class="winner-pill">Predicción: ${
-          mt.pred === "1" ? "gana " + esName(mt.teamA)
-          : mt.pred === "2" ? "gana " + esName(mt.teamB) : "empate"}</span></div>`
+      ? `<div style="text-align:center"><span class="winner-pill">Predicción (${VMODELS[TMODEL].n}): ${
+          dispPred === "1" ? "gana " + esName(mt.teamA)
+          : dispPred === "2" ? "gana " + esName(mt.teamB) : "empate"}</span></div>`
       : `<div style="text-align:center"><span class="winner-pill">▶ Avanza ${esName(mt.winner)} ${flag(mt.winner)}</span></div>`;
+  const gm3 = (isGroup && dispMdl) ? dispMdl : [mt.p1, mt.px, mt.p2];
   const probBlock = isGroup ? `
       <div class="block">
-        <p class="block-title">Probabilidad 1-X-2${mt.hasOdds ? ' · 📊 incluye cuotas del mercado' : ''}</p>
+        <p class="block-title">Probabilidad 1-X-2 ${modelSelHTML()}${(TMODEL === "ens" && mt.hasOdds) ? ' · 📊 incluye cuotas' : ''}</p>
         <div class="prob-bar">
-          <div class="prob-seg a" style="width:${mt.p1 * 100}%">${pct(mt.p1)}</div>
-          <div class="prob-seg x" style="width:${mt.px * 100}%">${pct(mt.px)}</div>
-          <div class="prob-seg b" style="width:${mt.p2 * 100}%">${pct(mt.p2)}</div>
+          <div class="prob-seg a" style="width:${gm3[0] * 100}%">${pct(gm3[0])}</div>
+          <div class="prob-seg x" style="width:${gm3[1] * 100}%">${pct(gm3[1])}</div>
+          <div class="prob-seg b" style="width:${gm3[2] * 100}%">${pct(gm3[2])}</div>
         </div>
         <div class="prob-meta"><span>Gana ${esName(mt.teamA)}</span><span>Empate</span><span>Gana ${esName(mt.teamB)}</span></div>
       </div>` : `
@@ -624,7 +658,7 @@ function openModal(mt) {
           <div class="sname">${esName(mt.teamA)}</div>
         </div>
         <div>
-          <div class="sb-score">${mt.scoreA} <span style="color:var(--muted)">·</span> ${mt.scoreB}</div>
+          <div class="sb-score">${dispA} <span style="color:var(--muted)">·</span> ${dispB}</div>
           ${(mt.xgA != null) ? `<div class="sb-xg">goles esperados ${mt.xgA} · ${mt.xgB}</div>` : ""}
         </div>
         <div class="sb-team">
@@ -637,7 +671,7 @@ function openModal(mt) {
     </div>
     <div class="modal-body">
       ${probBlock}
-      ${modelProbBarHTML(mt)}
+      ${isGroup ? "" : modelProbBarHTML(mt)}
 
       <div class="block">
         <p class="block-title">Cómo va quedando — minutos de gol</p>
@@ -668,7 +702,7 @@ function openModal(mt) {
 
       ${mt.topScores ? `<div class="block">
         <p class="block-title">Marcadores más probables</p>
-        ${topScoresChartHTML(mt)}
+        ${topScoresChartHTML(mt, dispA, dispB, dispMdl)}
       </div>` : ""}
 
       ${mt.factors ? `<div class="block">
@@ -758,12 +792,12 @@ function timelineHTML(mt) {
     </div>`;
 }
 
-function topScoresChartHTML(mt) {
+function topScoresChartHTML(mt, predA, predB, mdl) {
   const codeA = (TEAM_CODE[mt.teamA] || "").replace("_", "") || "A";
   const codeB = (TEAM_CODE[mt.teamB] || "").replace("_", "") || "B";
-  // ÚNICA fuente de verdad: el resultado más probable (1-X-2 agregado)
-  const out = [mt.p1, mt.px, mt.p2];
-  const oi = out.indexOf(Math.max(...out));
+  if (predA == null) { predA = mt.scoreA; predB = mt.scoreB; }
+  // El ganador SIEMPRE se deriva del marcador mostrado → 100% coherente (grupos y bracket)
+  const oi = predA > predB ? 0 : (predA < predB ? 2 : 1);
   const outLbl = oi === 0 ? "Gana " + esName(mt.teamA)
               : oi === 2 ? "Gana " + esName(mt.teamB) : "Empate";
   // sumar la probabilidad de cada resultado dentro de los marcadores mostrados
@@ -771,8 +805,8 @@ function topScoresChartHTML(mt) {
   mt.topScores.forEach(s => { const [i, j] = s.score; agg[i > j ? 0 : i < j ? 2 : 1] += s.p; });
   // poner el marcador previsto primero, el resto por probabilidad
   const scores = mt.topScores.slice().sort((a, b) => {
-    const ap = a.score[0] === mt.scoreA && a.score[1] === mt.scoreB ? 1 : 0;
-    const bp = b.score[0] === mt.scoreA && b.score[1] === mt.scoreB ? 1 : 0;
+    const ap = a.score[0] === predA && a.score[1] === predB ? 1 : 0;
+    const bp = b.score[0] === predA && b.score[1] === predB ? 1 : 0;
     return bp - ap || b.p - a.p;
   });
   const maxp = Math.max(...scores.map(s => s.p));
@@ -780,14 +814,14 @@ function topScoresChartHTML(mt) {
     const [i, j] = s.score;
     const cls = i > j ? "win-a" : (i < j ? "win-b" : "win-d");
     const w = (s.p / maxp * 100).toFixed(0);
-    const isPred = i === mt.scoreA && j === mt.scoreB;
+    const isPred = i === predA && j === predB;
     return `<div class="tsb-row${isPred ? " tsb-pred" : ""}">
       <span class="tsb-label">${codeA} <b>${i}-${j}</b> ${codeB}${isPred ? ' <span class="tsb-star">★ previsto</span>' : ""}</span>
       <div class="tsb-track"><div class="tsb-fill ${cls}" style="width:${w}%"></div></div>
       <span class="tsb-pct">${(s.p * 100).toFixed(1)}%</span>
     </div>`;
   }).join("");
-  return `<div class="ts-head">Resultado más probable: <b>${outLbl}</b> · marcador <b>${mt.scoreA}-${mt.scoreB}</b></div>
+  return `<div class="ts-head">Resultado más probable: <b>${outLbl}</b> · marcador <b>${predA}-${predB}</b></div>
     <div class="ts-chart">${rows}</div>
     <p class="ts-note">Como <b>resultado</b>: ${esName(mt.teamA)} ${(agg[0]*100).toFixed(0)}% · empate ${(agg[1]*100).toFixed(0)}% · ${esName(mt.teamB)} ${(agg[2]*100).toFixed(0)}%. (Un empate puede ser el <i>marcador suelto</i> más común aunque la <b>suma</b> de victorias sea mayor — por eso el ganador y el marcador concuerdan.)</p>
     <div class="ts-legend">
