@@ -65,6 +65,27 @@ def main():
                   f, ensure_ascii=False, indent=2)
     print(f"OK -> {webp}")
 
+    # Cruces REALES de eliminatorias (para corregir la siembra del bracket)
+    FDCANON = {
+        "Congo DR": "DR Congo", "Cape Verde Islands": "Cape Verde",
+        "Bosnia-Herzegovina": "Bosnia and Herzegovina", "Türkiye": "Turkey",
+        "Czechia": "Czech Republic", "Korea Republic": "South Korea",
+        "IR Iran": "Iran",
+    }
+    def cz(n):
+        return FDCANON.get(n, n)
+    ko = [m for m in ms if m["stage"] in ("LAST_32", "LAST_16", "QUARTER_FINALS",
+                                          "SEMI_FINALS", "FINAL", "THIRD_PLACE")]
+    korows = [{"stage": m["stage"], "home": cz(m["homeTeam"]["name"] or ""),
+               "away": cz(m["awayTeam"]["name"] or "")} for m in ko
+              if m["homeTeam"]["name"] and m["awayTeam"]["name"]]
+    if korows:
+        p3 = os.path.join(ROOT, "data_user", "ko_real_2026.csv")
+        with open(p3, "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=["stage", "home", "away"])
+            w.writeheader(); w.writerows(korows)
+        print(f"OK -> {p3} ({len(korows)} cruces reales de eliminatorias)")
+
 
 if __name__ == "__main__":
     main()

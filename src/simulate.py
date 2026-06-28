@@ -455,7 +455,7 @@ def qualify_from_stats(stats, groups, rng):
 
 
 # ------------------------- torneo completo (Monte Carlo) -------------------------
-def play_tournament(engine, base_stats, groups, remaining, rng):
+def play_tournament(engine, base_stats, groups, remaining, rng, real_opp=None):
     stats = copy.deepcopy(base_stats)
     for m in remaining:
         gh, ga = engine.sim_group_match(m["home"], m["away"], rng, m["neutral"])
@@ -471,6 +471,8 @@ def play_tournament(engine, base_stats, groups, remaining, rng):
 
     qual = qualify_from_stats(stats, groups, rng)
     r32, _ = resolve_r32_teams(qual)
+    if real_opp:
+        r32 = correct_r32(r32, qual, real_opp)
 
     reached = {t: 0 for g in groups for t in groups[g]}
     winners = {}
@@ -486,12 +488,12 @@ def play_tournament(engine, base_stats, groups, remaining, rng):
     return reached
 
 
-def monte_carlo(engine, base_stats, groups, remaining, n=N_SIMS, seed=42):
+def monte_carlo(engine, base_stats, groups, remaining, n=N_SIMS, seed=42, real_opp=None):
     rng = np.random.default_rng(seed)
     phases = ["Qualify", "R16", "QF", "SF", "Final", "Champion"]
     counts = defaultdict(lambda: np.zeros(6))
     for _ in range(n):
-        reached = play_tournament(engine, base_stats, groups, remaining, rng)
+        reached = play_tournament(engine, base_stats, groups, remaining, rng, real_opp)
         for team, r in reached.items():
             # r: 1=Qualify,2=R16,3=QF,4=SF,5=Final,6=Champion
             for p in range(1, r + 1):
@@ -697,7 +699,39 @@ def predicted_bracket(engine, r32_teams, timing, seed=7, model="ens"):
     return br, champ
 
 
-def r32_for_model(group_preds, played_df, groups, model):
+def load_real_r32():
+    """Rival real de cada equipo en 16avos (football-data) -> {equipo: rival}."""
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                        "data_user", "ko_real_2026.csv")
+    if not os.path.exists(path):
+        return {}
+    import csv
+    opp = {}
+    with open(path, encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if r.get("stage") == "LAST_32" and r["home"] and r["away"]:
+                opp[r["home"]] = r["away"]
+                opp[r["away"]] = r["home"]
+    return opp
+
+
+def correct_r32(r32, qual, real_opp):
+    """Corrige la asignación de terceros usando los cruces REALES: en cada cruce
+    con un tercero, lo reemplaza por el rival real del líder (ancla)."""
+    if not real_opp:
+        return r32
+    thirds = {t["team"] for t in qual["best_thirds"]}
+    out = {}
+    for mid, (a, b) in r32.items():
+        if a in thirds and b not in thirds and b in real_opp:
+            a = real_opp[b]
+        elif b in thirds and a not in thirds and a in real_opp:
+            b = real_opp[a]
+        out[mid] = (a, b)
+    return out
+
+
+def r32_for_model(group_preds, played_df, groups, model, real_opp=None):
     """Clasificados a 16vos según las predicciones de grupo del MODELO elegido."""
     pred_rows = []
     for gp in group_preds:
@@ -709,7 +743,9 @@ def r32_for_model(group_preds, played_df, groups, model):
         played_df[["home_team", "away_team", "home_score", "away_score"]],
         pd.DataFrame(pred_rows)], ignore_index=True)
     fs = compute_standings(combined, groups)
-    return resolve_r32_teams(qualifiers(fs))
+    qual = qualifiers(fs)
+    r32, third_assign = resolve_r32_teams(qual)
+    return correct_r32(r32, qual, real_opp or {}), third_assign
 
 
 # ------------------------- standings para mostrar -------------------------
@@ -782,19 +818,23 @@ def main():
     final_standings = compute_standings(combined, groups)
     qual = qualifiers(final_standings)
     r32_teams, third_assign = resolve_r32_teams(qual)
+    real_opp = load_real_r32()   # cruces reales de 16avos (corrige siembra de terceros)
+    if real_opp:
+        r32_teams = correct_r32(r32_teams, qual, real_opp)
+        print(f"  Cruces de 16avos corregidos con datos reales ({len(real_opp)//2} cruces).")
 
     # --- Un cuadro por CADA modelo (para el selector en la pantalla de eliminatorias) ---
     print(f"Simulando el cuadro con cada modelo ({N_MATCH} sims/partido)...")
     brackets = {}; champions = {}
     for mk in ("ens", "xgb", "stat", "elo"):
-        r32_m, _ = r32_for_model(group_preds, played_df, groups, mk)
+        r32_m, _ = r32_for_model(group_preds, played_df, groups, mk, real_opp)
         brackets[mk], champions[mk] = predicted_bracket(engine, r32_m, timing, model=mk)
         print(f"  {mk}: campeón {champions[mk]}")
     bracket, champion = brackets["ens"], champions["ens"]
 
     print(f"Monte Carlo desde el estado actual ({N_SIMS} torneos)...")
     base_stats, _ = base_group_stats(played_df, groups)
-    adv = monte_carlo(engine, base_stats, groups, remaining)
+    adv = monte_carlo(engine, base_stats, groups, remaining, real_opp=real_opp)
 
     team_group = {t: g for g, ts in groups.items() for t in ts}
     adv_list = [{"team": t, "group": team_group.get(t, "?"),

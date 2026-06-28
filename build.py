@@ -25,6 +25,11 @@ if __name__ == "__main__":
         fetch_footballdata_live.main()
     except Exception as e:  # noqa: BLE001
         print(f"(aviso: no se actualizaron goleadores/árbitros: {e})")
+    try:
+        import fetch_injuries
+        fetch_injuries.main()
+    except Exception as e:  # noqa: BLE001
+        print(f"(aviso: no se actualizaron lesiones: {e})")
     # 2) Regenera el modelo bottom-up (ataque+defensa por jugador) antes de simular
     try:
         import players_model

@@ -22,6 +22,7 @@ ALIAS = {
     "turkiye": "turkey", "ivory coast": "ivory coast",
     "cote divoire": "ivory coast", "korea republic": "south korea",
     "ir iran": "iran", "ipr korea": "north korea", "czechia": "czech republic",
+    "congo dr": "dr congo", "bosnia-herzegovina": "bosnia and herzegovina",
 }
 
 
