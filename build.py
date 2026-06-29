@@ -30,6 +30,16 @@ if __name__ == "__main__":
         fetch_injuries.main()
     except Exception as e:  # noqa: BLE001
         print(f"(aviso: no se actualizaron lesiones: {e})")
+    try:  # stats por partido/jugador + alineaciones + cronología (ESPN, solo 2026)
+        import fetch_match_stats
+        fetch_match_stats.main()
+    except Exception as e:  # noqa: BLE001
+        print(f"(aviso: no se actualizaron stats de partido ESPN: {e})")
+    try:  # ratings 2026 por jugador -> equipo (reactivo a lesiones/alineación)
+        import players2026
+        players2026.main()
+    except Exception as e:  # noqa: BLE001
+        print(f"(aviso: no se generaron ratings 2026: {e})")
     # 2) Regenera el modelo bottom-up (ataque+defensa por jugador) antes de simular
     try:
         import players_model
@@ -42,4 +52,9 @@ if __name__ == "__main__":
         validate_timing.main()
     except Exception as e:  # noqa: BLE001
         print(f"(aviso: validate_timing no corrió: {e})")
+    try:  # validación del modelo solo-2026 (sin histórico) -> web
+        import validate_2026
+        validate_2026.main()
+    except Exception as e:  # noqa: BLE001
+        print(f"(aviso: validate_2026 no corrió: {e})")
     main()

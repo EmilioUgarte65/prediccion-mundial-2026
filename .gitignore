@@ -8,3 +8,6 @@ config/api_keys.json
 
 sb_data/
 sb_competitions.json
+
+# Backups locales de modelos (no van al repo)
+backups/

@@ -351,6 +351,18 @@ def main():
     # ---- exportar TODAS las predicciones (modelo final = ensemble tuneado) ----
     export_predictions(pooled, we, ws, wx)
 
+    # ---- guardar probabilidades por partido (para experimentos de ensemble) ----
+    import csv as _csv
+    pp = os.path.join(ROOT_DATA, "wc_backtest_probs.csv")
+    with open(pp, "w", newline="", encoding="utf-8") as f:
+        cols = ["edition", "el1", "elx", "el2", "s1", "sx", "s2",
+                "p1", "px", "p2", "real"]
+        w = _csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
+        w.writeheader()
+        for r in pooled:
+            w.writerow(r)
+    print(f"  -> {pp} ({len(pooled)} partidos con probs por modelo)")
+
     # ---- EXPERIMENTOS pedidos: empates en histórico + acierto de campeón ----
     draw_threshold_experiment(pooled, we, ws, wx)
     champion_experiment(results, editions)
@@ -386,6 +398,12 @@ def main():
         with open(OUT_PATH, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False, indent=2)
         print(f"\nOK -> {OUT_PATH}")
+        # re-inyectar el modelo SOLO-2026 (si no, correr backtest solo lo borraría)
+        try:
+            from validate_2026 import patch_backtest
+            patch_backtest()
+        except Exception as e:  # noqa: BLE001
+            print(f"  (no se pudo re-inyectar y2026: {e})")
 
 
 if __name__ == "__main__":

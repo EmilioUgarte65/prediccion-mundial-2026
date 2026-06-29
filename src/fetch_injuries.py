@@ -96,6 +96,18 @@ def main():
     for r in rows:
         if (r["team"], r["player"]) not in have:
             merged.append(r); have.add((r["team"], r["player"])); added += 1
+    # Filtrar a equipos que siguen vivos (clasificados a eliminatorias), si se sabe.
+    ko = os.path.join(ROOT, "data_user", "ko_real_2026.csv")
+    if os.path.exists(ko):
+        alive = set()
+        with open(ko, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                alive.add(r["home"]); alive.add(r["away"])
+        if len(alive) >= 16:
+            before = len(merged)
+            merged = [r for r in merged if r["team"] in alive]
+            if before - len(merged):
+                print(f"  (filtradas {before - len(merged)} lesiones de equipos eliminados)")
     merged.sort(key=lambda r: (r["team"], r.get("status", "")))
     with open(OUT, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["team", "player", "side", "status", "injury"])

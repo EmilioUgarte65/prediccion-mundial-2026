@@ -37,6 +37,12 @@
       "assists": 0
     },
     {
+      "player": "Kai Havertz",
+      "team": "Germany",
+      "goals": 3,
+      "assists": 0
+    },
+    {
       "player": "Deniz Undav",
       "team": "Germany",
       "goals": 3,
@@ -65,12 +71,6 @@
       "team": "Switzerland",
       "goals": 3,
       "assists": 1
-    },
-    {
-      "player": "Jonathan David",
-      "team": "Canada",
-      "goals": 3,
-      "assists": 0
     }
   ],
   "referees": [
@@ -99,5 +99,5 @@
       "matches": 2
     }
   ],
-  "n_ref_matches": 70
+  "n_ref_matches": 72
 }

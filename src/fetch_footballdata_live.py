@@ -21,10 +21,22 @@ def get(path):
     return json.load(urllib.request.urlopen(req, timeout=30))
 
 
+# nombres football-data -> canónicos del motor (un solo lugar de verdad)
+FDCANON = {
+    "Congo DR": "DR Congo", "Cape Verde Islands": "Cape Verde",
+    "Bosnia-Herzegovina": "Bosnia and Herzegovina", "Türkiye": "Turkey",
+    "Czechia": "Czech Republic", "Korea Republic": "South Korea", "IR Iran": "Iran",
+}
+
+
+def cz(n):
+    return FDCANON.get(n, n)
+
+
 def main():
-    # Goleadores reales
+    # Goleadores reales (equipo canónico desde el origen)
     sc = get("competitions/WC/scorers?limit=30")["scorers"]
-    srows = [{"player": s["player"]["name"], "team": s["team"]["name"],
+    srows = [{"player": s["player"]["name"], "team": cz(s["team"]["name"]),
               "goals": s.get("goals") or 0, "assists": s.get("assists") or 0,
               "penalties": s.get("penalties") or 0} for s in sc]
     p = os.path.join(ROOT, "data_user", "scorers_real_2026.csv")
@@ -66,14 +78,6 @@ def main():
     print(f"OK -> {webp}")
 
     # Cruces REALES de eliminatorias (para corregir la siembra del bracket)
-    FDCANON = {
-        "Congo DR": "DR Congo", "Cape Verde Islands": "Cape Verde",
-        "Bosnia-Herzegovina": "Bosnia and Herzegovina", "Türkiye": "Turkey",
-        "Czechia": "Czech Republic", "Korea Republic": "South Korea",
-        "IR Iran": "Iran",
-    }
-    def cz(n):
-        return FDCANON.get(n, n)
     ko = [m for m in ms if m["stage"] in ("LAST_32", "LAST_16", "QUARTER_FINALS",
                                           "SEMI_FINALS", "FINAL", "THIRD_PLACE")]
     korows = [{"stage": m["stage"], "home": cz(m["homeTeam"]["name"] or ""),

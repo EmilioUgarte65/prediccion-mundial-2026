@@ -69,6 +69,7 @@ const ROUND_LABELS = {
 let DATA = null, BT = null, STATS = null, PERF = null, PED = null;
 let TVAL = null;          // validación de minutos de gol
 let REAL = null;          // datos reales 2026 (goleadores/árbitros)
+let V2026 = null;         // validación del modelo solo-2026
 let TMODEL = "ens";       // modelo elegido para comparar en el modal del torneo
 let CURRENT_MT = null;    // partido abierto en el modal
 let BMODEL = "ens";       // modelo que arma el CUADRO de eliminatorias
@@ -82,10 +83,11 @@ function setBModel(m) {
 }
 let VALID_MODEL = "ens";  // modelo mostrado en la tabla de validación
 const VMODELS = {
-  ens:  { p: "e",  n: "🔀 Ensemble" },
-  xgb:  { p: "p",  n: "🤖 XGBoost" },
-  stat: { p: "s",  n: "📊 Estadístico" },
-  elo:  { p: "el", n: "📈 Elo" },
+  ens:   { p: "e",  n: "🔀 Ensemble" },
+  xgb:   { p: "p",  n: "🤖 XGBoost" },
+  stat:  { p: "s",  n: "📊 Estadístico" },
+  elo:   { p: "el", n: "📈 Elo" },
+  y2026: { p: "y",  n: "🆕 Solo 2026" },
 };
 
 Promise.all([
@@ -96,8 +98,9 @@ Promise.all([
   fetch("data/wc_pedigree.json").then(r => r.ok ? r.json() : null).catch(() => null),
   fetch("data/timing_validation.json").then(r => r.ok ? r.json() : null).catch(() => null),
   fetch("data/real_2026.json").then(r => r.ok ? r.json() : null).catch(() => null),
+  fetch("data/validation_2026.json").then(r => r.ok ? r.json() : null).catch(() => null),
 ])
-  .then(([d, bt, st, pf, pe, tv, rl]) => { DATA = d; BT = bt; STATS = st; PERF = pf; PED = pe; TVAL = tv; REAL = rl; init(); })
+  .then(([d, bt, st, pf, pe, tv, rl, v26]) => { DATA = d; BT = bt; STATS = st; PERF = pf; PED = pe; TVAL = tv; REAL = rl; V2026 = v26; init(); })
   .catch(e => {
     document.getElementById("bracketEl").innerHTML =
       `<p class="tl-empty">No se pudo cargar data/predictions.json. Ejecuta el pipeline (build.py) y sirve la carpeta web con un servidor local.</p>`;
@@ -160,7 +163,7 @@ function mById(round) {
 function bracketModelSelHTML() {
   if (!DATA.brackets) return "";
   const champ = (DATA.champions && DATA.champions[BMODEL]) || "";
-  const btns = ["ens", "xgb", "stat", "elo"].map(m =>
+  const btns = ["ens", "xgb", "stat", "elo", "y2026"].map(m =>
     `<button class="mdl-btn${m === BMODEL ? " on" : ""}" onclick="setBModel('${m}')">${VMODELS[m].n}</button>`).join("");
   return `<div class="bmsel">
     <span class="bmsel-lbl">Modelo del cuadro:</span> ${btns}
@@ -411,6 +414,7 @@ function renderBacktest() {
     ["xgb", "🤖 XGBoost", pct1(m.xgb_acc), `LogLoss ${m.xgb_logloss.toFixed(3)}`, m.xgb_acc === best ? "good" : ""],
     ["ens", "🔀 Ensemble", pct1(m.ens_acc), `LogLoss ${m.ens_logloss.toFixed(3)}`, m.ens_acc === best ? "good" : ""],
     ["elo", "📈 Elo", pct1(m.baseline_elo_acc), "referencia", ""],
+    ...(m.y2026_acc != null ? [["y2026", "🆕 Solo 2026", pct1(m.y2026_acc), "sin histórico", ""]] : []),
     [null, "🎯 Marcador exacto", pct1(m.exact_score), `${m.n} partidos`, ""],
   ];
   mEl.innerHTML = cards.map(c => `
@@ -604,8 +608,41 @@ function closeModal() {
   else document.getElementById("overlay").classList.remove("open");
 }
 
+function ouBar(label, over) {
+  const o = Math.round(over * 100);          // under = 100 - over (suman 100% exacto)
+  return `<div class="ou-row">
+      <span class="ou-line">${label}</span>
+      <div class="ou-bar">
+        <div class="ou-over" style="width:${o}%">${o}%</div>
+        <div class="ou-under" style="width:${100 - o}%">${100 - o}%</div>
+      </div>
+    </div>`;
+}
+function ouLegendHTML() {
+  return `<div class="ou-legend"><span><i class="ou-sw over"></i>Más de (Over)</span>
+      <span><i class="ou-sw under"></i>Menos de (Under)</span></div>`;
+}
+function overUnderHTML(mt) {
+  if (!mt.ou) return "";
+  const ou = mt.ou;
+  const rows = [["+1.5 goles", ou.o15], ["+2.5 goles", ou.o25], ["+3.5 goles", ou.o35]]
+    .map(([l, p]) => ouBar(l, p)).join("");
+  return `<div class="block">
+    <p class="block-title">⚽ Goles totales — más probable: <b>${ou.mode}</b></p>
+    <div class="ou-wrap">${rows}</div>${ouLegendHTML()}
+  </div>`;
+}
+function marketHTML(title, mkt) {
+  if (!mkt || !mkt.lines) return "";
+  const rows = mkt.lines.map(L => ouBar("+" + L.l, L.over)).join("");
+  return `<div class="block">
+    <p class="block-title">${title} — más probable: <b>${mkt.mode}</b></p>
+    <div class="ou-wrap">${rows}</div>${ouLegendHTML()}
+  </div>`;
+}
+
 function modelSelHTML() {
-  return `<span class="mdl-sel">${["ens", "xgb", "stat", "elo"].map(m =>
+  return `<span class="mdl-sel">${["ens", "xgb", "stat", "elo", "y2026"].map(m =>
     `<button class="mdl-btn${m === TMODEL ? " on" : ""}" onclick="setTModel('${m}')">${VMODELS[m].n}</button>`).join("")}</span>`;
 }
 function modelProbBarHTML(mt) {
@@ -681,7 +718,6 @@ function openModal(mt) {
         </div>
         <div>
           <div class="sb-score">${dispA} <span style="color:var(--muted)">·</span> ${dispB}</div>
-          ${(mt.xgA != null) ? `<div class="sb-xg">goles esperados ${mt.xgA} · ${mt.xgB}</div>` : ""}
         </div>
         <div class="sb-team">
           <div class="sflag">${flag(mt.teamB, "fl-lg")}</div>
@@ -694,6 +730,8 @@ function openModal(mt) {
     <div class="modal-body">
       ${probBlock}
       ${isGroup ? "" : modelProbBarHTML(mt)}
+
+      ${overUnderHTML(mt)}
 
       <div class="block">
         <p class="block-title">Cómo va quedando — minutos de gol</p>
@@ -732,21 +770,9 @@ function openModal(mt) {
         ${factorsHTML(mt)}
       </div>` : ""}
 
-      ${mt.cards ? `<div class="block">
-        <p class="block-title">Tarjetas previstas (tendencia histórica)</p>
-        <div class="cards-row">
-          <div class="cards-team"><span class="yc"></span> ${mt.cards.yellowA} <span class="ct">${esName(mt.teamA)}</span></div>
-          <div class="cards-team"><span class="ct">${esName(mt.teamB)}</span> ${mt.cards.yellowB} <span class="yc"></span></div>
-        </div>
-      </div>` : ""}
+      ${marketHTML("🟨 Tarjetas amarillas (total)", mt.cardsMkt)}
 
-      ${mt.corners ? `<div class="block">
-        <p class="block-title">Tiros de esquina previstos (estimado por ataque)</p>
-        <div class="cards-row">
-          <div class="cards-team"><span class="ck"></span> ${mt.corners.a} <span class="ct">${esName(mt.teamA)}</span></div>
-          <div class="cards-team"><span class="ct">${esName(mt.teamB)}</span> ${mt.corners.b} <span class="ck"></span></div>
-        </div>
-      </div>` : ""}
+      ${marketHTML("⛳ Tiros de esquina (total)", mt.cornersMkt)}
 
       ${(mt.penShareA != null || mt.penShareB != null) ? `<div class="block">
         <p class="block-title">Dependencia del penal (% de sus goles, histórico)</p>
@@ -822,9 +848,15 @@ function topScoresChartHTML(mt, predA, predB, mdl) {
   const oi = predA > predB ? 0 : (predA < predB ? 2 : 1);
   const outLbl = oi === 0 ? "Gana " + esName(mt.teamA)
               : oi === 2 ? "Gana " + esName(mt.teamB) : "Empate";
-  // sumar la probabilidad de cada resultado dentro de los marcadores mostrados
-  const agg = [0, 0, 0];
-  mt.topScores.forEach(s => { const [i, j] = s.score; agg[i > j ? 0 : i < j ? 2 : 1] += s.p; });
+  // "Como resultado": en eliminatorias usa el resultado 90' coherente (con lesiones);
+  // en grupos, suma los marcadores mostrados.
+  let agg;
+  if (mt.outcome90) {
+    agg = mt.outcome90;
+  } else {
+    agg = [0, 0, 0];
+    mt.topScores.forEach(s => { const [i, j] = s.score; agg[i > j ? 0 : i < j ? 2 : 1] += s.p; });
+  }
   // poner el marcador previsto primero, el resto por probabilidad
   const scores = mt.topScores.slice().sort((a, b) => {
     const ap = a.score[0] === predA && a.score[1] === predB ? 1 : 0;

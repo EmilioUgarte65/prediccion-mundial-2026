@@ -1,9 +1,9 @@
 """Simulador Monte Carlo del Mundial 2026 desde el estado REAL actual.
 
-Estado de los datos: grupos A, B y C completos; grupos D-L con la última jornada
-por jugar (18 partidos). El simulador:
-  1. predice/simula los partidos de grupo restantes,
-  2. completa las tablas y decide clasificados (1º, 2º y 8 mejores terceros),
+Usa los partidos de grupo ya jugados (datos reales) y, si quedan, predice los
+restantes. El simulador:
+  1. completa las tablas y decide clasificados (1º, 2º y 8 mejores terceros),
+  2. corrige la siembra de 16avos con los cruces reales (ko_real_2026.csv),
   3. simula las eliminatorias (R32 -> Final) con prórroga y penales.
 
 Motor de goles: regresores Poisson de XGBoost + ratings. Tiempos de gol:
@@ -57,6 +57,24 @@ def load_market_odds():
                 continue
             s = 1 / oh + 1 / od + 1 / oa
             out[(r["home_team"], r["away_team"])] = (1 / oh / s, 1 / od / s, 1 / oa / s)
+    return out
+
+
+def load_ratings_2026():
+    """Ratings SOLO-2026 por equipo (de players2026.py): ataque y goles recibidos."""
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                        "data_user", "team_ratings_2026.csv")
+    if not os.path.exists(path):
+        return {}
+    import csv
+    out = {}
+    with open(path, encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            try:
+                out[r["team"]] = {"att": float(r["attack_mult"]),
+                                  "def": float(r["defense"])}
+            except (ValueError, KeyError):
+                continue
     return out
 
 
@@ -275,6 +293,9 @@ class Engine:
         self.patt = load_player_attack()  # ataque+defensa bottom-up por jugadores
         if self.patt:
             print(f"  Bottom-up (ataque+defensa) cargado para {len(self.patt)} selecciones.")
+        self.r2026 = load_ratings_2026()  # ratings SOLO-2026 (para el modelo 5)
+        self._avg_def2026 = (np.mean([v["def"] for v in self.r2026.values()])
+                             if self.r2026 else 1.3)
         self.avail = load_availability()  # fuerza del plantel disponible
         if self.avail:
             print(f"  Disponibilidad de plantel cargada para {len(self.avail)} selecciones.")
@@ -373,7 +394,25 @@ class Engine:
         out["elo"] = (np.asarray(em.outcome_probs(self.elo.get(a, 1500),
                       self.elo.get(b, 1500), neutral), float) if em else xgb)
         out["ens"] = (out["xgb"] + out["stat"] + out["elo"]) / 3.0
+        out["y2026"] = self.outcome_2026(a, b)
         return {k: [round(float(x), 4) for x in v] for k, v in out.items()}
+
+    def outcome_2026(self, a, b):
+        """Modelo SOLO-2026: λ desde ataque/defensa de ESTE Mundial -> Dixon-Coles."""
+        ra, rb = self.r2026.get(a), self.r2026.get(b)
+        if not ra or not rb:
+            return self.outcome(a, b, True)  # fallback si falta rating
+        ad = self._avg_def2026
+
+        def deff(d):
+            return float(np.clip((d + 0.8) / (ad + 0.8), 0.5, 1.8))
+        lh = 1.35 * ra["att"] * deff(rb["def"])
+        la = 1.35 * rb["att"] * deff(ra["def"])
+        lh = float(np.clip(lh, 0.2, 5)); la = float(np.clip(la, 0.2, 5))
+        g = _dc_grid(lh, la, 8)
+        ii, jj = np.indices(g.shape)
+        o = np.array([g[ii > jj].sum(), g[ii == jj].sum(), g[ii < jj].sum()])
+        return o / o.sum()
 
     def pen_prob(self, a, b):
         # Los penales son casi un volado: con 678 tandas reales, quien patea
@@ -581,6 +620,33 @@ def timeline_from_score(sa, sb, timing, rng, et=False, fav_side=None):
     return tl
 
 
+def over_under(lh, la, maxg=10):
+    """Probabilidades de total de goles (+1.5/+2.5/+3.5) y total esperado,
+    desde la rejilla Dixon-Coles. Sin fuga: solo usa las λ del modelo."""
+    g = _dc_grid(lh, la, maxg)
+    g = g / g.sum()
+    ii, jj = np.indices(g.shape)
+    tot = np.array([g[(ii + jj) == k].sum() for k in range(2 * maxg + 1)])
+    mode = int(np.argmax(tot))   # total de goles MÁS probable (entero, apostable)
+    return {"mode": mode,
+            "o15": round(float(tot[2:].sum()), 3),
+            "o25": round(float(tot[3:].sum()), 3),
+            "o35": round(float(tot[4:].sum()), 3)}
+
+
+def count_market(lam):
+    """Mercado de conteo (córners, tarjetas): entero más probable + over/under
+    en líneas .5 apostables, vía Poisson. Sin decimales en el conteo."""
+    lam = max(0.1, float(lam))
+    ks = np.arange(0, 31)
+    pmf = poisson.pmf(ks, lam)
+    mode = int(ks[pmf.argmax()])
+    lines = [l for l in (mode - 1.5, mode - 0.5, mode + 0.5, mode + 1.5) if l > 0][:3]
+    return {"mode": mode,
+            "lines": [{"l": l, "over": round(float(1 - poisson.cdf(int(l), lam)), 3)}
+                      for l in lines]}
+
+
 def est_corners(lh, la):
     """Córners esperados (estimación desde la fuerza ofensiva; no dataset real)."""
     avg = 1.35  # gol esperado promedio
@@ -601,6 +667,8 @@ def predict_group_match(engine, m, timing, rng):
     sa, sb = most_likely_score(lh, la, outcome=int(proba.argmax()))
     mb = engine.outcome_by_model(a, b, neutral)
     mb["ens"] = [round(float(x), 4) for x in proba]  # ens del modal = producción (con mercado)
+    cd = engine.cards.expected(a, b, knockout=False)
+    cc = est_corners(lh, la)
     return {
         "match": m.get("id"), "round": "group", "group": m["group"],
         "date": m["date"], "teamA": a, "teamB": b,
@@ -611,9 +679,10 @@ def predict_group_match(engine, m, timing, rng):
         "xgB": round(float(la), 2),
         "timeline": timeline_from_score(sa, sb, timing, rng),
         "bucketsA": buckets(lh, timing), "bucketsB": buckets(la, timing),
-        "cards": engine.cards.expected(a, b, knockout=False),
-        "corners": est_corners(lh, la),
+        "cards": cd, "cardsMkt": count_market(cd["yellowA"] + cd["yellowB"]),
+        "corners": cc, "cornersMkt": count_market(cc["a"] + cc["b"]),
         "hasOdds": (a, b) in engine.market,
+        "ou": over_under(lh, la),
         "topScores": top_scores(lh, la),
         "factors": build_factors(engine, a, b),
         "penShareA": engine.pen_share.get(a), "penShareB": engine.pen_share.get(b),
@@ -634,34 +703,44 @@ def predict_ko_match(engine, a, b, timing, rng, n=N_MATCH, model="ens"):
             pen_total += 1
             if w == a:
                 pen_a += 1
-    # Quién avanza según el MODELO elegido: P(A avanza) = P(gana A) + P(empate)·P(A en penales)
+    # Resultado en 90' = mezcla del clasificador del modelo + la λ (que SÍ incluye
+    # lesiones/forma). Así el ganador, el marcador y el agregado CONCUERDAN.
     mb = engine.outcome_by_model(a, b, True)
-    p1, px, p2 = mb[model]
+    co = np.asarray(mb[model], float)
+    g = _dc_grid(lh, la, 8)
+    ii, jj = np.indices(g.shape)
+    lo = np.array([g[ii > jj].sum(), g[ii == jj].sum(), g[ii < jj].sum()])
+    lo = lo / lo.sum()
+    o = 0.5 * co + 0.5 * lo
+    o = o / o.sum()                       # resultado 90' coherente (con lesiones)
     pp = engine.pen_prob(a, b)
-    adv_a = p1 + px * pp
-    adv_b = p2 + px * (1 - pp)
+    adv_a = o[0] + o[1] * pp
+    adv_b = o[2] + o[1] * (1 - pp)
     pA = adv_a / (adv_a + adv_b) if (adv_a + adv_b) else 0.5
     favorite = a if pA >= 0.5 else b
-    # Marcador representativo DETERMINISTA: el más probable donde gana el favorito
-    # (coherente con el top-5 y sin ruido de simulación).
+    # Marcador representativo: el más probable donde gana el favorito (coherente con 'o')
     fav_outcome = 0 if favorite == a else 2
     scoreA, scoreB = most_likely_score(lh, la, outcome=fav_outcome)
+    outcome90 = [round(float(x), 4) for x in o]
     decided = "regular"
     fav_side = "A" if favorite == a else "B"
     penA = penB = None
     # prob. de ganar en penales (si se llega a penales)
     pen_win_a = round(pen_a / pen_total, 3) if pen_total else round(engine.pen_prob(a, b), 3)
+    _cd = engine.cards.expected(a, b, knockout=True)   # determinista: calcular 1 vez
+    _cc = est_corners(lh, la)
     return {
         "teamA": a, "teamB": b, "pA": round(pA, 4), "pB": round(1 - pA, 4),
-        "models": mb,
+        "models": mb, "outcome90": outcome90,
         "winner": favorite, "scoreA": int(scoreA), "scoreB": int(scoreB),
         "decided": decided, "penA": penA, "penB": penB,
         "xgA": round(float(lh), 2), "xgB": round(float(la), 2),
         "timeline": timeline_from_score(scoreA, scoreB, timing, rng,
                                         et=decided == "ET", fav_side=fav_side),
         "bucketsA": buckets(lh, timing), "bucketsB": buckets(la, timing),
-        "cards": engine.cards.expected(a, b, knockout=True),
-        "corners": est_corners(lh, la),
+        "cards": _cd, "cardsMkt": count_market(_cd["yellowA"] + _cd["yellowB"]),
+        "corners": _cc, "cornersMkt": count_market(_cc["a"] + _cc["b"]),
+        "ou": over_under(lh, la),
         "topScores": top_scores(lh, la),
         "factors": build_factors(engine, a, b),
         "resolution": {k: round(v / n, 3) for k, v in res.items()},
@@ -717,17 +796,23 @@ def load_real_r32():
 
 def correct_r32(r32, qual, real_opp):
     """Corrige la asignación de terceros usando los cruces REALES: en cada cruce
-    con un tercero, lo reemplaza por el rival real del líder (ancla)."""
+    con un tercero, lo reemplaza por el rival real del líder (ancla).
+    GUARDA: solo aplica si el reemplazo es un clasificado del propio bracket y el
+    resultado mantiene los 32 equipos sin duplicados; si no, revierte."""
     if not real_opp:
         return r32
     thirds = {t["team"] for t in qual["best_thirds"]}
+    orig = {t for pair in r32.values() for t in pair}
     out = {}
     for mid, (a, b) in r32.items():
-        if a in thirds and b not in thirds and b in real_opp:
+        if a in thirds and b not in thirds and real_opp.get(b) in orig:
             a = real_opp[b]
-        elif b in thirds and a not in thirds and a in real_opp:
+        elif b in thirds and a not in thirds and real_opp.get(a) in orig:
             b = real_opp[a]
         out[mid] = (a, b)
+    teams = [t for pair in out.values() for t in pair]
+    if len(set(teams)) != len(teams) or set(teams) != orig:
+        return r32   # la corrección rompería el cuadro -> mantener original
     return out
 
 
@@ -826,7 +911,7 @@ def main():
     # --- Un cuadro por CADA modelo (para el selector en la pantalla de eliminatorias) ---
     print(f"Simulando el cuadro con cada modelo ({N_MATCH} sims/partido)...")
     brackets = {}; champions = {}
-    for mk in ("ens", "xgb", "stat", "elo"):
+    for mk in ("ens", "xgb", "stat", "elo", "y2026"):
         r32_m, _ = r32_for_model(group_preds, played_df, groups, mk, real_opp)
         brackets[mk], champions[mk] = predicted_bracket(engine, r32_m, timing, model=mk)
         print(f"  {mk}: campeón {champions[mk]}")
