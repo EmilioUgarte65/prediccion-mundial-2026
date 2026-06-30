@@ -120,6 +120,7 @@ function init() {
   const t = new URLSearchParams(location.search).get("tab");
   if (t && document.querySelector(`.tab[data-panel="${t}"]`)) selectTab(t);
   setupModal();
+  setupTableZoom();
   openFromHash();
   window.addEventListener("hashchange", openFromHash);
 }
@@ -611,8 +612,37 @@ function setupModal() {
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 }
 function closeModal() {
+  document.getElementById("modal").classList.remove("modal--table");
   if (location.hash) location.hash = "";
   else document.getElementById("overlay").classList.remove("open");
+}
+
+/* ---------- Tablas: clic para ampliar en un popup ---------- */
+function setupTableZoom() {
+  document.addEventListener("click", e => {
+    const table = e.target.closest("table");
+    if (!table || table.closest("#modal")) return;          // ya está dentro de un popup
+    if (e.target.closest("a,button,input,select,label")) return;  // no robar clics a controles
+    if (window.getSelection && String(window.getSelection()).trim()) return; // está seleccionando texto
+    openTablePopup(table);
+  });
+}
+function tablePopTitle(table) {
+  const base = table.closest(".adv-wrap") || table;
+  let p = base.previousElementSibling;
+  while (p) { if (/^H[2-5]$/.test(p.tagName)) return p.textContent.trim(); p = p.previousElementSibling; }
+  const panel = table.closest(".panel");
+  const st = panel && panel.querySelector(".section-title");
+  return st ? st.textContent.trim() : "Tabla";
+}
+function openTablePopup(table) {
+  const modal = document.getElementById("modal");
+  modal.classList.add("modal--table");
+  modal.innerHTML =
+    '<button class="close-btn" aria-label="Cerrar" onclick="closeModal()">✕</button>' +
+    '<div class="table-pop"><h3 class="table-pop-title">' + tablePopTitle(table) + '</h3>' +
+    '<div class="table-pop-scroll">' + table.outerHTML + '</div></div>';
+  document.getElementById("overlay").classList.add("open");
 }
 
 function ouBar(label, over) {
@@ -714,6 +744,7 @@ function openModal(mt) {
       </div>`;
 
   const modal = document.getElementById("modal");
+  modal.classList.remove("modal--table");
   modal.innerHTML = `
     <div class="modal-head">
       <button class="close-btn" aria-label="Cerrar" onclick="closeModal()">✕</button>

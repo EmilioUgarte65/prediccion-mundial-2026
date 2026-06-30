@@ -295,6 +295,17 @@ table.adv tbody tr:hover { background: var(--surface); }
 }
 .close-btn:hover { border-color: var(--danger); color: var(--danger); }
 
+/* ---------- Tablas: clic para ampliar en popup ---------- */
+.adv-wrap > table, table.standings { cursor: zoom-in; }
+.adv-wrap > table:hover, table.standings:hover { outline: 1px dashed var(--border); outline-offset: 3px; }
+.modal.modal--table { width: min(1040px, 100%); }
+.table-pop { padding: 18px 20px 20px; }
+.table-pop-title { font-family: 'Fira Code', monospace; font-size: .76rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin: 2px 36px 14px 0; }
+.table-pop-scroll { overflow: auto; max-height: 80vh; }
+.table-pop-scroll table { width: 100%; }
+.table-pop-scroll thead th { position: sticky; top: 0; background: var(--surface-2); z-index: 1; }
+@media (max-width: 640px) { .table-pop { padding: 14px; } }
+
 .score-board { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin-top: 12px; }
 .sb-team { text-align: center; }
 .sb-team .sflag { font-size: 2.4rem; }
