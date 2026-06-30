@@ -122,6 +122,11 @@ section.panel.active { display: block; animation: fade .3s ease; }
 .bcard:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 8px 22px rgba(0,0,0,.5); }
 .bcard:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .btag { font-size: .56rem; color: var(--accent); text-align: center; padding: 3px 0 0; font-family: 'Fira Code', monospace; letter-spacing: .5px; }
+.bcard.played { border-color: rgba(245,179,1,.5); }
+.breal { font-size: .54rem; font-weight: 700; text-align: center; padding: 3px 4px;
+  letter-spacing: .3px; line-height: 1.2; }
+.breal.ok { background: rgba(34,197,94,.16); color: #4ade80; }
+.breal.no { background: rgba(239,68,68,.16); color: #f87171; }
 .brow {
   display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 8px;
   padding: 7px 10px; font-size: .8rem;

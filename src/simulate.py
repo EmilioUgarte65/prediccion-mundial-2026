@@ -513,16 +513,26 @@ def play_tournament(engine, base_stats, groups, remaining, rng, real_opp=None):
     if real_opp:
         r32 = correct_r32(r32, qual, real_opp)
 
+    ko_real = getattr(engine, "ko_results", {})
+
+    def _ko(a, b):
+        # Si el cruce YA se jugó, el ganador real avanza (no se simula)
+        real = ko_real.get(frozenset((a, b)))
+        if real and real["winner"] in (a, b):
+            return real["winner"]
+        w, *_ = engine.sim_ko_match(a, b, rng)
+        return w
+
     reached = {t: 0 for g in groups for t in groups[g]}
     winners = {}
     for mid, (a, b) in r32.items():
         reached[a] = max(reached[a], 1); reached[b] = max(reached[b], 1)
-        w, *_ = engine.sim_ko_match(a, b, rng)
+        w = _ko(a, b)
         winners[mid] = w; reached[w] = max(reached[w], 2)
     for feed, ph in ((R16_FEED, 3), (QF_FEED, 4), (SF_FEED, 5), (FINAL_FEED, 6)):
         for mid, (fa, fb) in feed.items():
             a, b = winners[fa], winners[fb]
-            w, *_ = engine.sim_ko_match(a, b, rng)
+            w = _ko(a, b)
             winners[mid] = w; reached[w] = max(reached[w], ph)
     return reached
 
@@ -729,10 +739,27 @@ def predict_ko_match(engine, a, b, timing, rng, n=N_MATCH, model="ens"):
     pen_win_a = round(pen_a / pen_total, 3) if pen_total else round(engine.pen_prob(a, b), 3)
     _cd = engine.cards.expected(a, b, knockout=True)   # determinista: calcular 1 vez
     _cc = est_corners(lh, la)
+    # --- Si el partido YA se jugó, manda el resultado REAL (el ganador real avanza) ---
+    real = getattr(engine, "ko_results", {}).get(frozenset((a, b)))
+    is_real = False; pred_winner = favorite
+    pred_scoreA, pred_scoreB = int(scoreA), int(scoreB)
+    if real:
+        is_real = True
+        if real["home"] == a:
+            scoreA, scoreB = real["hs"], real["as"]
+        else:
+            scoreA, scoreB = real["as"], real["hs"]
+        favorite = real["winner"]
+        fav_side = "A" if favorite == a else "B"
+        decided = {"REGULAR": "regular", "EXTRA_TIME": "ET",
+                   "PENALTIES": "pens"}.get(real.get("dur", ""), "regular")
     return {
         "teamA": a, "teamB": b, "pA": round(pA, 4), "pB": round(1 - pA, 4),
         "models": mb, "outcome90": outcome90,
         "winner": favorite, "scoreA": int(scoreA), "scoreB": int(scoreB),
+        "real": is_real, "predWinner": pred_winner,
+        "predScoreA": pred_scoreA, "predScoreB": pred_scoreB,
+        "hit": (pred_winner == favorite) if is_real else None,
         "decided": decided, "penA": penA, "penB": penB,
         "xgA": round(float(lh), 2), "xgB": round(float(la), 2),
         "timeline": timeline_from_score(scoreA, scoreB, timing, rng,
@@ -792,6 +819,30 @@ def load_real_r32():
                 opp[r["home"]] = r["away"]
                 opp[r["away"]] = r["home"]
     return opp
+
+
+def load_real_ko():
+    """Resultados REALES de eliminatorias ya jugadas (football-data).
+    -> {frozenset({home,away}): {home,away,hs,as,winner,dur,status}}."""
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                        "data_user", "ko_real_2026.csv")
+    if not os.path.exists(path):
+        return {}
+    import csv
+    out = {}
+    with open(path, encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if r.get("status") != "FINISHED" or not r.get("winner"):
+                continue
+            try:
+                hs, as_ = int(r["hs"]), int(r["as"])
+            except (ValueError, KeyError, TypeError):
+                continue
+            out[frozenset((r["home"], r["away"]))] = {
+                "home": r["home"], "away": r["away"], "hs": hs, "as": as_,
+                "winner": r["winner"], "dur": r.get("dur", ""),
+            }
+    return out
 
 
 def correct_r32(r32, qual, real_opp):
@@ -907,6 +958,9 @@ def main():
     if real_opp:
         r32_teams = correct_r32(r32_teams, qual, real_opp)
         print(f"  Cruces de 16avos corregidos con datos reales ({len(real_opp)//2} cruces).")
+    engine.ko_results = load_real_ko()   # resultados reales ya jugados -> el bracket los respeta
+    if engine.ko_results:
+        print(f"  Eliminatorias ya jugadas con resultado real: {len(engine.ko_results)}.")
 
     # --- Un cuadro por CADA modelo (para el selector en la pantalla de eliminatorias) ---
     print(f"Simulando el cuadro con cada modelo ({N_MATCH} sims/partido)...")

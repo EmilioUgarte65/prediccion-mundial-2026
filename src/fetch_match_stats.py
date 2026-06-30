@@ -22,7 +22,7 @@ DATA = os.path.join(ROOT, "data_user")
 BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
 START = date(2026, 6, 11)        # inicio del Mundial
-END = date(2026, 6, 28)          # hoy (se amplía solo al correr más adelante)
+END = date.today()               # hoy (se amplía solo conforme avanza el torneo)
 
 CANON = {
     "Bosnia-Herzegovina": "Bosnia and Herzegovina", "Czechia": "Czech Republic",

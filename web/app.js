@@ -221,16 +221,23 @@ function bcard(mt, mirror) {
   card.className = "bcard" + (mirror ? " mirror" : "");
   card.setAttribute("aria-label",
     `${esName(mt.teamA)} contra ${esName(mt.teamB)}, ver predicción`);
+  if (mt.real) card.classList.add("played");
   const aWin = mt.winner === mt.teamA;
   const tag = mt.decided === "pens" ? `pen ${mt.penA}-${mt.penB}`
             : mt.decided === "ET" ? "pror." : "";
+  // Badge de resultado real (jugado) + si el modelo acertó el ganador
+  const realBadge = mt.real
+    ? `<div class="breal ${mt.hit ? "ok" : "no"}">✓ jugado${
+        mt.hit === false ? ` · falló (decía ${shortName(mt.predWinner)})` :
+        mt.hit === true ? " · acertó" : ""}</div>`
+    : "";
   const row = (team, score, win) => {
     const fl = flag(team), nm = `<span class="bname">${shortName(team)}</span>`,
           sc = `<span class="bscore">${score}</span>`;
     const inner = mirror ? `${sc}${nm}${fl}` : `${fl}${nm}${sc}`;
     return `<div class="brow ${win ? "win" : "lose"}">${inner}</div>`;
   };
-  card.innerHTML = (tag ? `<div class="btag">${tag}</div>` : "")
+  card.innerHTML = realBadge + (tag ? `<div class="btag">${tag}</div>` : "")
     + row(mt.teamA, mt.scoreA, aWin) + row(mt.teamB, mt.scoreB, !aWin);
   card.addEventListener("click", () => { location.hash = `match-${mt.match}`; });
   return card;

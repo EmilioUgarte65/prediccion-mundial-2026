@@ -80,15 +80,36 @@ def main():
     # Cruces REALES de eliminatorias (para corregir la siembra del bracket)
     ko = [m for m in ms if m["stage"] in ("LAST_32", "LAST_16", "QUARTER_FINALS",
                                           "SEMI_FINALS", "FINAL", "THIRD_PLACE")]
-    korows = [{"stage": m["stage"], "home": cz(m["homeTeam"]["name"] or ""),
-               "away": cz(m["awayTeam"]["name"] or "")} for m in ko
-              if m["homeTeam"]["name"] and m["awayTeam"]["name"]]
+    korows = []
+    nplayed = 0
+    for m in ko:
+        h, a = m["homeTeam"]["name"], m["awayTeam"]["name"]
+        if not (h and a):
+            continue
+        sc = m.get("score") or {}
+        ft = sc.get("fullTime") or {}
+        hs, as_ = ft.get("home"), ft.get("away")
+        # ganador real (incluye prórroga/penales según football-data)
+        win = ""
+        if m["status"] == "FINISHED":
+            nplayed += 1
+            w = sc.get("winner")
+            if w == "HOME_TEAM":
+                win = cz(h)
+            elif w == "AWAY_TEAM":
+                win = cz(a)
+        korows.append({"stage": m["stage"], "home": cz(h), "away": cz(a),
+                       "hs": "" if hs is None else hs,
+                       "as": "" if as_ is None else as_,
+                       "winner": win, "dur": sc.get("duration") or "",
+                       "status": m["status"]})
     if korows:
         p3 = os.path.join(ROOT, "data_user", "ko_real_2026.csv")
         with open(p3, "w", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(f, fieldnames=["stage", "home", "away"])
+            w = csv.DictWriter(f, fieldnames=["stage", "home", "away", "hs", "as",
+                                              "winner", "dur", "status"])
             w.writeheader(); w.writerows(korows)
-        print(f"OK -> {p3} ({len(korows)} cruces reales de eliminatorias)")
+        print(f"OK -> {p3} ({len(korows)} cruces reales, {nplayed} ya jugados)")
 
 
 if __name__ == "__main__":

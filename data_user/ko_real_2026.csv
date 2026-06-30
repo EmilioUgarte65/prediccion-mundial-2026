@@ -1,17 +1,18 @@
-stage,home,away
-LAST_32,South Africa,Canada
-LAST_32,Brazil,Japan
-LAST_32,Germany,Paraguay
-LAST_32,Netherlands,Morocco
-LAST_32,Ivory Coast,Norway
-LAST_32,France,Sweden
-LAST_32,Mexico,Ecuador
-LAST_32,England,DR Congo
-LAST_32,Belgium,Senegal
-LAST_32,United States,Bosnia and Herzegovina
-LAST_32,Spain,Austria
-LAST_32,Portugal,Croatia
-LAST_32,Switzerland,Algeria
-LAST_32,Australia,Egypt
-LAST_32,Argentina,Cape Verde
-LAST_32,Colombia,Ghana
+stage,home,away,hs,as,winner,dur,status
+LAST_32,South Africa,Canada,0,1,Canada,REGULAR,FINISHED
+LAST_32,Brazil,Japan,2,1,Brazil,REGULAR,FINISHED
+LAST_32,Germany,Paraguay,4,5,Paraguay,PENALTY_SHOOTOUT,FINISHED
+LAST_32,Netherlands,Morocco,3,4,Morocco,PENALTY_SHOOTOUT,FINISHED
+LAST_32,Ivory Coast,Norway,,,,REGULAR,TIMED
+LAST_32,France,Sweden,,,,REGULAR,TIMED
+LAST_32,Mexico,Ecuador,,,,REGULAR,TIMED
+LAST_32,England,DR Congo,,,,REGULAR,TIMED
+LAST_32,Belgium,Senegal,,,,REGULAR,TIMED
+LAST_32,United States,Bosnia and Herzegovina,,,,REGULAR,TIMED
+LAST_32,Spain,Austria,,,,REGULAR,TIMED
+LAST_32,Portugal,Croatia,,,,REGULAR,TIMED
+LAST_32,Switzerland,Algeria,,,,REGULAR,TIMED
+LAST_32,Australia,Egypt,,,,REGULAR,TIMED
+LAST_32,Argentina,Cape Verde,,,,REGULAR,TIMED
+LAST_32,Colombia,Ghana,,,,REGULAR,TIMED
+LAST_16,Canada,Morocco,,,,REGULAR,TIMED
