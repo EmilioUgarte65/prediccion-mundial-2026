@@ -2796,3 +2796,91 @@ gameId,minute,type,team,player,text
 760488,120'+2',End Extra Time,,,"Second Half Extra Time ends, Netherlands 1, Morocco 1."
 760488,120',Start Shootout,,,
 760488,120',End Match,,,"Penalty Shootout ends, Netherlands 1(2), Morocco 1(3)."
+760490,,Kickoff,,,First Half begins.
+760490,24',Start Delay,Norway,,Delay in match for a drinks break.
+760490,24',Start Delay,Ivory Coast,,
+760490,27',End Delay,Norway,,Delay over. They are ready to continue.
+760490,27',End Delay,Ivory Coast,,
+760490,39',Goal,Norway,Antonio Nusa,"Goal! Côte d'Ivoire 0, Norway 1. Antonio Nusa (Norway) right footed shot from the left side of the box to the top right corner. Assisted by Martin Ødegaard."
+760490,45'+1',Yellow Card,Norway,Antonio Nusa,Antonio Nusa (Norway) is shown the yellow card for a bad foul.
+760490,45'+4',Halftime,,,
+760490,45',Start 2nd Half,,,"Second Half begins Côte d'Ivoire 0, Norway 1."
+760490,60',Substitution,Ivory Coast,Amad Diallo,"Substitution, Côte d'Ivoire. Amad Diallo replaces Christ Inao Oulaï."
+760490,60',Substitution,Ivory Coast,Elye Wahi,"Substitution, Côte d'Ivoire. Elye Wahi replaces Ange-Yoan Bonny."
+760490,68',Start Delay,Norway,,Delay in match for a drinks break.
+760490,68',Start Delay,Ivory Coast,,
+760490,71',Substitution,Norway,Andreas Schjelderup,"Substitution, Norway. Andreas Schjelderup replaces Antonio Nusa."
+760490,71',Substitution,Norway,Oscar Bobb,"Substitution, Norway. Oscar Bobb replaces Alexander Sørloth."
+760490,71',End Delay,Norway,,Delay over. They are ready to continue.
+760490,71',End Delay,Ivory Coast,,
+760490,74',Goal,Ivory Coast,Amad Diallo,"Goal! Côte d'Ivoire 1, Norway 1. Amad Diallo (Côte d'Ivoire) left footed shot from the right side of the six yard box to the bottom left corner. Assisted by Nicolas Pépé."
+760490,81',Start Delay,Ivory Coast,,Delay in match because of an injury Amad Diallo (Côte d'Ivoire).
+760490,81',Start Delay,Norway,,
+760490,82',End Delay,Ivory Coast,,Delay over. They are ready to continue.
+760490,82',End Delay,Norway,,
+760490,83',Substitution,Norway,Fredrik Aursnes,"Substitution, Norway. Fredrik Aursnes replaces Marcus Pedersen."
+760490,86',Goal,Norway,Erling Haaland,"Goal! Côte d'Ivoire 1, Norway 2. Erling Haaland (Norway) left footed shot from the centre of the box to the centre of the goal. Assisted by Patrick Berg."
+760490,87',Substitution,Ivory Coast,Oumar Diakité,"Substitution, Côte d'Ivoire. Oumar Diakité replaces Nicolas Pépé."
+760490,90'+3',Substitution,Ivory Coast,Evann Guessand,"Substitution, Côte d'Ivoire. Evann Guessand replaces Yan Diomande."
+760490,90'+3',Substitution,Ivory Coast,Bazoumana Touré,"Substitution, Côte d'Ivoire. Bazoumana Touré replaces Ghislain Konan."
+760490,90'+8',End Regular Time,,,"Second Half ends, Côte d'Ivoire 1, Norway 2."
+760492,,Kickoff,,,First Half begins.
+760492,23',Start Delay,France,,Delay in match for a drinks break.
+760492,23',Start Delay,Sweden,,
+760492,26',End Delay,France,,Delay over. They are ready to continue.
+760492,26',End Delay,Sweden,,
+760492,45',Goal,France,Kylian Mbappé,"Goal! France 1, Sweden 0. Kylian Mbappé (France) right footed shot from the centre of the box to the top right corner. Assisted by Ousmane Dembélé following a corner."
+760492,45'+4',Halftime,,,
+760492,45',Start 2nd Half,,,"Second Half begins France 1, Sweden 0."
+760492,53',Goal,France,Bradley Barcola,"Goal! France 2, Sweden 0. Bradley Barcola (France) right footed shot from the centre of the box to the top left corner. Assisted by Michael Olise with a through ball following a fast break."
+760492,66',Substitution,Sweden,Taha Ali,"Substitution, Sweden. Taha Ali replaces Elliot Stroud."
+760492,66',Substitution,Sweden,Besfort Zeneli,"Substitution, Sweden. Besfort Zeneli replaces Lucas Bergvall."
+760492,68',Start Delay,France,,Delay in match for a drinks break.
+760492,68',Start Delay,Sweden,,
+760492,71',End Delay,France,,Delay over. They are ready to continue.
+760492,71',End Delay,Sweden,,
+760492,74',Goal,France,Kylian Mbappé,"Goal! France 3, Sweden 0. Kylian Mbappé (France) right footed shot from the left side of the box to the bottom right corner. Assisted by Michael Olise with a through ball."
+760492,75',Substitution,France,Désiré Doué,"Substitution, France. Désiré Doué replaces Ousmane Dembélé."
+760492,75',Substitution,France,Malo Gusto,"Substitution, France. Malo Gusto replaces Jules Koundé."
+760492,78',Substitution,France,Theo Hernández,"Substitution, France. Théo Hernández replaces Lucas Digne."
+760492,82',Substitution,Sweden,Mattias Svanberg,"Substitution, Sweden. Mattias Svanberg replaces Daniel Svensson."
+760492,82',Substitution,Sweden,Benjamin Nygren,"Substitution, Sweden. Benjamin Nygren replaces Yasin Ayari."
+760492,85',Substitution,France,Jean-Philippe Mateta,"Substitution, France. Jean-Philippe Mateta replaces Kylian Mbappé."
+760492,85',Substitution,France,Rayan Cherki,"Substitution, France. Rayan Cherki replaces Michael Olise."
+760492,89',Substitution,Sweden,Gustaf Nilsson,"Substitution, Sweden. Gustaf Nilsson replaces Alexander Isak."
+760492,90'+4',End Regular Time,,,"Second Half ends, France 3, Sweden 0."
+760491,,Start Delay,Mexico,,
+760491,,Kickoff,,,
+760491,22',Goal,Mexico,Julián Quiñones,"Goal! Mexico 1, Ecuador 0. Julián Quiñones (Mexico) right footed shot from the left side of the box to the top left corner. Assisted by Roberto Alvarado with a through ball."
+760491,25',Start Delay,Mexico,,Delay in match for a drinks break.
+760491,25',Start Delay,Ecuador,,
+760491,28',End Delay,Mexico,,Delay over. They are ready to continue.
+760491,28',End Delay,Ecuador,,
+760491,31',Goal,Mexico,Raúl Jiménez,"Goal! Mexico 2, Ecuador 0. Raúl Jiménez (Mexico) right footed shot from the centre of the box to the top right corner. Assisted by Julián Quiñones."
+760491,45'+1',Yellow Card,Ecuador,Alan Franco,Alan Franco (Ecuador) is shown the yellow card.
+760491,45'+6',Halftime,,,
+760491,45',Substitution,Ecuador,Ángelo Preciado,"Substitution, Ecuador. Ángelo Preciado replaces Joel Ordóñez."
+760491,45',Substitution,Ecuador,Yaimar Medina,"Substitution, Ecuador. Yaimar Medina replaces Alan Franco."
+760491,45',Start 2nd Half,,,"Second Half begins Mexico 2, Ecuador 0."
+760491,58',Substitution,Mexico,Brian Gutiérrez,"Substitution, Mexico. Brian Gutiérrez replaces Gilberto Mora."
+760491,59',Substitution,Ecuador,Kevin Rodríguez,"Substitution, Ecuador. Kevin Rodríguez replaces Enner Valencia."
+760491,68',Start Delay,Ecuador,,Delay in match for a drinks break.
+760491,68',Start Delay,Mexico,,Delay in match for a drinks break.
+760491,71',End Delay,Ecuador,,Delay over. They are ready to continue.
+760491,71',End Delay,Mexico,,Delay over. They are ready to continue.
+760491,73',Substitution,Mexico,Obed Vargas,"Substitution, Mexico. Obed Vargas replaces Luis Romo."
+760491,74',Substitution,Mexico,Santiago Gimenez,"Substitution, Mexico. Santiago Giménez replaces Raúl Jiménez."
+760491,75',Start Delay,Mexico,,Delay in match because of an injury Raúl Rangel (Mexico).
+760491,75',Start Delay,Ecuador,,
+760491,76',End Delay,Mexico,,Delay over. They are ready to continue.
+760491,76',End Delay,Ecuador,,
+760491,79',Substitution,Ecuador,Jordy Caicedo,"Substitution, Ecuador. Jordy Caicedo replaces John Yeboah."
+760491,79',Substitution,Ecuador,Kendry Páez,"Substitution, Ecuador. Kendry Páez replaces Nilson Angulo."
+760491,80',Substitution,Mexico,Orbelín Pineda,"Substitution, Mexico. Orbelín Pineda replaces Julián Quiñones."
+760491,80',Substitution,Mexico,Israel Reyes,"Substitution, Mexico. Israel Reyes replaces Roberto Alvarado."
+760491,90'+3',Yellow Card,Ecuador,Kendry Páez,Kendry Páez (Ecuador) is shown the yellow card for a bad foul.
+760491,90'+4',Start Delay,Ecuador,,
+760491,90'+5',End Delay,Ecuador,,
+760491,90'+5',Red Card,Ecuador,Piero Hincapié,Piero Hincapié (Ecuador) is shown the red card.
+760491,90'+9',Yellow Card,Ecuador,Moisés Caicedo,Moisés Caicedo (Ecuador) is shown the yellow card for a bad foul.
+760491,90'+9',End Regular Time,,,

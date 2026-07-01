@@ -3,9 +3,9 @@ LAST_32,South Africa,Canada,0,1,Canada,REGULAR,FINISHED
 LAST_32,Brazil,Japan,2,1,Brazil,REGULAR,FINISHED
 LAST_32,Germany,Paraguay,4,5,Paraguay,PENALTY_SHOOTOUT,FINISHED
 LAST_32,Netherlands,Morocco,3,4,Morocco,PENALTY_SHOOTOUT,FINISHED
-LAST_32,Ivory Coast,Norway,,,,REGULAR,TIMED
-LAST_32,France,Sweden,,,,REGULAR,TIMED
-LAST_32,Mexico,Ecuador,,,,REGULAR,TIMED
+LAST_32,Ivory Coast,Norway,1,2,Norway,REGULAR,FINISHED
+LAST_32,France,Sweden,3,0,France,REGULAR,FINISHED
+LAST_32,Mexico,Ecuador,2,0,Mexico,REGULAR,FINISHED
 LAST_32,England,DR Congo,,,,REGULAR,TIMED
 LAST_32,Belgium,Senegal,,,,REGULAR,TIMED
 LAST_32,United States,Bosnia and Herzegovina,,,,REGULAR,TIMED
@@ -16,3 +16,5 @@ LAST_32,Australia,Egypt,,,,REGULAR,TIMED
 LAST_32,Argentina,Cape Verde,,,,REGULAR,TIMED
 LAST_32,Colombia,Ghana,,,,REGULAR,TIMED
 LAST_16,Canada,Morocco,,,,REGULAR,TIMED
+LAST_16,Paraguay,France,,,,REGULAR,TIMED
+LAST_16,Brazil,Norway,,,,REGULAR,TIMED

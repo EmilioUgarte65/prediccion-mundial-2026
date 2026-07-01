@@ -48,7 +48,14 @@ def main():
     for i in idxs:
         key = frozenset((norm(df.at[i, "home_team"]), norm(df.at[i, "away_team"])))
         pair_rows.setdefault(key, []).append(i)
+    # nombre canónico (ortografía ya usada en results.csv) por equipo normalizado,
+    # para poder AÑADIR partidos de eliminatorias que aún no tienen fila
+    canon_name = {}
+    for i in idxs:
+        for col in ("home_team", "away_team"):
+            canon_name.setdefault(norm(df.at[i, col]), df.at[i, col])
 
+    new_rows = []
     updated = added = unmatched = 0
     miss = []
     for m in fin:
@@ -59,7 +66,21 @@ def main():
         key = frozenset((norm(h), norm(a)))
         rows = pair_rows.get(key, [])
         if not rows:
-            unmatched += 1; miss.append(f"{h} vs {a}"); continue
+            # Partido sin fila previa (típico: eliminatorias) -> AÑADIR como fila nueva
+            # para que ENTRE al entrenamiento (Elo/forma/XGBoost aprenden del KO).
+            nh = canon_name.get(norm(h), h)
+            na = canon_name.get(norm(a), a)
+            fd = pd.to_datetime(m.get("utcDate", ""), errors="coerce")
+            new_rows.append({
+                "date": (fd.date().isoformat() if pd.notna(fd) else ""),
+                "home_team": nh, "away_team": na,
+                "home_score": ft["home"], "away_score": ft["away"],
+                "tournament": "FIFA World Cup",
+                "city": (m.get("venue") or ""), "country": "United States",
+                "neutral": True,
+            })
+            added += 1
+            continue
         # elegir la fila correcta: la de fecha más cercana al partido real
         # (evita asignar el marcador al partido equivocado si el par se repite)
         fd = pd.to_datetime(m.get("utcDate", ""), errors="coerce")
@@ -80,8 +101,11 @@ def main():
         df.at[i, "home_score"] = hs
         df.at[i, "away_score"] = as_
 
+    if new_rows:
+        df = pd.concat([df, pd.DataFrame(new_rows)], ignore_index=True)
     df.to_csv(CSV, index=False)
-    print(f"Rellenados (antes NA): {updated} | sin match: {unmatched}")
+    print(f"Rellenados (antes NA): {updated} | añadidos (KO nuevos): {added} | "
+          f"sin match: {unmatched}")
     if miss:
         print("  no cruzaron:", miss[:10])
     # estado final
