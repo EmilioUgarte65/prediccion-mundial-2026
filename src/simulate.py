@@ -284,7 +284,15 @@ class Engine:
         self.lam_cache = {}
         self.xg = load_team_xg()
         self.market = load_market_odds()
-        self.cards = CardModel().fit()
+        # Tarjetas: modelo CALIBRADO A 2026 (76% O/U vs 67% del prior viejo);
+        # si no hay datos 2026, cae al prior histórico.
+        try:
+            from cards2026 import Card2026
+            self.cards = Card2026().fit()
+            if not self.cards.yhist:
+                self.cards = CardModel().fit()
+        except Exception:  # noqa: BLE001
+            self.cards = CardModel().fit()
         self.pen_share = load_pen_share()
         self.scorers = team_scorers()
         self.injuries = load_injuries()
@@ -397,22 +405,40 @@ class Engine:
         out["y2026"] = self.outcome_2026(a, b)
         return {k: [round(float(x), 4) for x in v] for k, v in out.items()}
 
-    def outcome_2026(self, a, b):
-        """Modelo SOLO-2026: λ desde ataque/defensa de ESTE Mundial -> Dixon-Coles."""
+    def _lam2026(self, a, b):
+        """λ (local, visita) del modelo SOLO-2026 desde ataque/defensa 2026."""
         ra, rb = self.r2026.get(a), self.r2026.get(b)
         if not ra or not rb:
-            return self.outcome(a, b, True)  # fallback si falta rating
+            return None
         ad = self._avg_def2026
 
         def deff(d):
             return float(np.clip((d + 0.8) / (ad + 0.8), 0.5, 1.8))
-        lh = 1.35 * ra["att"] * deff(rb["def"])
-        la = 1.35 * rb["att"] * deff(ra["def"])
-        lh = float(np.clip(lh, 0.2, 5)); la = float(np.clip(la, 0.2, 5))
+        lh = float(np.clip(1.35 * ra["att"] * deff(rb["def"]), 0.2, 5))
+        la = float(np.clip(1.35 * rb["att"] * deff(ra["def"]), 0.2, 5))
+        return lh, la
+
+    def outcome_2026(self, a, b):
+        """Modelo SOLO-2026: λ desde ataque/defensa de ESTE Mundial -> Dixon-Coles."""
+        lam = self._lam2026(a, b)
+        if lam is None:
+            return self.outcome(a, b, True)  # fallback si falta rating
+        lh, la = lam
         g = _dc_grid(lh, la, 8)
         ii, jj = np.indices(g.shape)
         o = np.array([g[ii > jj].sum(), g[ii == jj].sum(), g[ii < jj].sum()])
         return o / o.sum()
+
+    def lambdas_by_model(self, a, b, neutral=True):
+        """λ (local, visita) de CADA modelo, para mercados por modelo.
+        xgb=regresor Poisson, stat=GoalsModel/Dixon-Coles, y2026=ataque/defensa 2026,
+        elo=usa la λ estadística (Elo no modela goles), ens=media de las tres."""
+        row, slh, sla = self.fb.matchup_features(a, b, self.elo, neutral=neutral)
+        xlh, xla = self.model.predict_lambdas(row)
+        ls = (float(slh), float(sla)); lx = (float(xlh), float(xla))
+        ly = self._lam2026(a, b) or ls
+        le = tuple(float(v) for v in np.mean([lx, ls, ly], axis=0))
+        return {"xgb": lx, "stat": ls, "elo": ls, "y2026": ly, "ens": le}
 
     def pen_prob(self, a, b):
         # Los penales son casi un volado: con 678 tandas reales, quien patea
@@ -638,7 +664,8 @@ def over_under(lh, la, maxg=10):
     ii, jj = np.indices(g.shape)
     tot = np.array([g[(ii + jj) == k].sum() for k in range(2 * maxg + 1)])
     mode = int(np.argmax(tot))   # total de goles MÁS probable (entero, apostable)
-    return {"mode": mode,
+    exp = float((np.arange(len(tot)) * tot).sum())   # valor esperado (decimal, para apostar)
+    return {"mode": mode, "exp": round(exp, 1),
             "o15": round(float(tot[2:].sum()), 3),
             "o25": round(float(tot[3:].sum()), 3),
             "o35": round(float(tot[4:].sum()), 3)}
@@ -652,7 +679,7 @@ def count_market(lam):
     pmf = poisson.pmf(ks, lam)
     mode = int(ks[pmf.argmax()])
     lines = [l for l in (mode - 1.5, mode - 0.5, mode + 0.5, mode + 1.5) if l > 0][:3]
-    return {"mode": mode,
+    return {"mode": mode, "exp": round(lam, 1),   # esperado (decimal, para apostar)
             "lines": [{"l": l, "over": round(float(1 - poisson.cdf(int(l), lam)), 3)}
                       for l in lines]}
 
@@ -663,6 +690,182 @@ def est_corners(lh, la):
     ca = round(min(9.5, max(2.0, 5.0 * lh / avg)), 1)
     cb = round(min(9.5, max(2.0, 5.0 * la / avg)), 1)
     return {"a": ca, "b": cb}
+
+
+def markets_by_model(engine, a, b, neutral=True):
+    """Mercados de GOLES y CÓRNERS con la λ de CADA modelo (para el modal).
+    Las tarjetas NO dependen del modelo de 1X2 -> se muestran compartidas."""
+    lam = engine.lambdas_by_model(a, b, neutral)
+    out = {}
+    for m, (lh, la) in lam.items():
+        cc = est_corners(lh, la)
+        out[m] = {"ou": over_under(lh, la),
+                  "corners": cc, "cornersMkt": count_market(cc["a"] + cc["b"]),
+                  "xgA": round(lh, 2), "xgB": round(la, 2)}
+    return out
+
+
+def _raw_odds():
+    """Cuotas 1X2 CRUDAS (decimales) para calcular valor esperado de apuesta."""
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                        "data_user", "odds.csv")
+    if not os.path.exists(path):
+        return {}
+    import csv
+    out = {}
+    with open(path, encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            try:
+                out[frozenset((r["home_team"], r["away_team"]))] = {
+                    "home": r["home_team"], "away": r["away_team"],
+                    "oh": float(r["odd_home"]), "od": float(r["odd_draw"]),
+                    "oa": float(r["odd_away"]), "date": r.get("date", "")}
+            except (ValueError, KeyError):
+                continue
+    return out
+
+
+def _main_line(lines, exp):
+    """Elige la LÍNEA estándar (la .5 más cercana al esperado, la que ofrece la
+    casa) y el lado más probable. Evita líneas triviales tipo 'más de 0.5'."""
+    if not lines:
+        return {"pick": "—", "prob": 0.5, "line": 0}
+    L = min(lines, key=lambda x: abs(x["l"] - exp))
+    over = float(L["over"])
+    if over >= 0.5:
+        return {"pick": f"Más de {L['l']}", "prob": round(over, 3), "line": L["l"]}
+    return {"pick": f"Menos de {L['l']}", "prob": round(1 - over, 3), "line": L["l"]}
+
+
+def build_bets(engine):
+    """Mejores apuestas para los próximos partidos con cuotas (Bet365 u otra).
+    Valor 1X2 = prob_modelo * cuota - 1 (>0 = apuesta con ventaja). Además, los
+    mercados de goles/tarjetas/córners más probables (compara la línea en tu casa)."""
+    raw = _raw_odds()
+    if not raw:
+        return None
+    def _lines(lam, Ls):
+        return [{"l": L, "over": round(float(1 - poisson.cdf(int(L), lam)), 3)} for L in Ls]
+
+    bets = []
+    for key, od in raw.items():
+        a, b = od["home"], od["away"]          # orientación de la casa
+        probs = [float(x) for x in engine.outcome_blended(a, b, True)]
+        lh, la = engine.lambdas(a, b, True)
+        ou = over_under(lh, la)
+        cd = engine.cards.expected(a, b, knockout=True)
+        cc = est_corners(lh, la)
+        ce = cd["yellowA"] + cd["yellowB"]; kk = cc["a"] + cc["b"]
+        odds = [od["oh"], od["od"], od["oa"]]
+        names = [a, "Empate", b]
+        sels = ["1", "X", "2"]
+        # devig 1X2: prob REAL de la casa (sin margen) y ventaja del modelo
+        imp = [1.0 / o for o in odds]; sdev = sum(imp) or 1.0
+        fair = [x / sdev for x in imp]
+        evs = [{"sel": sels[i], "name": names[i], "prob": round(probs[i], 3),
+                "odd": round(odds[i], 2), "ev": round(probs[i] * odds[i] - 1, 3),
+                "fair": round(fair[i], 3), "edge": round(probs[i] - fair[i], 3)}
+               for i in range(3)]
+        best = max(evs, key=lambda e: e["ev"])
+        goals_lines = [{"l": 1.5, "over": ou["o15"]}, {"l": 2.5, "over": ou["o25"]},
+                       {"l": 3.5, "over": ou["o35"]}]
+        cards_lines = _lines(ce, (1.5, 2.5, 3.5, 4.5))
+        corn_lines = _lines(kk, (8.5, 9.5, 10.5, 11.5))
+        btts = float((1 - np.exp(-lh)) * (1 - np.exp(-la)))
+        goals = _main_line(goals_lines, ou["exp"]); goals["exp"] = ou["exp"]
+        cards = _main_line(cards_lines, ce); cards["exp"] = round(ce, 1)
+        corners = _main_line(corn_lines, kk); corners["exp"] = round(kk, 1)
+        # recomendación por partido (qué conviene, con fiabilidad medida)
+        rec = [
+            {"m": "⚽ Goles", "pick": goals["pick"], "prob": goals["prob"], "rel": "80%"},
+            {"m": "🟨 Tarjetas", "pick": cards["pick"], "prob": cards["prob"], "rel": "76%"},
+            {"m": "🤝 Ambos anotan", "pick": "Sí" if btts >= 0.5 else "No",
+             "prob": round(max(btts, 1 - btts), 3), "rel": "media"},
+        ]
+        val = [e for e in evs if e["ev"] > 0.03 and e["prob"] >= 0.35]
+        if val:
+            v = max(val, key=lambda e: e["ev"])
+            rec.insert(0, {"m": "💎 Ganador (valor)",
+                           "pick": v["name"] if v["sel"] != "X" else "Empate",
+                           "prob": v["prob"], "rel": f"valor +{round(v['ev']*100)}%"})
+        bets.append({"home": a, "away": b, "date": od["date"],
+                     "x12": {"all": evs, "best": best},
+                     "goalsLines": goals_lines, "cardsLines": cards_lines,
+                     "cornersLines": corn_lines, "btts": round(btts, 3),
+                     "teamA": {"name": a, "lines": _lines(lh, (0.5, 1.5, 2.5))},
+                     "teamB": {"name": b, "lines": _lines(la, (0.5, 1.5, 2.5))},
+                     "xgA": round(lh, 2), "xgB": round(la, 2),
+                     "goals": goals, "cards": cards, "corners": corners, "rec": rec})
+    # pool de todas las selecciones 1X2 con su valor esperado
+    pool = []
+    for b in bets:
+        for e in b["x12"]["all"]:
+            pool.append({"home": b["home"], "away": b["away"], "date": b["date"], **e})
+    # VALOR realista: ventaja sobre la casa en un resultado PLAUSIBLE (no longshots).
+    # (una prob. de 10% con cuota alta da "EV alto" pero es ruido, no valor real.)
+    value = sorted([s for s in pool if s["ev"] > 0.03 and s["prob"] >= 0.40],
+                   key=lambda s: s["ev"], reverse=True)
+    # SEGURAS: el resultado más probable de cada partido (favorito), con su valor.
+    safe = []
+    for b in bets:
+        top = max(b["x12"]["all"], key=lambda e: e["prob"])
+        safe.append({"home": b["home"], "away": b["away"], **top})
+    safe = sorted(safe, key=lambda s: s["prob"], reverse=True)
+    # LA MEJOR: un favorito confiable que ADEMÁS tiene valor positivo sobre la casa.
+    strong = sorted([s for s in safe if s["ev"] > 0 and s["prob"] >= 0.55],
+                    key=lambda s: s["ev"], reverse=True)
+    top = strong[0] if strong else (safe[0] if safe else None)
+    # CONFIANZA en mercados (goles/tarjetas/córners más probables)
+    conf = []
+    for b in bets:
+        for mk, ico in (("goals", "⚽"), ("cards", "🟨"), ("corners", "🚩")):
+            conf.append({"home": b["home"], "away": b["away"], "market": mk,
+                         "ico": ico, **b[mk]})
+    conf = sorted(conf, key=lambda c: c["prob"], reverse=True)
+    return {"matches": bets, "value": value[:8], "safe": safe,
+            "confidence": conf[:10], "top": top,
+            "combos": build_combos(bets)}
+
+
+def build_combos(bets, stake=200):
+    """Optimizador de COMBINACIONES (parlays): junta favoritos para subir el pago.
+    Para cada combo calcula prob. conjunta (producto, partidos independientes),
+    cuota combinada (producto) y el pago real para un stake dado. Así encuentras
+    el punto donde SIGUE siendo seguro pero paga mucho más que un favorito solo."""
+    import itertools
+    # piernas candidatas: el favorito del modelo por partido con prob >= 0.5
+    legs = []
+    for b in bets:
+        best = max(b["x12"]["all"], key=lambda e: e["prob"])
+        if best["prob"] >= 0.5 and best["odd"] > 1.0:
+            legs.append({"home": b["home"], "away": b["away"], "sel": best["sel"],
+                         "name": best["name"], "prob": best["prob"], "odd": best["odd"]})
+
+    def mk(combo):
+        jp = 1.0; od = 1.0
+        for l in combo:
+            jp *= l["prob"]; od *= l["odd"]
+        return {"legs": [{"home": l["home"], "away": l["away"], "sel": l["sel"],
+                          "name": l["name"], "odd": round(l["odd"], 2),
+                          "prob": round(l["prob"], 3)} for l in combo],
+                "n": len(combo), "prob": round(jp, 3), "odd": round(od, 2),
+                "payout": round(stake * od), "profit": round(stake * od - stake),
+                "ev": round(jp * od - 1, 3)}
+
+    combos = []
+    for size in (2, 3, 4):
+        for c in itertools.combinations(legs, size):
+            combos.append(mk(c))
+    # rankings útiles
+    safest = sorted(combos, key=lambda c: c["prob"], reverse=True)
+    # equilibrio: prob conjunta alta Y que pague al menos ~1.8x (200 -> 360+)
+    balanced = sorted([c for c in combos if c["prob"] >= 0.50 and c["odd"] >= 1.8],
+                      key=lambda c: c["prob"], reverse=True)
+    # mejor pago manteniendo algo de seguridad (prob >= 0.35)
+    payout = sorted([c for c in combos if c["prob"] >= 0.35],
+                    key=lambda c: c["odd"], reverse=True)
+    return {"stake": stake,
+            "safest": safest[:6], "balanced": balanced[:6], "payout": payout[:6]}
 
 
 def buckets(lmbda, timing):
@@ -693,6 +896,7 @@ def predict_group_match(engine, m, timing, rng):
         "corners": cc, "cornersMkt": count_market(cc["a"] + cc["b"]),
         "hasOdds": (a, b) in engine.market,
         "ou": over_under(lh, la),
+        "mkt": markets_by_model(engine, a, b, neutral),
         "topScores": top_scores(lh, la),
         "factors": build_factors(engine, a, b),
         "penShareA": engine.pen_share.get(a), "penShareB": engine.pen_share.get(b),
@@ -772,6 +976,7 @@ def predict_ko_match(engine, a, b, timing, rng, n=N_MATCH, model="ens"):
         "cards": _cd, "cardsMkt": count_market(_cd["yellowA"] + _cd["yellowB"]),
         "corners": _cc, "cornersMkt": count_market(_cc["a"] + _cc["b"]),
         "ou": over_under(lh, la),
+        "mkt": markets_by_model(engine, a, b, True),
         "topScores": top_scores(lh, la),
         "factors": build_factors(engine, a, b),
         "resolution": {k: round(v / n, 3) for k, v in res.items()},
@@ -1031,6 +1236,7 @@ def main():
         "brackets": brackets,        # un cuadro por modelo (ens/xgb/stat/elo)
         "champions": champions,      # campeón previsto por modelo
         "advancement": adv_list,
+        "bets": build_bets(engine),  # mejores apuestas (valor 1X2 + mercados)
     }
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:

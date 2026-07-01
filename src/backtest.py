@@ -115,6 +115,8 @@ def backtest_one(results, elo, start, end):
             "el1": round(float(ep[0]), 4), "elx": round(float(ep[1]), 4), "el2": round(float(ep[2]), 4),
             "e1": round(float(ens[0]), 4), "ex": round(float(ens[1]), 4), "e2": round(float(ens[2]), 4),
             "lh": round(float(lh), 3), "la": round(float(la), 3),
+            "slh": round(float(feats.loc[idx, "lam_h"]), 3),
+            "sla": round(float(feats.loc[idx, "lam_a"]), 3),
             "pred": LABELS[int(ens.argmax())], "pred_score": list(pscore),
             "real_score": [int(r["home_score"]), int(r["away_score"])], "real": LABELS[real],
             "hit": bool(int(ens.argmax()) == real),
@@ -320,6 +322,118 @@ def champion_experiment(results, editions):
     print("  (Acertar al campeón es durísimo: el favorito gana ~1 de cada 3-4 Mundiales)")
 
 
+# ============================ MERCADOS (goles/tarjetas/córners) ============================
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data_user")
+
+
+def _ou_from_lambdas(lh, la, maxg=10):
+    """P(over) de goles totales para líneas .5, desde la rejilla Dixon-Coles."""
+    ph = poisson.pmf(np.arange(maxg + 1), lh)
+    pa = poisson.pmf(np.arange(maxg + 1), la)
+    g = np.outer(ph, pa); g = g / g.sum()
+    ii, jj = np.indices(g.shape)
+    tot = np.array([g[(ii + jj) == k].sum() for k in range(2 * maxg + 1)])
+    return {"mode": int(np.argmax(tot)),
+            "o25": float(tot[3:].sum()), "o35": float(tot[4:].sum())}
+
+
+def _corners_from_lambdas(lh, la):
+    """Córners esperados (misma heurística que la web: fuerza ofensiva)."""
+    avg = 1.35
+    ca = min(9.5, max(2.0, 5.0 * lh / avg))
+    cb = min(9.5, max(2.0, 5.0 * la / avg))
+    return ca + cb
+
+
+def load_real_markets_2026():
+    """Goles/tarjetas/córners REALES por partido (ESPN), clave = frozenset(equipos)."""
+    import csv
+    from collections import defaultdict
+    p = os.path.join(DATA_DIR, "match_team_stats_2026.csv")
+    if not os.path.exists(p):
+        return {}
+    yel = defaultdict(int); cor = defaultdict(int); teams = {}
+    for r in csv.DictReader(open(p, encoding="utf-8")):
+        g = r["gameId"]
+        yel[g] += int(float(r["yellowCards"] or 0))
+        cor[g] += int(float(r["wonCorners"] or 0))
+        teams.setdefault(g, []).append(r["team"])
+    out = {}
+    for g, ts in teams.items():
+        if len(ts) == 2:
+            out[frozenset(ts)] = {"cards": yel[g], "corners": cor[g]}
+    return out
+
+
+def load_ratings_2026():
+    """Ratings SOLO-2026 (att_mult, defense) para la λ del modelo 2026."""
+    import csv
+    p = os.path.join(DATA_DIR, "team_ratings_2026.csv")
+    if not os.path.exists(p):
+        return {}, 1.3
+    out = {}; defs = []
+    for r in csv.DictReader(open(p, encoding="utf-8")):
+        try:
+            out[r["team"]] = {"att": float(r["attack_mult"]), "def": float(r["defense"])}
+            defs.append(float(r["defense"]))
+        except (ValueError, KeyError):
+            continue
+    return out, (float(np.mean(defs)) if defs else 1.3)
+
+
+def _lambda_2026(a, b, r2026, avg_def):
+    """λ del modelo SOLO-2026 (misma fórmula que simulate.outcome_2026)."""
+    ra, rb = r2026.get(a), r2026.get(b)
+    if not ra or not rb:
+        return None
+
+    def deff(d):
+        return float(np.clip((d + 0.8) / (avg_def + 0.8), 0.5, 1.8))
+    lh = float(np.clip(1.35 * ra["att"] * deff(rb["def"]), 0.2, 5))
+    la = float(np.clip(1.35 * rb["att"] * deff(ra["def"]), 0.2, 5))
+    return lh, la
+
+
+def market_metrics(rows):
+    """Acierto de mercados por modelo (goles y córners con la λ de cada modelo;
+    tarjetas es compartida: sale del modelo disciplinario, no del 1X2)."""
+    real = load_real_markets_2026()
+    r2026, avg_def = load_ratings_2026()
+    if not real:
+        return {}
+    # acumuladores por modelo para goles y córners
+    G = {m: {"ou": 0, "mae": 0.0, "n": 0} for m in ("xgb", "stat", "elo", "ens", "y2026")}
+    C = {m: {"ou": 0, "mae": 0.0, "n": 0} for m in G}
+    for r in rows:
+        rm = real.get(frozenset((r["home"], r["away"])))
+        if not rm:
+            continue
+        real_goals = r["real_score"][0] + r["real_score"][1]
+        # λ por modelo: xgb=regresor, stat=GoalsModel, y2026=att/def, elo=stat, ens=media
+        lx = (r["lh"], r["la"])
+        ls = (r.get("slh", r["lh"]), r.get("sla", r["la"]))
+        ly = _lambda_2026(r["home"], r["away"], r2026, avg_def) or ls
+        lam = {"xgb": lx, "stat": ls, "y2026": ly, "elo": ls,
+               "ens": tuple(np.mean([lx, ls, ly], axis=0))}
+        for m, (lh, la) in lam.items():
+            ou = _ou_from_lambdas(lh, la)
+            G[m]["ou"] += int((ou["o25"] > 0.5) == (real_goals > 2.5))
+            G[m]["mae"] += abs(ou["mode"] - real_goals); G[m]["n"] += 1
+            kt = _corners_from_lambdas(lh, la)
+            C[m]["ou"] += int((kt > 9.5) == (rm["corners"] > 9.5))
+            C[m]["mae"] += abs(round(kt) - rm["corners"]); C[m]["n"] += 1
+
+    def fin(d):
+        n = max(1, d["n"])
+        return {"ou_acc": round(d["ou"] / n, 4), "mae": round(d["mae"] / n, 3), "n": d["n"]}
+    # tarjetas (compartida): modelo CALIBRADO A 2026, validado walk-forward
+    from cards2026 import walkforward_ou
+    cards = walkforward_ou(3.5)
+    return {"goals": {m: fin(G[m]) for m in G},
+            "corners": {m: fin(C[m]) for m in C},
+            "cards": cards}
+
+
 def main():
     print("Cargando datos y Elo walk-forward...")
     results = load_results()
@@ -386,12 +500,24 @@ def main():
                   f"{m['stat_acc']*100:5.1f}%   (baseline {m['baseline_elo_acc']*100:.1f}%)")
 
     if rows_2026 is not None:
+        # --- acierto de mercados (goles/tarjetas/córners) por modelo, en 2026 ---
+        elig_2026 = [r for r in rows_2026 if r["eligible"]]
+        markets = market_metrics(elig_2026)
+        me = all_metrics.get("2026", glob)
+        if markets:
+            me = {**me, "markets": markets}
+            g = markets["goals"]; c = markets["corners"]
+            print("\n=== MERCADOS 2026 (acierto por modelo) ===")
+            print(f"  {'Modelo':<10}{'Goles O/U':>11}{'Córners O/U':>13}")
+            for m in ("xgb", "elo", "ens", "stat", "y2026"):
+                print(f"  {m:<10}{g[m]['ou_acc']*100:>10.1f}%{c[m]['ou_acc']*100:>12.1f}%")
+            print(f"  Tarjetas O/U (compartida): {markets['cards']['ou_acc']*100:.1f}%")
         payload = {
             "meta": {"description": "Backtest walk-forward en todos los Mundiales",
                      "train_metrics": train_2026,
                      "global": glob,
                      "tournaments": all_metrics},
-            "metrics_eligible": all_metrics.get("2026", glob),
+            "metrics_eligible": me,
             "matches": rows_2026,
         }
         os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)

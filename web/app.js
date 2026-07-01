@@ -116,6 +116,7 @@ function init() {
   renderAdvancement();
   renderBacktest();
   renderStats();
+  renderBets();
   setupTabs();
   const t = new URLSearchParams(location.search).get("tab");
   if (t && document.querySelector(`.tab[data-panel="${t}"]`)) selectTab(t);
@@ -268,6 +269,160 @@ function centerCol(finalMatch) {
     <div class="champ-odds">${odds ? pct1(odds) + " prob. título" : ""}</div>`;
   col.appendChild(champBox);
   return col;
+}
+
+/* ---------- Apuestas ---------- */
+function _evTag(ev) {
+  const p = Math.round(ev * 100);
+  return `<span class="ev ${ev > 0 ? "pos" : "neg"}">${p > 0 ? "+" : ""}${p}% valor</span>`;
+}
+function _pickLabel(name) { return name === "Empate" ? "Empate" : "Gana " + esName(name); }
+
+function renderBets() {
+  const el = document.getElementById("betsEl");
+  if (!el) return;
+  const B = DATA && DATA.bets;
+  if (!B || !B.matches || !B.matches.length) {
+    el.innerHTML = `<p class="tl-empty">No hay cuotas de próximos partidos. Corre <code>python src/fetch_odds.py</code> y <code>build.py</code>.</p>`;
+    return;
+  }
+  const mk = BT && BT.metrics_eligible && BT.metrics_eligible.markets;
+  const t = B.top;
+  const hero = t ? `<div class="bet-hero">
+    <div class="bh-label">⭐ La mejor apuesta ahora mismo</div>
+    <div class="bh-main">${flag(t.home)} ${esName(t.home)} <span class="vs">vs</span> ${flag(t.away)} ${esName(t.away)}</div>
+    <div class="bh-pick">${_pickLabel(t.name)} <b>@ ${t.odd}</b></div>
+    <div class="bh-meta">Prob. del modelo <b>${pct(t.prob)}</b> · ${_evTag(t.ev)}</div>
+  </div>` : "";
+  const rel = mk ? `<div class="bet-note">📊 <b>Fiabilidad medida</b> (validación walk-forward): ganador <b>~85%</b> <small>(cuando hay favorito claro)</small> · goles O/U <b>${pct(mk.goals.ens.ou_acc)}</b> · tarjetas <b>${pct(mk.cards.ou_acc)}</b> <small>(tiende a sobrestimar)</small> · córners <b>${pct(mk.corners.ens.ou_acc)}</b> <small>(poco fiable, evítalo)</small>.</div>` : "";
+
+  const valueHTML = B.value && B.value.length ? B.value.map(v => `
+    <div class="bet-row"><span class="br-teams">${flag(v.home)} ${esName(v.home)} <small>vs</small> ${flag(v.away)} ${esName(v.away)}</span>
+      <span class="br-pick">${_pickLabel(v.name)} @ ${v.odd}</span>
+      <span class="br-prob">${pct(v.prob)}</span>${_evTag(v.ev)}</div>`).join("")
+    : `<p class="bet-empty">Sin apuestas de valor claras ahora (la casa está ajustada). Mira las seguras y los mercados.</p>`;
+
+  const safeHTML = B.safe.slice(0, 6).map(s => `
+    <div class="bet-row"><span class="br-teams">${flag(s.home)} ${esName(s.home)} <small>vs</small> ${flag(s.away)} ${esName(s.away)}</span>
+      <span class="br-pick">${_pickLabel(s.name)} @ ${s.odd}</span>
+      <span class="br-prob">${pct(s.prob)}</span>${_evTag(s.ev)}</div>`).join("");
+
+  const confHTML = B.confidence.filter(c => c.market !== "corners").slice(0, 8).map(c => `
+    <div class="bet-row"><span class="br-teams">${c.ico} ${flag(c.home)} ${esName(c.home)} <small>vs</small> ${flag(c.away)} ${esName(c.away)}</span>
+      <span class="br-pick">${c.pick} <small>(esp. ${c.exp})</small></span>
+      <span class="br-prob">${pct(c.prob)}</span></div>`).join("");
+
+  // Tarjetas por partido (clic -> cuadro completo de qué conviene)
+  const matchesHTML = B.matches.map((m, i) => {
+    const r = m.rec[0];
+    const ico = r.m.split(" ")[0];
+    const lbl = r.m.replace(/^\S+\s/, "");
+    return `<button type="button" class="betmatch" data-i="${i}">
+      <div class="bm-teams">${flag(m.home)} ${shortName(m.home)} <span class="vs">v</span> ${flag(m.away)} ${shortName(m.away)}</div>
+      ${m.date ? `<div class="bm-date">${m.date.slice(5)}</div>` : ""}
+      <div class="bm-top">${ico} <span class="bm-lbl">${lbl}:</span> <b>${r.pick}</b> <span class="bm-p">${pct(r.prob)}</span></div>
+      <div class="bm-hint">toca para ver todo →</div>
+    </button>`;
+  }).join("");
+
+  // Combinaciones (parlays): más pago manteniendo seguridad
+  const C = B.combos;
+  const comboRow = (x) => {
+    const legs = x.legs.map(l =>
+      `${l.sel === "X" ? "🤝 Empate" : flag(l.name) + " " + esName(l.name)} <span class="cl-odd">@${l.odd}</span>`).join(" &nbsp;+&nbsp; ");
+    return `<div class="combo-row">
+      <div class="cr-legs">${legs}</div>
+      <div class="cr-meta">
+        <span class="cr-prob">${pct(x.prob)} prob.</span>
+        <span class="cr-odd">cuota ${x.odd}</span>
+        <span class="cr-pay">${C.stake}→<b>${x.payout}</b> <small>(+${x.profit})</small></span>
+        ${_evTag(x.ev)}</div>
+    </div>`;
+  };
+  const combosHTML = C ? `
+    <h3 class="bet-h" style="margin-top:22px">🧮 Combinaciones — más pago sin perder seguridad <small>(stake ${C.stake})</small></h3>
+    <div class="bet-2col">
+      <div class="bet-block"><h4 class="combo-h">🛡️ Más seguras</h4>${C.safest.slice(0,4).map(comboRow).join("")}</div>
+      <div class="bet-block"><h4 class="combo-h">⚖️ Mejor equilibrio <small>(segura + paga bien)</small></h4>${(C.balanced.length?C.balanced:C.safest).slice(0,4).map(comboRow).join("")}</div>
+    </div>
+    <div class="bet-block"><h4 class="combo-h">💰 Mayor pago <small>(más riesgo)</small></h4>${C.payout.slice(0,4).map(comboRow).join("")}</div>
+    <p class="bet-note" style="margin-top:6px">La prob. conjunta es el producto de cada partido (son independientes): a más partidos, más pago pero menos seguro. Una combinada falla entera si falla UNA pata.</p>` : "";
+
+  el.innerHTML = hero + rel + `
+    <div class="bet-actions"><button id="dlQuiniela" class="dl-btn">⬇️ Descargar quiniela (CSV)</button></div>
+    <h3 class="bet-h">📋 Partidos — toca una tarjeta para ver <b>qué te conviene apostar</b></h3>
+    <div class="betmatch-grid">${matchesHTML}</div>
+    ${combosHTML}
+    <p class="bet-disclaimer">⚠️ Apuestas sujetas a azar. El modelo da probabilidades, no certezas. Apuesta solo lo que puedas permitirte perder. +18.</p>`;
+
+  el.querySelectorAll(".betmatch").forEach(btn =>
+    btn.addEventListener("click", () => openBetModal(B.matches[+btn.dataset.i])));
+  const dl = document.getElementById("dlQuiniela");
+  if (dl) dl.addEventListener("click", downloadQuiniela);
+}
+
+function openBetModal(m) {
+  const modal = document.getElementById("modal");
+  modal.classList.remove("modal--table");
+  const recHTML = m.rec.map(r =>
+    `<div class="brec"><span class="brec-m">${r.m}</span> <b>${r.pick}</b>
+      <span class="brec-p">${pct(r.prob)}</span> <span class="brec-rel">${r.rel}</span></div>`).join("");
+  const x12 = m.x12.all.map(e => {
+    const val = e.edge > 0.03 && e.prob >= 0.35;
+    const nm = e.sel === "1" ? esName(m.home) : e.sel === "2" ? esName(m.away) : "Empate";
+    return `<tr class="${val ? "dv-val" : ""}"><td class="l">${nm}</td><td>${e.odd}</td>
+      <td>${pct(e.prob)}</td><td>${pct(e.fair)}</td>
+      <td class="${e.edge > 0 ? "pos" : "neg"}">${e.edge > 0 ? "+" : ""}${Math.round(e.edge * 100)}%</td></tr>`;
+  }).join("");
+  const lines = (arr, best) => arr.map(l => {
+    const pk = best && best.line === l.l;
+    return `<div class="oul ${pk ? "oul-best" : ""}"><span class="oul-l">±${l.l}</span>
+      <span class="ov">Más ${pct(l.over)}</span><span class="un">Menos ${pct(1 - l.over)}</span></div>`;
+  }).join("");
+  modal.innerHTML = `
+    <div class="modal-head"><div>
+      <h3 id="mTitle">${flag(m.home)} ${esName(m.home)} <span class="vs">vs</span> ${flag(m.away)} ${esName(m.away)}</h3>
+      <span class="mh-sub">${m.date ? "Partido " + m.date.slice(5) + " · " : ""}goles esperados ${m.xgA}–${m.xgB}</span>
+    </div><button class="modal-x" onclick="closeModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-body">
+      <div class="block bet-rec"><p class="block-title">💡 Qué te conviene apostar</p>${recHTML}</div>
+      <div class="block"><p class="block-title">Ganador (1X2) — modelo vs casa <b>sin vig</b></p>
+        <table class="devig"><thead><tr><th class="l">Resultado</th><th>Cuota</th><th>Modelo</th><th>Justo</th><th>Ventaja</th></tr></thead>
+        <tbody>${x12}</tbody></table>
+        <p class="mini-note">Verde = el modelo ve valor (ventaja &gt; 3% sobre la casa sin margen).</p></div>
+      <div class="block"><p class="block-title">⚽ Goles totales <span class="rel-tag">fiable 80%</span></p>${lines(m.goalsLines, m.goals)}</div>
+      <div class="block"><p class="block-title">🟨 Tarjetas <span class="rel-tag">fiable 76%</span></p>${lines(m.cardsLines, m.cards)}</div>
+      <div class="block"><p class="block-title">🤝 Ambos anotan</p>
+        <div class="oul"><span class="oul-l"></span><span class="ov">Sí ${pct(m.btts)}</span><span class="un">No ${pct(1 - m.btts)}</span></div></div>
+      <div class="block"><p class="block-title">Goles por equipo</p>
+        <p class="tt-name">${esName(m.teamA.name)}</p>${lines(m.teamA.lines)}
+        <p class="tt-name">${esName(m.teamB.name)}</p>${lines(m.teamB.lines)}</div>
+      <div class="block"><p class="block-title">🚩 Córners <span class="rel-tag warn">poco fiable — evítalo</span></p>${lines(m.cornersLines, m.corners)}</div>
+    </div>`;
+  document.getElementById("overlay").classList.add("open");
+}
+
+function downloadQuiniela() {
+  const B = DATA && DATA.bets;
+  if (!B) return;
+  const clean = (s) => String(s).replace(/[^\x00-\x7Fáéíóúñ ]/gi, "").trim();
+  const rows = [["Partido", "Fecha", "Mercado", "Apuesta", "Prob modelo", "Fiabilidad"]];
+  B.matches.forEach(m => m.rec.forEach(r =>
+    rows.push([`${esName(m.home)} vs ${esName(m.away)}`, m.date, clean(r.m),
+               clean(r.pick), Math.round(r.prob * 100) + "%", r.rel])));
+  rows.push([]);
+  rows.push(["COMBINACIONES (stake " + B.combos.stake + ")", "", "", "Cuota", "Prob", "Pago"]);
+  (B.combos.balanced.length ? B.combos.balanced : B.combos.safest).slice(0, 3).forEach(c => {
+    const legs = c.legs.map(l => l.sel === "X" ? "Empate" : esName(l.name)).join(" + ");
+    rows.push([clean(legs), "", "combinada", c.odd, Math.round(c.prob * 100) + "%", B.combos.stake + "->" + c.payout]);
+  });
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "quiniela_mundial2026.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
 }
 
 /* ---------- Groups ---------- */
@@ -482,12 +637,25 @@ function renderBtTable() {
   const nPredX = elig.filter(x => predOf(x) === "X").length;
   const sEl = document.getElementById("btSplit");
   if (sEl) {
+    // --- Mercados (goles/córners con la λ del modelo; tarjetas compartida) ---
+    const mk = BT.metrics_eligible && BT.metrics_eligible.markets;
+    let mktHTML = "";
+    if (mk) {
+      const gm = mk.goals[VALID_MODEL] || mk.goals.ens;
+      const cm = mk.corners[VALID_MODEL] || mk.corners.ens;
+      mktHTML = `<div class="bt-split bt-mkt">
+        <span class="bts-it mkt-title">📈 Mercados <small>(${gm.n} partidos)</small></span>
+        <span class="bts-it">⚽ Goles O/U 2.5: <b>${pct(gm.ou_acc)}</b> <small>(±${gm.mae} gol)</small></span>
+        <span class="bts-it">🚩 Córners O/U 9.5: <b>${pct(cm.ou_acc)}</b> <small>(±${cm.mae})</small></span>
+        <span class="bts-it">🟨 Tarjetas O/U 3.5: <b>${pct(mk.cards.ou_acc)}</b> <small>(compartida, ±${mk.cards.mae})</small></span>
+      </div>`;
+    }
     sEl.innerHTML = `<div class="bt-split">
       <span class="bts-it"><b>${VMODELS[VALID_MODEL].n}</b> en ${elig.length} partidos</span>
       <span class="bts-it ok-tone">✅ Victorias: <b>${pct(hitW / wins.length)}</b> <small>(${hitW}/${wins.length})</small></span>
       <span class="bts-it warn-tone">🤝 Empates: <b>${draws.length ? pct(hitD / draws.length) : "—"}</b> <small>(${hitD}/${draws.length})</small></span>
       <span class="bts-it">Predijo empate: <b>${nPredX}</b> ${nPredX === 1 ? "vez" : "veces"}</span>
-    </div>`;
+    </div>${mktHTML}`;
   }
   let head = `<thead><tr><th class="l">Fecha</th><th class="l">Partido</th>
     <th>Pred. <span class="th-mod">${VMODELS[VALID_MODEL].n}</span></th><th>Prob.</th>
@@ -661,12 +829,15 @@ function ouLegendHTML() {
       <span><i class="ou-sw under"></i>Menos de (Under)</span></div>`;
 }
 function overUnderHTML(mt) {
-  if (!mt.ou) return "";
-  const ou = mt.ou;
+  const perM = mt.mkt && mt.mkt[TMODEL];
+  const ou = perM ? perM.ou : mt.ou;
+  if (!ou) return "";
   const rows = [["+1.5 goles", ou.o15], ["+2.5 goles", ou.o25], ["+3.5 goles", ou.o35]]
     .map(([l, p]) => ouBar(l, p)).join("");
   return `<div class="block">
-    <p class="block-title">⚽ Goles totales — más probable: <b>${ou.mode}</b></p>
+    <p class="block-title">⚽ Goles totales — más probable: <b>${ou.mode}</b>${
+      ou.exp != null ? ` <span class="exp-tag">esperado ${ou.exp.toFixed(1)}</span>` : ""}${
+      perM ? ` <span class="mkt-tag">según ${VMODELS[TMODEL].n}</span>` : ""}</p>
     <div class="ou-wrap">${rows}</div>${ouLegendHTML()}
   </div>`;
 }
@@ -674,7 +845,8 @@ function marketHTML(title, mkt) {
   if (!mkt || !mkt.lines) return "";
   const rows = mkt.lines.map(L => ouBar("+" + L.l, L.over)).join("");
   return `<div class="block">
-    <p class="block-title">${title} — más probable: <b>${mkt.mode}</b></p>
+    <p class="block-title">${title} — más probable: <b>${mkt.mode}</b>${
+      mkt.exp != null ? ` <span class="exp-tag">esperado ${mkt.exp.toFixed(1)}</span>` : ""}</p>
     <div class="ou-wrap">${rows}</div>${ouLegendHTML()}
   </div>`;
 }
@@ -809,9 +981,10 @@ function openModal(mt) {
         ${factorsHTML(mt)}
       </div>` : ""}
 
-      ${marketHTML("🟨 Tarjetas amarillas (total)", mt.cardsMkt)}
+      ${marketHTML("🟨 Tarjetas amarillas (total) · compartida", mt.cardsMkt)}
 
-      ${marketHTML("⛳ Tiros de esquina (total)", mt.cornersMkt)}
+      ${marketHTML("⛳ Tiros de esquina (total) · según " + VMODELS[TMODEL].n,
+        (mt.mkt && mt.mkt[TMODEL] ? mt.mkt[TMODEL].cornersMkt : mt.cornersMkt))}
 
       ${(mt.penShareA != null || mt.penShareB != null) ? `<div class="block">
         <p class="block-title">Dependencia del penal (% de sus goles, histórico)</p>

@@ -390,6 +390,104 @@ table.adv tbody tr:hover { background: var(--surface); }
 .bts-it small { color: var(--muted); font-family: 'Fira Code', monospace; }
 .bts-it.ok-tone { border-color: rgba(34,197,94,.4); }
 .bts-it.warn-tone { border-color: rgba(234,179,8,.4); }
+.bt-mkt { margin-top: 8px; }
+.bt-mkt .bts-it { background: var(--surface-2); border-color: rgba(141,166,214,.28); }
+.bts-it.mkt-title { background: transparent; border: none; color: var(--accent); font-weight: 700; }
+.mkt-tag { font-size: .68rem; color: var(--accent); font-weight: 600; font-family: 'Fira Code', monospace; }
+.exp-tag { font-size: .66rem; color: var(--muted); font-weight: 600; font-family: 'Fira Code', monospace;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
+
+/* ---- Apuestas ---- */
+.bet-hero { background: linear-gradient(135deg, rgba(245,179,1,.16), rgba(34,197,94,.10));
+  border: 1px solid rgba(245,179,1,.5); border-radius: 16px; padding: 18px 20px; margin-bottom: 16px; }
+.bh-label { font-size: .72rem; letter-spacing: 1px; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+.bh-main { font-size: 1.25rem; font-weight: 700; margin: 6px 0; }
+.bh-pick { font-size: 1.05rem; color: #fff; }
+.bh-pick b { color: var(--accent); font-family: 'Fira Code', monospace; }
+.bh-meta { color: var(--muted); margin-top: 4px; font-size: .9rem; }
+.bet-note { background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 14px; font-size: .82rem; color: var(--txt); margin-bottom: 18px; }
+.bet-note small { color: var(--muted); }
+.bet-block { margin-bottom: 16px; }
+.bet-h { font-size: .95rem; margin: 0 0 10px; }
+.bet-h small { color: var(--muted); font-weight: 400; }
+.bet-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.bet-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 9px;
+  padding: 8px 12px; margin-bottom: 7px; font-size: .86rem; }
+.br-teams { flex: 1 1 200px; } .br-teams small { color: var(--muted); }
+.br-pick { font-weight: 600; color: #fff; }
+.br-prob { font-family: 'Fira Code', monospace; color: var(--accent); font-weight: 700; min-width: 42px; text-align: right; }
+.ev { font-family: 'Fira Code', monospace; font-size: .74rem; font-weight: 700; padding: 1px 7px; border-radius: 6px; }
+.ev.pos { background: rgba(34,197,94,.18); color: #4ade80; }
+.ev.neg { background: rgba(148,163,184,.14); color: var(--muted); }
+.bet-empty { color: var(--muted); font-size: .85rem; padding: 6px 2px; }
+.bet-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.bet-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.bc-head { font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.bc-date { margin-left: auto; color: var(--muted); font-family: 'Fira Code', monospace; font-size: .72rem; }
+.bx-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+.bx-sel { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 4px; text-align: center; font-size: .72rem; display: flex; flex-direction: column; gap: 2px; }
+.bx-sel.best { border-color: rgba(34,197,94,.55); background: rgba(34,197,94,.08); }
+.bx-odd { font-family: 'Fira Code', monospace; color: var(--accent); font-weight: 700; }
+.bx-prob { color: var(--muted); font-size: .68rem; }
+.bx-ev { font-family: 'Fira Code', monospace; font-size: .68rem; font-weight: 700; }
+.bx-ev.pos { color: #4ade80; } .bx-ev.neg { color: var(--muted); }
+.bm-row { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--border); padding-top: 8px; }
+.bm-it { font-size: .78rem; } .bm-it b { color: #fff; } .bm-it small { color: var(--muted); }
+.bet-disclaimer { margin-top: 20px; color: var(--muted); font-size: .78rem; text-align: center;
+  border-top: 1px solid var(--border); padding-top: 14px; }
+.combo-h { font-size: .82rem; margin: 0 0 8px; color: var(--accent); }
+.combo-h small { color: var(--muted); font-weight: 400; }
+.combo-row { background: var(--surface); border: 1px solid var(--border); border-radius: 9px;
+  padding: 9px 12px; margin-bottom: 7px; }
+.cr-legs { font-size: .82rem; margin-bottom: 6px; }
+.cl-odd { font-family: 'Fira Code', monospace; color: var(--accent); font-size: .74rem; }
+.cr-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: .78rem; }
+.cr-prob { color: #4ade80; font-weight: 700; }
+.cr-odd { font-family: 'Fira Code', monospace; color: var(--muted); }
+.cr-pay { font-family: 'Fira Code', monospace; } .cr-pay b { color: var(--accent); font-size: .95rem; }
+.cr-pay small { color: var(--muted); }
+/* tarjetas por partido */
+.bet-actions { margin-bottom: 14px; }
+.dl-btn { background: var(--accent); color: #1a1206; border: none; border-radius: 10px;
+  padding: 10px 18px; font-weight: 800; font-size: .9rem; cursor: pointer; }
+.dl-btn:hover { filter: brightness(1.08); }
+.betmatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+.betmatch { text-align: left; background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; cursor: pointer;
+  transition: transform .15s, border-color .2s, box-shadow .2s; color: inherit; font: inherit; }
+.betmatch:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,.45); }
+.bm-teams { font-weight: 600; font-size: .9rem; }
+.betmatch .bm-date { color: var(--muted); font-family: 'Fira Code', monospace; font-size: .7rem; margin: 3px 0 8px; }
+.bm-top { font-size: .82rem; background: rgba(34,197,94,.10); border: 1px solid rgba(34,197,94,.3);
+  border-radius: 8px; padding: 6px 8px; }
+.bm-top b { color: #fff; } .bm-lbl { color: var(--muted); } .bm-p { color: #4ade80; font-weight: 700; float: right; }
+.bm-hint { color: var(--accent); font-size: .7rem; margin-top: 8px; }
+/* modal de apuestas */
+.modal-x { background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; align-self: flex-start; }
+.mh-sub { color: var(--muted); font-size: .8rem; }
+.bet-rec .brec { display: flex; align-items: center; gap: 8px; padding: 7px 10px; margin-bottom: 6px;
+  background: rgba(245,179,1,.10); border: 1px solid rgba(245,179,1,.3); border-radius: 8px; font-size: .86rem; }
+.brec-m { flex: 0 0 auto; } .brec b { color: #fff; flex: 1; }
+.brec-p { font-family: 'Fira Code', monospace; color: var(--accent); font-weight: 700; }
+.brec-rel { font-size: .72rem; color: var(--muted); }
+.devig { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.devig th, .devig td { padding: 6px 8px; text-align: center; border-bottom: 1px solid var(--border); }
+.devig th.l, .devig td.l { text-align: left; }
+.devig .pos { color: #4ade80; font-weight: 700; } .devig .neg { color: var(--muted); }
+.devig tr.dv-val { background: rgba(34,197,94,.10); }
+.mini-note { color: var(--muted); font-size: .74rem; margin-top: 6px; }
+.oul { display: grid; grid-template-columns: 54px 1fr 1fr; gap: 6px; align-items: center;
+  padding: 5px 8px; border-bottom: 1px solid var(--border); font-size: .82rem; }
+.oul-l { font-family: 'Fira Code', monospace; color: var(--muted); }
+.oul .ov { color: #4ade80; } .oul .un { color: #f0a; color: #f87171; text-align: right; }
+.oul-best { background: rgba(245,179,1,.10); border-radius: 6px; }
+.rel-tag { font-size: .66rem; background: rgba(34,197,94,.16); color: #4ade80; border-radius: 6px; padding: 1px 7px; font-weight: 700; }
+.rel-tag.warn { background: rgba(239,68,68,.16); color: #f87171; }
+.tt-name { font-size: .8rem; color: var(--accent); margin: 8px 0 2px; font-weight: 600; }
+@media (max-width: 640px) { .bet-2col { grid-template-columns: 1fr; } .betmatch-grid { grid-template-columns: 1fr 1fr; } }
 .tv-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r2); padding: 18px; margin-top: 22px; }
 .tv-card h3 { margin: 0 0 6px; font-size: .95rem; }
 .tv-chart { display: flex; gap: 10px; align-items: flex-end; height: 150px; margin: 14px 0 6px; }
