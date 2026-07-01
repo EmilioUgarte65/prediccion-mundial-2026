@@ -228,9 +228,10 @@ function bcard(mt, mirror) {
             : mt.decided === "ET" ? "pror." : "";
   // Badge de resultado real (jugado) + si el modelo acertó el ganador
   const realBadge = mt.real
-    ? `<div class="breal ${mt.hit ? "ok" : "no"}">✓ jugado${
-        mt.hit === false ? ` · falló (decía ${shortName(mt.predWinner)})` :
-        mt.hit === true ? " · acertó" : ""}</div>`
+    ? `<div class="breal ${mt.hit ? "ok" : "no"}" title="${
+        mt.hit ? "El modelo acertó el ganador"
+               : "El modelo falló: había previsto a " + esName(mt.predWinner)}">${
+        mt.hit ? "✓ acertó" : "✗ falló · iba " + shortName(mt.predWinner)}</div>`
     : "";
   const row = (team, score, win) => {
     const fl = flag(team), nm = `<span class="bname">${shortName(team)}</span>`,

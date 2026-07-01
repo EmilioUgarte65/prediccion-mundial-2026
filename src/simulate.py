@@ -747,12 +747,16 @@ def predict_ko_match(engine, a, b, timing, rng, n=N_MATCH, model="ens"):
         is_real = True
         if real["home"] == a:
             scoreA, scoreB = real["hs"], real["as"]
+            penA, penB = real.get("penHome"), real.get("penAway")
         else:
             scoreA, scoreB = real["as"], real["hs"]
+            penA, penB = real.get("penAway"), real.get("penHome")
         favorite = real["winner"]
         fav_side = "A" if favorite == a else "B"
         decided = {"REGULAR": "regular", "EXTRA_TIME": "ET",
-                   "PENALTIES": "pens"}.get(real.get("dur", ""), "regular")
+                   "PENALTY_SHOOTOUT": "pens"}.get(real.get("dur", ""), "regular")
+        if decided != "pens":
+            penA = penB = None
     return {
         "teamA": a, "teamB": b, "pA": round(pA, 4), "pB": round(1 - pA, 4),
         "models": mb, "outcome90": outcome90,
@@ -838,8 +842,15 @@ def load_real_ko():
                 hs, as_ = int(r["hs"]), int(r["as"])
             except (ValueError, KeyError, TypeError):
                 continue
+
+            def _int(v):
+                try:
+                    return int(v)
+                except (ValueError, TypeError):
+                    return None
             out[frozenset((r["home"], r["away"]))] = {
                 "home": r["home"], "away": r["away"], "hs": hs, "as": as_,
+                "penHome": _int(r.get("penHome")), "penAway": _int(r.get("penAway")),
                 "winner": r["winner"], "dur": r.get("dur", ""),
             }
     return out

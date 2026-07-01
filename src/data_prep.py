@@ -113,6 +113,15 @@ def get_wc2026_fixtures(normalize: bool = True) -> pd.DataFrame:
         aliases = build_alias_map()
         df["home_team"] = normalize_team(df["home_team"], aliases)
         df["away_team"] = normalize_team(df["away_team"], aliases)
+    # Solo FASE DE GRUPOS: ambos equipos del MISMO grupo oficial. Esto excluye
+    # los partidos de eliminatorias (cruces entre grupos) que también viven en
+    # results.csv para el entrenamiento, sin confundir la tabla de grupos.
+    from wc2026 import load_official_groups
+    team_group = {t: g for g, ts in load_official_groups().items() for t in ts}
+    same_group = df.apply(
+        lambda r: team_group.get(r["home_team"]) is not None
+        and team_group.get(r["home_team"]) == team_group.get(r["away_team"]), axis=1)
+    df = df[same_group]
     return df.sort_values("date").reset_index(drop=True)
 
 

@@ -88,8 +88,18 @@ def main():
             continue
         sc = m.get("score") or {}
         ft = sc.get("fullTime") or {}
-        hs, as_ = ft.get("home"), ft.get("away")
-        # ganador real (incluye prórroga/penales según football-data)
+        reg = sc.get("regularTime") or {}
+        et = sc.get("extraTime") or {}
+        pen = sc.get("penalties") or {}
+        dur = sc.get("duration") or ""
+        # Marcador REAL del partido: si se definió por penales, el de 90'+prórroga
+        # (un empate); si no, el fullTime. Los penales se guardan aparte.
+        if dur == "PENALTY_SHOOTOUT":
+            hs = (reg.get("home") or 0) + (et.get("home") or 0)
+            as_ = (reg.get("away") or 0) + (et.get("away") or 0)
+        else:
+            hs, as_ = ft.get("home"), ft.get("away")
+        ph, pa = pen.get("home"), pen.get("away")
         win = ""
         if m["status"] == "FINISHED":
             nplayed += 1
@@ -101,13 +111,15 @@ def main():
         korows.append({"stage": m["stage"], "home": cz(h), "away": cz(a),
                        "hs": "" if hs is None else hs,
                        "as": "" if as_ is None else as_,
-                       "winner": win, "dur": sc.get("duration") or "",
-                       "status": m["status"]})
+                       "penHome": "" if ph is None else ph,
+                       "penAway": "" if pa is None else pa,
+                       "winner": win, "dur": dur, "status": m["status"]})
     if korows:
         p3 = os.path.join(ROOT, "data_user", "ko_real_2026.csv")
         with open(p3, "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=["stage", "home", "away", "hs", "as",
-                                              "winner", "dur", "status"])
+                                              "penHome", "penAway", "winner", "dur",
+                                              "status"])
             w.writeheader(); w.writerows(korows)
         print(f"OK -> {p3} ({len(korows)} cruces reales, {nplayed} ya jugados)")
 

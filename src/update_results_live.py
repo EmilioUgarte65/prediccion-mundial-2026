@@ -28,7 +28,7 @@ ALIAS = {
 
 def norm(s):
     s = unicodedata.normalize("NFKD", str(s)).encode("ascii", "ignore").decode()
-    s = s.lower().strip().replace("islands", "").strip()
+    s = s.lower().strip()
     return ALIAS.get(s, s)
 
 
@@ -60,9 +60,20 @@ def main():
     miss = []
     for m in fin:
         h, a = m["homeTeam"]["name"], m["awayTeam"]["name"]
-        ft = m["score"]["fullTime"]
-        if ft["home"] is None:
+        sc = m.get("score") or {}
+        ft = sc.get("fullTime") or {}
+        if ft.get("home") is None:
             continue
+        # Marcador DEPORTIVO (orientación football-data): si se definió por PENALES,
+        # el empate de 90'+prórroga (los penales NO son goles), para no contaminar
+        # el Elo/forma con goles de tanda ni contar un empate como victoria.
+        if sc.get("duration") == "PENALTY_SHOOTOUT":
+            reg = sc.get("regularTime") or {}
+            et = sc.get("extraTime") or {}
+            sh = (reg.get("home") or 0) + (et.get("home") or 0)
+            sa = (reg.get("away") or 0) + (et.get("away") or 0)
+        else:
+            sh, sa = ft["home"], ft["away"]
         key = frozenset((norm(h), norm(a)))
         rows = pair_rows.get(key, [])
         if not rows:
@@ -74,7 +85,7 @@ def main():
             new_rows.append({
                 "date": (fd.date().isoformat() if pd.notna(fd) else ""),
                 "home_team": nh, "away_team": na,
-                "home_score": ft["home"], "away_score": ft["away"],
+                "home_score": sh, "away_score": sa,
                 "tournament": "FIFA World Cup",
                 "city": (m.get("venue") or ""), "country": "United States",
                 "neutral": True,
@@ -90,11 +101,11 @@ def main():
                     df.at[k, "date"], errors="coerce")) else 9999))
         else:
             i = rows[0]
-        # orientar el marcador según cómo está el partido en el CSV
+        # orientar el marcador (deportivo) según cómo está el partido en el CSV
         if norm(df.at[i, "home_team"]) == norm(h):
-            hs, as_ = ft["home"], ft["away"]
+            hs, as_ = sh, sa
         else:
-            hs, as_ = ft["away"], ft["home"]
+            hs, as_ = sa, sh
         cur = pd.to_numeric(pd.Series([df.at[i, "home_score"]]), errors="coerce")[0]
         if pd.isna(cur):
             updated += 1

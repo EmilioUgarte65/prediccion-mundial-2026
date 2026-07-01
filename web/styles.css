@@ -94,7 +94,7 @@ section.panel.active { display: block; animation: fade .3s ease; }
 .bracket-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: 20px; }
 
 .bracket2 {
-  display: flex; align-items: stretch; width: 100%; min-width: 980px; min-height: 640px;
+  display: flex; align-items: stretch; width: 100%; min-width: 980px; min-height: 760px;
   background:
     radial-gradient(60% 75% at 88% 0%, rgba(34, 197, 94, 0.22), transparent 62%),
     radial-gradient(55% 65% at 12% 2%, rgba(34, 197, 94, 0.10), transparent 60%),
@@ -110,7 +110,7 @@ section.panel.active { display: block; animation: fade .3s ease; }
   opacity: .9;
 }
 .bcol-matches { display: flex; flex-direction: column; flex: 1; }
-.slot { flex: 1; display: flex; align-items: center; position: relative; }
+.slot { flex: 1; display: flex; align-items: center; position: relative; padding: 6px 0; }
 
 .bcard {
   position: relative; z-index: 2; width: 100%;
@@ -123,10 +123,11 @@ section.panel.active { display: block; animation: fade .3s ease; }
 .bcard:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .btag { font-size: .56rem; color: var(--accent); text-align: center; padding: 3px 0 0; font-family: 'Fira Code', monospace; letter-spacing: .5px; }
 .bcard.played { border-color: rgba(245,179,1,.5); }
-.breal { font-size: .54rem; font-weight: 700; text-align: center; padding: 3px 4px;
-  letter-spacing: .3px; line-height: 1.2; }
-.breal.ok { background: rgba(34,197,94,.16); color: #4ade80; }
-.breal.no { background: rgba(239,68,68,.16); color: #f87171; }
+.breal { font-size: .56rem; font-weight: 800; text-align: center; padding: 3px 6px;
+  letter-spacing: .2px; line-height: 1.25;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.breal.ok { background: rgba(34,197,94,.18); color: #4ade80; }
+.breal.no { background: rgba(239,68,68,.20); color: #fca5a5; }
 .brow {
   display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 8px;
   padding: 7px 10px; font-size: .8rem;
@@ -598,12 +599,14 @@ footer a { color: var(--primary); }
   .cards-row { flex-wrap: wrap; }
   /* ---- BRACKET compacto en móvil ---- */
   :root { --gap: 13px; }
-  .bracket2 { min-width: 720px; min-height: 480px; padding: 12px 6px; border-radius: 14px; }
+  .bracket2 { min-width: 720px; min-height: 560px; padding: 12px 6px; border-radius: 14px; }
   .bcol-head { font-size: .54rem; letter-spacing: 1px; margin-bottom: 8px; }
+  .slot { padding: 4px 0; }
   .brow { padding: 5px 7px; font-size: .66rem; gap: 5px; grid-template-columns: 16px 1fr auto; }
   .bcard.mirror .brow { grid-template-columns: auto 1fr 16px; }
   .bscore { font-size: .68rem; min-width: 11px; }
   .btag { font-size: .48rem; }
+  .breal { font-size: .48rem; padding: 2px 4px; }
   .center-col { flex: 0 0 132px; padding: 0 3px; gap: 6px; }
   .center-col .bcard { min-width: 118px; }
   .trophy-big svg { width: 40px; height: 40px; }

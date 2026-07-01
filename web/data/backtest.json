@@ -10,20 +10,20 @@
     "global": {
       "n": 635,
       "baseline_elo_acc": 0.5654,
-      "goals_mae": 0.9583,
+      "goals_mae": 0.9488,
       "exact_score": 0.1354,
-      "stat_acc": 0.5449,
-      "stat_logloss": 0.9782,
-      "stat_brier": 0.5822,
-      "xgb_acc": 0.5638,
-      "xgb_logloss": 0.9715,
-      "xgb_brier": 0.5729,
+      "stat_acc": 0.5433,
+      "stat_logloss": 0.9778,
+      "stat_brier": 0.5821,
+      "xgb_acc": 0.5622,
+      "xgb_logloss": 0.9716,
+      "xgb_brier": 0.573,
       "elo_acc": 0.5654,
-      "elo_logloss": 0.9664,
+      "elo_logloss": 0.9663,
       "elo_brier": 0.5653,
       "ens_acc": 0.5701,
-      "ens_logloss": 0.9568,
-      "ens_brier": 0.5653
+      "ens_logloss": 0.9567,
+      "ens_brier": 0.5654
     },
     "tournaments": {
       "1970": {
@@ -281,41 +281,41 @@
       "2026": {
         "n": 55,
         "baseline_elo_acc": 0.6545,
-        "goals_mae": 1.0545,
+        "goals_mae": 0.9455,
         "exact_score": 0.1455,
-        "stat_acc": 0.6,
-        "stat_logloss": 0.8789,
-        "stat_brier": 0.5143,
-        "xgb_acc": 0.7091,
-        "xgb_logloss": 0.8518,
-        "xgb_brier": 0.4884,
+        "stat_acc": 0.5818,
+        "stat_logloss": 0.875,
+        "stat_brier": 0.5129,
+        "xgb_acc": 0.6909,
+        "xgb_logloss": 0.8526,
+        "xgb_brier": 0.4899,
         "elo_acc": 0.6727,
-        "elo_logloss": 0.7891,
+        "elo_logloss": 0.7884,
         "elo_brier": 0.4572,
         "ens_acc": 0.6545,
-        "ens_logloss": 0.8262,
-        "ens_brier": 0.4773
+        "ens_logloss": 0.825,
+        "ens_brier": 0.4774
       }
     }
   },
   "metrics_eligible": {
     "n": 55,
     "baseline_elo_acc": 0.6545,
-    "goals_mae": 1.0545,
+    "goals_mae": 0.9455,
     "exact_score": 0.1455,
-    "stat_acc": 0.6,
-    "stat_logloss": 0.8789,
-    "stat_brier": 0.5143,
-    "xgb_acc": 0.7091,
-    "xgb_logloss": 0.8518,
-    "xgb_brier": 0.4884,
+    "stat_acc": 0.5818,
+    "stat_logloss": 0.875,
+    "stat_brier": 0.5129,
+    "xgb_acc": 0.6909,
+    "xgb_logloss": 0.8526,
+    "xgb_brier": 0.4899,
     "elo_acc": 0.6727,
-    "elo_logloss": 0.7891,
+    "elo_logloss": 0.7884,
     "elo_brier": 0.4572,
     "ens_acc": 0.6545,
-    "ens_logloss": 0.8262,
-    "ens_brier": 0.4773,
-    "y2026_acc": 0.6182,
+    "ens_logloss": 0.825,
+    "ens_brier": 0.4774,
+    "y2026_acc": 0.6,
     "y2026_logloss": 0.0
   },
   "matches": [
@@ -3093,10 +3093,10 @@
         0
       ],
       "real_score": [
-        4,
-        5
+        1,
+        1
       ],
-      "real": "2",
+      "real": "X",
       "hit": false,
       "exact": false,
       "eligible": true,
@@ -3245,10 +3245,10 @@
         0
       ],
       "real_score": [
-        3,
-        4
+        1,
+        1
       ],
-      "real": "2",
+      "real": "X",
       "hit": false,
       "exact": false,
       "eligible": true,
