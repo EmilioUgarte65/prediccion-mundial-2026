@@ -19,6 +19,12 @@
       "assists": 0
     },
     {
+      "player": "Harry Kane",
+      "team": "England",
+      "goals": 5,
+      "assists": 0
+    },
+    {
       "player": "Vinicius Junior",
       "team": "Brazil",
       "goals": 4,
@@ -31,10 +37,22 @@
       "assists": 2
     },
     {
+      "player": "Ismaïla Sarr",
+      "team": "Senegal",
+      "goals": 4,
+      "assists": 1
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 3,
       "assists": 1
+    },
+    {
+      "player": "Folarin Balogun",
+      "team": "United States",
+      "goals": 3,
+      "assists": 0
     },
     {
       "player": "Ismael Saibari",
@@ -53,24 +71,6 @@
       "team": "Germany",
       "goals": 3,
       "assists": 2
-    },
-    {
-      "player": "Elijah Just",
-      "team": "New Zealand",
-      "goals": 3,
-      "assists": 0
-    },
-    {
-      "player": "Yoane Wissa",
-      "team": "Congo DR",
-      "goals": 3,
-      "assists": 0
-    },
-    {
-      "player": "Harry Kane",
-      "team": "England",
-      "goals": 3,
-      "assists": 0
     }
   ],
   "referees": [
@@ -80,6 +80,10 @@
     },
     {
       "referee": "Danny Makkelie",
+      "matches": 3
+    },
+    {
+      "referee": "Said Martinez",
       "matches": 3
     },
     {
@@ -93,11 +97,7 @@
     {
       "referee": "Jalal Jayed",
       "matches": 3
-    },
-    {
-      "referee": "Amin Omar",
-      "matches": 2
     }
   ],
-  "n_ref_matches": 77
+  "n_ref_matches": 80
 }

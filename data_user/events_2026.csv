@@ -2884,3 +2884,128 @@ gameId,minute,type,team,player,text
 760491,90'+5',Red Card,Ecuador,Piero Hincapié,Piero Hincapié (Ecuador) is shown the red card.
 760491,90'+9',Yellow Card,Ecuador,Moisés Caicedo,Moisés Caicedo (Ecuador) is shown the yellow card for a bad foul.
 760491,90'+9',End Regular Time,,,
+760495,,Kickoff,,,
+760495,7',Goal,DR Congo,Brian Cipenga,"Goal! England 0, Congo DR 1. Brian Cipenga (Congo DR) right footed shot from the left side of the box to the bottom left corner. Assisted by Chancel Mbemba."
+760495,9',Start Delay,DR Congo,,Delay in match because of an injury Lionel Mpasi (Congo DR).
+760495,9',Start Delay,England,,
+760495,10',End Delay,DR Congo,,Delay over. They are ready to continue.
+760495,10',End Delay,England,,
+760495,19',Yellow Card,England,Jude Bellingham,Jude Bellingham (England) is shown the yellow card for a bad foul.
+760495,23',Start Delay,England,,Delay in match for a drinks break.
+760495,23',Start Delay,DR Congo,,
+760495,26',End Delay,England,,Delay over. They are ready to continue.
+760495,26',End Delay,DR Congo,,
+760495,28',Yellow Card,DR Congo,Noah Sadiki,Noah Sadiki (Congo DR) is shown the yellow card for a bad foul.
+760495,45'+7',Halftime,,,"First Half ends, England 0, Congo DR 1."
+760495,45',Start 2nd Half,,,"Second Half begins England 0, Congo DR 1."
+760495,61',Substitution,England,Bukayo Saka,"Substitution, England. Bukayo Saka replaces Noni Madueke."
+760495,61',Substitution,England,Anthony Gordon,"Substitution, England. Anthony Gordon replaces Marcus Rashford."
+760495,64',Substitution,DR Congo,Meschack Elia,"Substitution, Congo DR. Meschack Elia replaces Nathanaël Mbuku."
+760495,68',Start Delay,England,,Delay in match for a drinks break.
+760495,68',Start Delay,DR Congo,,
+760495,70',End Delay,England,,Delay over. They are ready to continue.
+760495,70',End Delay,DR Congo,,
+760495,70',Substitution,England,Eberechi Eze,"Substitution, England. Eberechi Eze replaces Djed Spence."
+760495,75',Goal - Header,England,Harry Kane,"Goal! England 1, Congo DR 1. Harry Kane (England) header from the centre of the box to the bottom left corner. Assisted by Anthony Gordon with a cross."
+760495,76',Substitution,DR Congo,Théo Bongonda,"Substitution, Congo DR. Théo Bongonda replaces Brian Cipenga."
+760495,76',Substitution,DR Congo,Edo Kayembe,"Substitution, Congo DR. Edo Kayembe replaces Ngal'ayel Mukau."
+760495,86',Goal,England,Harry Kane,"Goal! England 2, Congo DR 1. Harry Kane (England) right footed shot from the right side of the box to the top right corner. Assisted by Anthony Gordon."
+760495,89',Substitution,DR Congo,Joris Kayembe,"Substitution, Congo DR. Joris Kayembe replaces Arthur Masuaku."
+760495,89',Substitution,DR Congo,Fiston Mayele,"Substitution, Congo DR. Fiston Mayele replaces Samuel Moutoussamy."
+760495,90'+1',Substitution,England,John Stones,"Substitution, England. John Stones replaces Declan Rice."
+760495,90'+7',End Regular Time,,,"Second Half ends, England 2, Congo DR 1."
+760493,,Kickoff,,,
+760493,24',Goal,Senegal,Habib Diarra,"Goal! Belgium 0, Senegal 1. Habib Diarra (Senegal) right footed shot from very close range to the centre of the goal."
+760493,27',Start Delay,Senegal,,Delay in match for a drinks break.
+760493,27',Start Delay,Belgium,,Delay in match for a drinks break.
+760493,30',End Delay,Belgium,,Delay over. They are ready to continue.
+760493,30',End Delay,Senegal,,Delay over. They are ready to continue.
+760493,31',Start Delay,Belgium,,Delay in match (Belgium).
+760493,31',Start Delay,Senegal,,Delay in match (Senegal).
+760493,32',End Delay,Senegal,,Delay over. They are ready to continue.
+760493,32',End Delay,Belgium,,Delay over. They are ready to continue.
+760493,45'+6',Halftime,,,
+760493,45',Substitution,Belgium,Romelu Lukaku,"Substitution, Belgium. Romelu Lukaku replaces Charles De Ketelaere."
+760493,45',Start 2nd Half,,,"Second Half begins Belgium 0, Senegal 1."
+760493,51',Goal,Senegal,Ismaïla Sarr,"Goal! Belgium 0, Senegal 2. Ismaïla Sarr (Senegal) right footed shot from the centre of the box to the bottom right corner. Assisted by Moussa Niakhaté with a through ball."
+760493,56',Substitution,Belgium,Dodi Lukébakio,"Substitution, Belgium. Dodi Lukébakio replaces Jérémy Doku."
+760493,56',Substitution,Belgium,Nicolas Raskin,"Substitution, Belgium. Nicolas Raskin replaces Kevin De Bruyne."
+760493,63',Substitution,Belgium,Diego Moreira,"Substitution, Belgium. Diego Moreira replaces Hans Vanaken."
+760493,64',Yellow Card,Belgium,Brandon Mechele,Brandon Mechele (Belgium) is shown the yellow card for a bad foul.
+760493,66',Substitution,Senegal,Lamine Camara,"Substitution, Senegal. Lamine Camara replaces Pape Gueye."
+760493,67',Yellow Card,Senegal,Lamine Camara,Lamine Camara (Senegal) is shown the yellow card for a bad foul.
+760493,70',Start Delay,Belgium,,Delay in match for a drinks break.
+760493,70',Start Delay,Senegal,,
+760493,72',End Delay,Belgium,,Delay over. They are ready to continue.
+760493,72',End Delay,Senegal,,
+760493,73',Substitution,Senegal,Ibrahim Mbaye,"Substitution, Senegal. Ibrahim Mbaye replaces Iliman Ndiaye."
+760493,73',Substitution,Senegal,Pape Matar Sarr,"Substitution, Senegal. Pape Matar Sarr replaces Habib Diarra."
+760493,78',Substitution,Belgium,Thomas Meunier,"Substitution, Belgium. Thomas Meunier replaces Maxim De Cuyper."
+760493,86',Goal,Belgium,Romelu Lukaku,"Goal! Belgium 1, Senegal 2. Romelu Lukaku (Belgium) right footed shot from the right side of the six yard box to the high centre of the goal. Assisted by Thomas Meunier with a cross."
+760493,89',Goal - Header,Belgium,Youri Tielemans,"Goal! Belgium 2, Senegal 2. Youri Tielemans (Belgium) header from the centre of the box to the bottom left corner. Assisted by Leandro Trossard."
+760493,90'+8',End Regular Time,,,
+760493,90',Start Extra Time,,,
+760493,94',Substitution,Senegal,Nicolas Jackson,"Substitution, Senegal. Nicolas Jackson replaces Sadio Mané."
+760493,94',Substitution,Senegal,El Hadji Malick Diouf,"Substitution, Senegal. El Hadji Malick Diouf replaces Ismail Jakobs."
+760493,96',Substitution,Senegal,Bara Sapoko Ndiaye,"Substitution, Senegal. Bara Sapoko Ndiaye replaces Idrissa Gueye."
+760493,105'+1',Halftime Extra Time,,,"First Half Extra Time ends, Belgium 2, Senegal 2."
+760493,105',Start 2nd Half Extra Time,,,"Second Half Extra Time begins Belgium 2, Senegal 2."
+760493,109',Substitution,Belgium,Amadou Onana,"Substitution, Belgium. Amadou Onana replaces Leandro Trossard."
+760493,110',Start Delay,Belgium,,Delay in match because of an injury Diego Moreira (Belgium).
+760493,110',Start Delay,Senegal,,
+760493,111',End Delay,Belgium,,Delay over. They are ready to continue.
+760493,111',End Delay,Senegal,,
+760493,120',Start Delay,Belgium,,
+760493,120'+2',End Delay,Belgium,,
+760493,120'+5',Penalty - Scored,Belgium,Youri Tielemans,"Goal! Belgium 3, Senegal 2. Youri Tielemans (Belgium) converts the penalty with a right footed shot to the top right corner."
+760493,120'+12',End Extra Time,,,"Second Half Extra Time ends, Belgium 3, Senegal 2."
+760494,,Kickoff,,,
+760494,6',Start Delay,Bosnia and Herzegovina,,Delay in match because of an injury Armin Gigovic (Bosnia and Herzegovina).
+760494,6',Start Delay,United States,,
+760494,6',End Delay,Bosnia and Herzegovina,,Delay over. They are ready to continue.
+760494,6',End Delay,United States,,
+760494,18',Start Delay,Bosnia and Herzegovina,,Delay in match because of an injury Nikola Vasilj (Bosnia and Herzegovina).
+760494,18',Start Delay,United States,,
+760494,20',End Delay,Bosnia and Herzegovina,,Delay over. They are ready to continue.
+760494,20',End Delay,United States,,
+760494,23',Start Delay,United States,,Delay in match for a drinks break.
+760494,23',Start Delay,Bosnia and Herzegovina,,
+760494,26',End Delay,United States,,Delay over. They are ready to continue.
+760494,26',End Delay,Bosnia and Herzegovina,,
+760494,45',Goal,United States,Folarin Balogun,"Goal! USA 1, Bosnia and Herzegovina 0. Folarin Balogun (USA) left footed shot from the centre of the box to the centre of the goal."
+760494,45'+2',Start Delay,United States,,Delay in match because of an injury Tyler Adams (USA).
+760494,45'+2',Start Delay,Bosnia and Herzegovina,,
+760494,45'+5',End Delay,United States,,Delay over. They are ready to continue.
+760494,45'+5',End Delay,Bosnia and Herzegovina,,
+760494,45'+9',Start Delay,Bosnia and Herzegovina,,Delay in match because of an injury Kerim Alajbegovic (Bosnia and Herzegovina).
+760494,45'+9',Start Delay,United States,,Delay in match (USA).
+760494,45'+10',End Delay,Bosnia and Herzegovina,,Delay over. They are ready to continue.
+760494,45'+10',End Delay,United States,,Delay over. They are ready to continue.
+760494,45'+10',Halftime,,,
+760494,45',Start 2nd Half,,,
+760494,51',Substitution,Bosnia and Herzegovina,Esmir Bajraktarevic,"Substitution, Bosnia and Herzegovina. Esmir Bajraktarevic replaces Armin Gigovic."
+760494,51',Substitution,Bosnia and Herzegovina,Benjamin Tahirovic,"Substitution, Bosnia and Herzegovina. Benjamin Tahirovic replaces Ivan Sunjic."
+760494,51',Substitution,Bosnia and Herzegovina,Ermin Mahmic,"Substitution, Bosnia and Herzegovina. Ermin Mahmic replaces Edin Dzeko because of an injury."
+760494,61',Start Delay,Bosnia and Herzegovina,,Delay in match because of an injury Tarik Muharemovic (Bosnia and Herzegovina).
+760494,61',Start Delay,United States,,Delay in match because of an injury Folarin Balogun (USA).
+760494,63',End Delay,United States,,Delay over. They are ready to continue.
+760494,63',End Delay,Bosnia and Herzegovina,,
+760494,63',Start Delay,United States,,
+760494,64',End Delay,United States,,
+760494,64',Red Card,United States,Folarin Balogun,Folarin Balogun (USA) is shown the red card.
+760494,69',Start Delay,United States,,Delay in match for a drinks break.
+760494,69',Start Delay,Bosnia and Herzegovina,,
+760494,72',End Delay,United States,,Delay over. They are ready to continue.
+760494,72',End Delay,Bosnia and Herzegovina,,
+760494,75',Substitution,Bosnia and Herzegovina,Haris Tabakovic,"Substitution, Bosnia and Herzegovina. Haris Tabakovic replaces Sead Kolasinac."
+760494,75',Substitution,Bosnia and Herzegovina,Amar Memic,"Substitution, Bosnia and Herzegovina. Amar Memic replaces Nikola Katic."
+760494,80',Yellow Card,Bosnia and Herzegovina,Stjepan Radeljic,Stjepan Radeljic (Bosnia and Herzegovina) is shown the yellow card for a bad foul.
+760494,82',Goal - Free-kick,United States,Malik Tillman,"Goal! USA 2, Bosnia and Herzegovina 0. Malik Tillman (USA) from a free kick with a right footed shot to the top left corner."
+760494,87',Start Delay,United States,,Delay in match because of an injury Matt Freese (USA).
+760494,87',Start Delay,Bosnia and Herzegovina,,
+760494,87',End Delay,United States,,Delay over. They are ready to continue.
+760494,87',End Delay,Bosnia and Herzegovina,,
+760494,87',Substitution,United States,Sebastian Berhalter,"Substitution, USA. Sebastian Berhalter replaces Sergiño Dest."
+760494,88',Substitution,United States,Ricardo Pepi,"Substitution, USA. Ricardo Pepi replaces Christian Pulisic."
+760494,90'+5',Substitution,United States,Giovanni Reyna,"Substitution, USA. Giovanni Reyna replaces Weston McKennie."
+760494,90'+10',End Regular Time,,,"Second Half ends, USA 2, Bosnia and Herzegovina 0."

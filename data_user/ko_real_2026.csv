@@ -6,9 +6,9 @@ LAST_32,Netherlands,Morocco,1,1,2,3,Morocco,PENALTY_SHOOTOUT,FINISHED
 LAST_32,Ivory Coast,Norway,1,2,,,Norway,REGULAR,FINISHED
 LAST_32,France,Sweden,3,0,,,France,REGULAR,FINISHED
 LAST_32,Mexico,Ecuador,2,0,,,Mexico,REGULAR,FINISHED
-LAST_32,England,DR Congo,0,1,,,,REGULAR,LIVE
-LAST_32,Belgium,Senegal,,,,,,REGULAR,TIMED
-LAST_32,United States,Bosnia and Herzegovina,,,,,,REGULAR,TIMED
+LAST_32,England,DR Congo,2,1,,,England,REGULAR,FINISHED
+LAST_32,Belgium,Senegal,3,2,,,Belgium,EXTRA_TIME,FINISHED
+LAST_32,United States,Bosnia and Herzegovina,2,0,,,United States,REGULAR,FINISHED
 LAST_32,Spain,Austria,,,,,,REGULAR,TIMED
 LAST_32,Portugal,Croatia,,,,,,REGULAR,TIMED
 LAST_32,Switzerland,Algeria,,,,,,REGULAR,TIMED

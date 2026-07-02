@@ -767,6 +767,12 @@ def build_bets(engine):
                 "fair": round(fair[i], 3), "edge": round(probs[i] - fair[i], 3)}
                for i in range(3)]
         best = max(evs, key=lambda e: e["ev"])
+        # Resultado a 90 min (mercado 1X2 de la casa): gana local / empate / gana visita
+        oi = max(range(3), key=lambda i: probs[i])
+        result90 = {"pick": ["1", "X", "2"][oi],
+                    "label": a if oi == 0 else (b if oi == 2 else "Empate"),
+                    "prob": round(probs[oi], 3), "odd": round(odds[oi], 2),
+                    "draw": round(probs[1], 3)}
         goals_lines = [{"l": 1.5, "over": ou["o15"]}, {"l": 2.5, "over": ou["o25"]},
                        {"l": 3.5, "over": ou["o35"]}]
         cards_lines = _lines(ce, (1.5, 2.5, 3.5, 4.5))
@@ -789,7 +795,7 @@ def build_bets(engine):
                            "pick": v["name"] if v["sel"] != "X" else "Empate",
                            "prob": v["prob"], "rel": f"valor +{round(v['ev']*100)}%"})
         bets.append({"home": a, "away": b, "date": od["date"],
-                     "x12": {"all": evs, "best": best},
+                     "x12": {"all": evs, "best": best}, "result90": result90,
                      "goalsLines": goals_lines, "cardsLines": cards_lines,
                      "cornersLines": corn_lines, "btts": round(btts, 3),
                      "teamA": {"name": a, "lines": _lines(lh, (0.5, 1.5, 2.5))},

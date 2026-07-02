@@ -73,6 +73,19 @@ let V2026 = null;         // validación del modelo solo-2026
 let TMODEL = "ens";       // modelo elegido para comparar en el modal del torneo
 let CURRENT_MT = null;    // partido abierto en el modal
 let BMODEL = "ens";       // modelo que arma el CUADRO de eliminatorias
+let BET_STAKE = 200;      // monto que el usuario quiere apostar (apartado Apuestas)
+// devuelve HTML con lo que ganarías: recibes total y ganancia neta, para una cuota
+function winHTML(odd) {
+  const ret = Math.round(BET_STAKE * odd), profit = Math.round(BET_STAKE * (odd - 1));
+  return `<span class="win"><b>$${ret}</b> <small>(ganas $${profit})</small></span>`;
+}
+function setStake(v) {
+  const n = Math.max(1, Math.round(+v || 0));
+  BET_STAKE = n;
+  renderBets();
+  const inp = document.getElementById("stakeInput");
+  if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+}
 
 function activeBracket() {
   return (DATA.brackets && DATA.brackets[BMODEL]) || DATA.bracket;
@@ -293,7 +306,16 @@ function renderBets() {
     <div class="bh-main">${flag(t.home)} ${esName(t.home)} <span class="vs">vs</span> ${flag(t.away)} ${esName(t.away)}</div>
     <div class="bh-pick">${_pickLabel(t.name)} <b>@ ${t.odd}</b></div>
     <div class="bh-meta">Prob. del modelo <b>${pct(t.prob)}</b> · ${_evTag(t.ev)}</div>
+    <div class="bh-win">Con $${BET_STAKE} recibes ${winHTML(t.odd)}</div>
   </div>` : "";
+  const stakeBox = `<div class="stake-box">
+    <span class="stake-lbl">💵 ¿Cuánto quieres apostar?</span>
+    <span class="stake-in">$ <input id="stakeInput" type="number" min="1" step="10" value="${BET_STAKE}"
+      inputmode="numeric" onchange="setStake(this.value)"> MXN</span>
+    <span class="stake-quick">${[100, 200, 500, 1000].map(v =>
+      `<button class="sq ${v === BET_STAKE ? "on" : ""}" onclick="setStake(${v})">$${v}</button>`).join("")}</span>
+    <span class="stake-hint">Las ganancias se calculan con este monto.</span>
+  </div>`;
   const rel = mk ? `<div class="bet-note">📊 <b>Fiabilidad medida</b> (validación walk-forward): ganador <b>~85%</b> <small>(cuando hay favorito claro)</small> · goles O/U <b>${pct(mk.goals.ens.ou_acc)}</b> · tarjetas <b>${pct(mk.cards.ou_acc)}</b> <small>(tiende a sobrestimar)</small> · córners <b>${pct(mk.corners.ens.ou_acc)}</b> <small>(poco fiable, evítalo)</small>.</div>` : "";
 
   const valueHTML = B.value && B.value.length ? B.value.map(v => `
@@ -317,9 +339,12 @@ function renderBets() {
     const r = m.rec[0];
     const ico = r.m.split(" ")[0];
     const lbl = r.m.replace(/^\S+\s/, "");
+    const q = m.result90;
+    const q90 = q.pick === "X" ? "🤝 Empate" : "🏆 Gana " + shortName(q.label);
     return `<button type="button" class="betmatch" data-i="${i}">
       <div class="bm-teams">${flag(m.home)} ${shortName(m.home)} <span class="vs">v</span> ${flag(m.away)} ${shortName(m.away)}</div>
       ${m.date ? `<div class="bm-date">${m.date.slice(5)}</div>` : ""}
+      <div class="bm-r90">90 min: <b>${q90}</b> <span class="bm-p">${pct(q.prob)}</span></div>
       <div class="bm-top">${ico} <span class="bm-lbl">${lbl}:</span> <b>${r.pick}</b> <span class="bm-p">${pct(r.prob)}</span></div>
       <div class="bm-hint">toca para ver todo →</div>
     </button>`;
@@ -335,12 +360,12 @@ function renderBets() {
       <div class="cr-meta">
         <span class="cr-prob">${pct(x.prob)} prob.</span>
         <span class="cr-odd">cuota ${x.odd}</span>
-        <span class="cr-pay">${C.stake}→<b>${x.payout}</b> <small>(+${x.profit})</small></span>
+        <span class="cr-pay">$${BET_STAKE}→<b>$${Math.round(BET_STAKE * x.odd)}</b> <small>(+$${Math.round(BET_STAKE * (x.odd - 1))})</small></span>
         ${_evTag(x.ev)}</div>
     </div>`;
   };
   const combosHTML = C ? `
-    <h3 class="bet-h" style="margin-top:22px">🧮 Combinaciones — más pago sin perder seguridad <small>(stake ${C.stake})</small></h3>
+    <h3 class="bet-h" style="margin-top:22px">🧮 Combinaciones — más pago sin perder seguridad <small>(con $${BET_STAKE})</small></h3>
     <div class="bet-2col">
       <div class="bet-block"><h4 class="combo-h">🛡️ Más seguras</h4>${C.safest.slice(0,4).map(comboRow).join("")}</div>
       <div class="bet-block"><h4 class="combo-h">⚖️ Mejor equilibrio <small>(segura + paga bien)</small></h4>${(C.balanced.length?C.balanced:C.safest).slice(0,4).map(comboRow).join("")}</div>
@@ -348,7 +373,7 @@ function renderBets() {
     <div class="bet-block"><h4 class="combo-h">💰 Mayor pago <small>(más riesgo)</small></h4>${C.payout.slice(0,4).map(comboRow).join("")}</div>
     <p class="bet-note" style="margin-top:6px">La prob. conjunta es el producto de cada partido (son independientes): a más partidos, más pago pero menos seguro. Una combinada falla entera si falla UNA pata.</p>` : "";
 
-  el.innerHTML = hero + rel + `
+  el.innerHTML = stakeBox + hero + rel + `
     <div class="bet-actions"><button id="dlQuiniela" class="dl-btn">⬇️ Descargar quiniela (CSV)</button></div>
     <h3 class="bet-h">📋 Partidos — toca una tarjeta para ver <b>qué te conviene apostar</b></h3>
     <div class="betmatch-grid">${matchesHTML}</div>
@@ -372,7 +397,8 @@ function openBetModal(m) {
     const nm = e.sel === "1" ? esName(m.home) : e.sel === "2" ? esName(m.away) : "Empate";
     return `<tr class="${val ? "dv-val" : ""}"><td class="l">${nm}</td><td>${e.odd}</td>
       <td>${pct(e.prob)}</td><td>${pct(e.fair)}</td>
-      <td class="${e.edge > 0 ? "pos" : "neg"}">${e.edge > 0 ? "+" : ""}${Math.round(e.edge * 100)}%</td></tr>`;
+      <td class="${e.edge > 0 ? "pos" : "neg"}">${e.edge > 0 ? "+" : ""}${Math.round(e.edge * 100)}%</td>
+      <td class="win-cell">$${Math.round(BET_STAKE * e.odd)}</td></tr>`;
   }).join("");
   const lines = (arr, best) => arr.map(l => {
     const pk = best && best.line === l.l;
@@ -386,10 +412,15 @@ function openBetModal(m) {
     </div><button class="modal-x" onclick="closeModal()" aria-label="Cerrar">✕</button></div>
     <div class="modal-body">
       <div class="block bet-rec"><p class="block-title">💡 Qué te conviene apostar</p>${recHTML}</div>
+      <div class="block r90-block"><p class="block-title">🏁 Resultado a 90 minutos (mercado 1X2)</p>
+        <div class="r90-head">${m.result90.pick === "X" ? "🤝 Empate" : "🏆 Gana " + esName(m.result90.label)}
+          <b>${pct(m.result90.prob)}</b> <small>· prob. de empate ${pct(m.result90.draw)}</small></div>
+        <p class="mini-note">⚠️ El mercado <b>1X2</b> se paga <b>solo con 90 min</b> (prórroga y penales NO cuentan).
+          En eliminatorias, para apostar a <b>quién avanza</b> usa el mercado <b>"Para clasificar"</b>.</p></div>
       <div class="block"><p class="block-title">Ganador (1X2) — modelo vs casa <b>sin vig</b></p>
-        <table class="devig"><thead><tr><th class="l">Resultado</th><th>Cuota</th><th>Modelo</th><th>Justo</th><th>Ventaja</th></tr></thead>
+        <table class="devig"><thead><tr><th class="l">Resultado</th><th>Cuota</th><th>Modelo</th><th>Justo</th><th>Ventaja</th><th>Recibes</th></tr></thead>
         <tbody>${x12}</tbody></table>
-        <p class="mini-note">Verde = el modelo ve valor (ventaja &gt; 3% sobre la casa sin margen).</p></div>
+        <p class="mini-note">Verde = el modelo ve valor (ventaja &gt; 3%). "Recibes" = lo que te dan con tu apuesta de $${BET_STAKE} (incluye lo apostado).</p></div>
       <div class="block"><p class="block-title">⚽ Goles totales <span class="rel-tag">fiable 80%</span></p>${lines(m.goalsLines, m.goals)}</div>
       <div class="block"><p class="block-title">🟨 Tarjetas <span class="rel-tag">fiable 76%</span></p>${lines(m.cardsLines, m.cards)}</div>
       <div class="block"><p class="block-title">🤝 Ambos anotan</p>
@@ -411,10 +442,11 @@ function downloadQuiniela() {
     rows.push([`${esName(m.home)} vs ${esName(m.away)}`, m.date, clean(r.m),
                clean(r.pick), Math.round(r.prob * 100) + "%", r.rel])));
   rows.push([]);
-  rows.push(["COMBINACIONES (stake " + B.combos.stake + ")", "", "", "Cuota", "Prob", "Pago"]);
+  rows.push(["COMBINACIONES (con $" + BET_STAKE + ")", "", "", "Cuota", "Prob", "Recibes"]);
   (B.combos.balanced.length ? B.combos.balanced : B.combos.safest).slice(0, 3).forEach(c => {
     const legs = c.legs.map(l => l.sel === "X" ? "Empate" : esName(l.name)).join(" + ");
-    rows.push([clean(legs), "", "combinada", c.odd, Math.round(c.prob * 100) + "%", B.combos.stake + "->" + c.payout]);
+    rows.push([clean(legs), "", "combinada", c.odd, Math.round(c.prob * 100) + "%",
+               "$" + BET_STAKE + "->$" + Math.round(BET_STAKE * c.odd)]);
   });
   const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
   const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
