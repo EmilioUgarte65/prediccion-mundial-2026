@@ -478,7 +478,7 @@ table.adv tbody tr:hover { background: var(--surface); }
   border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; cursor: pointer;
   transition: transform .15s, border-color .2s, box-shadow .2s; color: inherit; font: inherit; }
 .betmatch:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,.45); }
-.bm-teams { font-weight: 600; font-size: .9rem; }
+.bm-teams { font-weight: 600; font-size: .9rem; overflow: hidden; text-overflow: ellipsis; }
 .betmatch .bm-date { color: var(--muted); font-family: 'Fira Code', monospace; font-size: .7rem; margin: 3px 0 8px; }
 .bm-r90 { font-size: .84rem; background: rgba(245,179,1,.12); border: 1px solid rgba(245,179,1,.35);
   border-radius: 8px; padding: 6px 8px; margin-bottom: 6px; }
@@ -488,7 +488,9 @@ table.adv tbody tr:hover { background: var(--surface); }
 .bm-top b { color: #fff; } .bm-lbl { color: var(--muted); } .bm-p { color: #4ade80; font-weight: 700; float: right; }
 .bm-hint { color: var(--accent); font-size: .7rem; margin-top: 8px; }
 /* modal de apuestas */
-.modal-x { background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; align-self: flex-start; }
+.modal-x { position: absolute; top: 14px; right: 16px; background: none; border: none;
+  color: var(--muted); font-size: 1.3rem; cursor: pointer; line-height: 1; z-index: 2; }
+.modal-x:hover { color: #fff; }
 .mh-sub { color: var(--muted); font-size: .8rem; }
 .bet-rec .brec { display: flex; align-items: center; gap: 8px; padding: 7px 10px; margin-bottom: 6px;
   background: rgba(245,179,1,.10); border: 1px solid rgba(245,179,1,.3); border-radius: 8px; font-size: .86rem; }

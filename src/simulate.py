@@ -788,7 +788,7 @@ def build_bets(engine):
             {"m": "🤝 Ambos anotan", "pick": "Sí" if btts >= 0.5 else "No",
              "prob": round(max(btts, 1 - btts), 3), "rel": "media"},
         ]
-        val = [e for e in evs if e["ev"] > 0.03 and e["prob"] >= 0.35]
+        val = [e for e in evs if e["ev"] > 0.03 and e["prob"] >= 0.40]
         if val:
             v = max(val, key=lambda e: e["ev"])
             rec.insert(0, {"m": "💎 Ganador (valor)",
@@ -851,11 +851,12 @@ def build_combos(bets, stake=200):
         jp = 1.0; od = 1.0
         for l in combo:
             jp *= l["prob"]; od *= l["odd"]
+        odr = round(od, 2)   # cuota mostrada -> el pago cuadra exacto con ella
         return {"legs": [{"home": l["home"], "away": l["away"], "sel": l["sel"],
                           "name": l["name"], "odd": round(l["odd"], 2),
                           "prob": round(l["prob"], 3)} for l in combo],
-                "n": len(combo), "prob": round(jp, 3), "odd": round(od, 2),
-                "payout": round(stake * od), "profit": round(stake * od - stake),
+                "n": len(combo), "prob": round(jp, 3), "odd": odr,
+                "payout": round(stake * odr), "profit": round(stake * odr - stake),
                 "ev": round(jp * od - 1, 3)}
 
     combos = []

@@ -393,7 +393,7 @@ function openBetModal(m) {
     `<div class="brec"><span class="brec-m">${r.m}</span> <b>${r.pick}</b>
       <span class="brec-p">${pct(r.prob)}</span> <span class="brec-rel">${r.rel}</span></div>`).join("");
   const x12 = m.x12.all.map(e => {
-    const val = e.edge > 0.03 && e.prob >= 0.35;
+    const val = e.edge > 0.03 && e.prob >= 0.40;
     const nm = e.sel === "1" ? esName(m.home) : e.sel === "2" ? esName(m.away) : "Empate";
     return `<tr class="${val ? "dv-val" : ""}"><td class="l">${nm}</td><td>${e.odd}</td>
       <td>${pct(e.prob)}</td><td>${pct(e.fair)}</td>
@@ -420,7 +420,7 @@ function openBetModal(m) {
       <div class="block"><p class="block-title">Ganador (1X2) — modelo vs casa <b>sin vig</b></p>
         <table class="devig"><thead><tr><th class="l">Resultado</th><th>Cuota</th><th>Modelo</th><th>Justo</th><th>Ventaja</th><th>Recibes</th></tr></thead>
         <tbody>${x12}</tbody></table>
-        <p class="mini-note">Verde = el modelo ve valor (ventaja &gt; 3%). "Recibes" = lo que te dan con tu apuesta de $${BET_STAKE} (incluye lo apostado).</p></div>
+        <p class="mini-note">Verde = valor real (ventaja &gt; 3% y prob ≥ 40%). "Recibes" = lo que te dan con tu apuesta de $${BET_STAKE} (incluye lo apostado).</p></div>
       <div class="block"><p class="block-title">⚽ Goles totales <span class="rel-tag">fiable 80%</span></p>${lines(m.goalsLines, m.goals)}</div>
       <div class="block"><p class="block-title">🟨 Tarjetas <span class="rel-tag">fiable 76%</span></p>${lines(m.cardsLines, m.cards)}</div>
       <div class="block"><p class="block-title">🤝 Ambos anotan</p>

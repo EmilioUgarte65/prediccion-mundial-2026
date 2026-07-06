@@ -3,19 +3,19 @@
     {
       "player": "Kylian Mbappé",
       "team": "France",
-      "goals": 6,
+      "goals": 7,
       "assists": 2
-    },
-    {
-      "player": "Lionel Messi",
-      "team": "Argentina",
-      "goals": 6,
-      "assists": 0
     },
     {
       "player": "Erling Haaland",
       "team": "Norway",
-      "goals": 5,
+      "goals": 7,
+      "assists": 0
+    },
+    {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "goals": 7,
       "assists": 0
     },
     {
@@ -27,6 +27,12 @@
     {
       "player": "Vinicius Junior",
       "team": "Brazil",
+      "goals": 4,
+      "assists": 1
+    },
+    {
+      "player": "Mikel Oyarzabal",
+      "team": "Spain",
       "goals": 4,
       "assists": 1
     },
@@ -65,12 +71,6 @@
       "team": "Germany",
       "goals": 3,
       "assists": 0
-    },
-    {
-      "player": "Deniz Undav",
-      "team": "Germany",
-      "goals": 3,
-      "assists": 2
     }
   ],
   "referees": [
@@ -99,5 +99,5 @@
       "matches": 3
     }
   ],
-  "n_ref_matches": 80
+  "n_ref_matches": 89
 }
