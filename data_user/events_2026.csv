@@ -3352,3 +3352,51 @@ gameId,minute,type,team,player,text
 760504,90'+6',Yellow Card,Brazil,Neymar,Neymar (Brazil) is shown the yellow card for a bad foul.
 760504,90'+10',Penalty - Scored,Brazil,Neymar,"Goal! Brazil 1, Norway 2. Neymar (Brazil) converts the penalty with a right footed shot to the bottom right corner."
 760504,90'+12',End Regular Time,,,
+760505,,Start Delay,Mexico,,
+760505,,Kickoff,,,First Half begins.
+760505,1',Yellow Card,England,Declan Rice,Declan Rice (England) is shown the yellow card for a bad foul.
+760505,2',Start Delay,Mexico,,Delay in match because of an injury Luis Romo (Mexico).
+760505,2',Start Delay,England,,
+760505,3',End Delay,Mexico,,Delay over. They are ready to continue.
+760505,3',End Delay,England,,
+760505,23',Start Delay,Mexico,,Delay in match for a drinks break.
+760505,23',Start Delay,England,,
+760505,26',End Delay,Mexico,,Delay over. They are ready to continue.
+760505,26',End Delay,England,,
+760505,36',Goal - Header,England,Jude Bellingham,"Goal! Mexico 0, England 1. Jude Bellingham (England) header from very close range to the bottom left corner. Assisted by Bukayo Saka with a cross."
+760505,38',Goal,England,Jude Bellingham,"Goal! Mexico 0, England 2. Jude Bellingham (England) right footed shot from very close range to the bottom left corner. Assisted by Harry Kane."
+760505,42',Goal - Volley,Mexico,Julián Quiñones,"Goal! Mexico 1, England 2. Julián Quiñones (Mexico) right footed shot from the centre of the box to the high centre of the goal following a set piece situation."
+760505,45'+6',Halftime,,,
+760505,45',Substitution,Mexico,Edson Álvarez,"Substitution, Mexico. Edson Álvarez replaces César Montes."
+760505,45',Start 2nd Half,,,
+760505,53',Start Delay,England,,
+760505,54',End Delay,England,,
+760505,54',Red Card,England,Jarell Quansah,Jarell Quansah (England) is shown the red card.
+760505,57',Substitution,England,John Stones,"Substitution, England. John Stones replaces Bukayo Saka."
+760505,60',Penalty - Scored,England,Harry Kane,"Goal! Mexico 1, England 3. Harry Kane (England) converts the penalty with a right footed shot to the bottom left corner."
+760505,61',Substitution,Mexico,Santiago Gimenez,"Substitution, Mexico. Santiago Giménez replaces Gilberto Mora."
+760505,61',Substitution,Mexico,Brian Gutiérrez,"Substitution, Mexico. Brian Gutiérrez replaces Luis Romo."
+760505,67',Start Delay,Mexico,,
+760505,68',End Delay,Mexico,,
+760505,68',Yellow Card,England,Marc Guéhi,Marc Guéhi (England) is shown the yellow card.
+760505,69',Penalty - Scored,Mexico,Raúl Jiménez,"Goal! Mexico 2, England 3. Raúl Jiménez (Mexico) converts the penalty with a right footed shot to the bottom left corner."
+760505,70',Start Delay,England,,Delay in match because of an injury Nico O'Reilly (England).
+760505,70',Start Delay,Mexico,,
+760505,71',Yellow Card,Mexico,Jorge Sánchez,Jorge Sánchez (Mexico) is shown the yellow card.
+760505,71',End Delay,England,,Delay over. They are ready to continue.
+760505,71',End Delay,Mexico,,
+760505,71',Start Delay,Mexico,,Delay in match for a drinks break.
+760505,71',Start Delay,England,,
+760505,72',Yellow Card,England,Nico O'Reilly,Nico O'Reilly (England) is shown the yellow card.
+760505,74',End Delay,Mexico,,Delay over. They are ready to continue.
+760505,74',End Delay,England,,
+760505,74',Substitution,England,Djed Spence,"Substitution, England. Djed Spence replaces Nico O'Reilly."
+760505,75',Substitution,England,Dan Burn,"Substitution, England. Dan Burn replaces Elliot Anderson."
+760505,79',Substitution,Mexico,Álvaro Fidalgo,"Substitution, Mexico. Álvaro Fidalgo replaces Jorge Sánchez."
+760505,81',Substitution,Mexico,Guillermo Martínez,"Substitution, Mexico. Guillermo Martínez replaces Julián Quiñones."
+760505,84',Start Delay,Mexico,,
+760505,84',End Delay,Mexico,,
+760505,90',Substitution,England,Morgan Rogers,"Substitution, England. Morgan Rogers replaces Harry Kane."
+760505,90'+8',Yellow Card,Mexico,Johan Vásquez,Johan Vásquez (Mexico) is shown the yellow card.
+760505,90'+8',Yellow Card,England,Jordan Henderson,Jordan Henderson (England) is shown the yellow card.
+760505,90'+13',End Regular Time,,,"Second Half ends, Mexico 2, England 3."

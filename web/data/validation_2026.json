@@ -1,9 +1,9 @@
 {
-  "n": 276,
-  "acc": 51.4,
-  "wins_acc": 69.6,
-  "wc_acc": 60.4,
-  "wc_n": 91,
+  "n": 277,
+  "acc": 51.3,
+  "wins_acc": 69.3,
+  "wc_acc": 59.8,
+  "wc_n": 92,
   "by_tournament": {
     "African Cup of Nations": {
       "hits": 4,
@@ -23,22 +23,10 @@
     },
     "FIFA World Cup": {
       "hits": 55,
-      "n": 91
+      "n": 92
     }
   },
   "wc_matches": [
-    {
-      "date": "2026-06-11",
-      "home": "Mexico",
-      "away": "South Africa",
-      "pred": "1",
-      "real": "1",
-      "score": [
-        2,
-        0
-      ],
-      "hit": true
-    },
     {
       "date": "2026-06-11",
       "home": "South Korea",
@@ -50,6 +38,18 @@
         1
       ],
       "hit": false
+    },
+    {
+      "date": "2026-06-11",
+      "home": "Mexico",
+      "away": "South Africa",
+      "pred": "1",
+      "real": "1",
+      "score": [
+        2,
+        0
+      ],
+      "hit": true
     },
     {
       "date": "2026-06-12",
@@ -72,18 +72,6 @@
       "score": [
         4,
         1
-      ],
-      "hit": false
-    },
-    {
-      "date": "2026-06-13",
-      "home": "Australia",
-      "away": "Turkey",
-      "pred": "2",
-      "real": "1",
-      "score": [
-        2,
-        0
       ],
       "hit": false
     },
@@ -122,6 +110,18 @@
         1
       ],
       "hit": true
+    },
+    {
+      "date": "2026-06-13",
+      "home": "Australia",
+      "away": "Turkey",
+      "pred": "2",
+      "real": "1",
+      "score": [
+        2,
+        0
+      ],
+      "hit": false
     },
     {
       "date": "2026-06-14",
@@ -173,6 +173,30 @@
     },
     {
       "date": "2026-06-15",
+      "home": "Saudi Arabia",
+      "away": "Uruguay",
+      "pred": "2",
+      "real": "X",
+      "score": [
+        1,
+        1
+      ],
+      "hit": false
+    },
+    {
+      "date": "2026-06-15",
+      "home": "Spain",
+      "away": "Cape Verde",
+      "pred": "1",
+      "real": "X",
+      "score": [
+        0,
+        0
+      ],
+      "hit": false
+    },
+    {
+      "date": "2026-06-15",
       "home": "Belgium",
       "away": "Egypt",
       "pred": "1",
@@ -192,30 +216,6 @@
       "score": [
         2,
         2
-      ],
-      "hit": false
-    },
-    {
-      "date": "2026-06-15",
-      "home": "Spain",
-      "away": "Cape Verde",
-      "pred": "1",
-      "real": "X",
-      "score": [
-        0,
-        0
-      ],
-      "hit": false
-    },
-    {
-      "date": "2026-06-15",
-      "home": "Saudi Arabia",
-      "away": "Uruguay",
-      "pred": "2",
-      "real": "X",
-      "score": [
-        1,
-        1
       ],
       "hit": false
     },
@@ -269,18 +269,6 @@
     },
     {
       "date": "2026-06-17",
-      "home": "England",
-      "away": "Croatia",
-      "pred": "1",
-      "real": "1",
-      "score": [
-        4,
-        2
-      ],
-      "hit": true
-    },
-    {
-      "date": "2026-06-17",
       "home": "Ghana",
       "away": "Panama",
       "pred": "2",
@@ -316,25 +304,25 @@
       "hit": true
     },
     {
-      "date": "2026-06-18",
-      "home": "Czech Republic",
-      "away": "South Africa",
-      "pred": "1",
-      "real": "X",
-      "score": [
-        1,
-        1
-      ],
-      "hit": false
-    },
-    {
-      "date": "2026-06-18",
-      "home": "Mexico",
-      "away": "South Korea",
+      "date": "2026-06-17",
+      "home": "England",
+      "away": "Croatia",
       "pred": "1",
       "real": "1",
       "score": [
-        1,
+        4,
+        2
+      ],
+      "hit": true
+    },
+    {
+      "date": "2026-06-18",
+      "home": "Canada",
+      "away": "Qatar",
+      "pred": "1",
+      "real": "1",
+      "score": [
+        6,
         0
       ],
       "hit": true
@@ -353,15 +341,27 @@
     },
     {
       "date": "2026-06-18",
-      "home": "Canada",
-      "away": "Qatar",
+      "home": "Mexico",
+      "away": "South Korea",
       "pred": "1",
       "real": "1",
       "score": [
-        6,
+        1,
         0
       ],
       "hit": true
+    },
+    {
+      "date": "2026-06-18",
+      "home": "Czech Republic",
+      "away": "South Africa",
+      "pred": "1",
+      "real": "X",
+      "score": [
+        1,
+        1
+      ],
+      "hit": false
     },
     {
       "date": "2026-06-19",
@@ -413,6 +413,18 @@
     },
     {
       "date": "2026-06-20",
+      "home": "Tunisia",
+      "away": "Japan",
+      "pred": "2",
+      "real": "2",
+      "score": [
+        0,
+        4
+      ],
+      "hit": true
+    },
+    {
+      "date": "2026-06-20",
       "home": "Germany",
       "away": "Ivory Coast",
       "pred": "1",
@@ -446,18 +458,6 @@
         1
       ],
       "hit": false
-    },
-    {
-      "date": "2026-06-20",
-      "home": "Tunisia",
-      "away": "Japan",
-      "pred": "2",
-      "real": "2",
-      "score": [
-        0,
-        4
-      ],
-      "hit": true
     },
     {
       "date": "2026-06-21",
@@ -641,18 +641,6 @@
     },
     {
       "date": "2026-06-24",
-      "home": "Canada",
-      "away": "Switzerland",
-      "pred": "1",
-      "real": "2",
-      "score": [
-        1,
-        2
-      ],
-      "hit": false
-    },
-    {
-      "date": "2026-06-24",
       "home": "South Africa",
       "away": "South Korea",
       "pred": "2",
@@ -674,6 +662,18 @@
         0
       ],
       "hit": true
+    },
+    {
+      "date": "2026-06-24",
+      "home": "Canada",
+      "away": "Switzerland",
+      "pred": "1",
+      "real": "2",
+      "score": [
+        1,
+        2
+      ],
+      "hit": false
     },
     {
       "date": "2026-06-25",
@@ -761,18 +761,6 @@
     },
     {
       "date": "2026-06-26",
-      "home": "Norway",
-      "away": "France",
-      "pred": "2",
-      "real": "2",
-      "score": [
-        1,
-        4
-      ],
-      "hit": true
-    },
-    {
-      "date": "2026-06-26",
       "home": "Uruguay",
       "away": "Spain",
       "pred": "2",
@@ -780,6 +768,18 @@
       "score": [
         0,
         1
+      ],
+      "hit": true
+    },
+    {
+      "date": "2026-06-26",
+      "home": "Norway",
+      "away": "France",
+      "pred": "2",
+      "real": "2",
+      "score": [
+        1,
+        4
       ],
       "hit": true
     },
@@ -905,18 +905,6 @@
     },
     {
       "date": "2026-06-29",
-      "home": "Germany",
-      "away": "Paraguay",
-      "pred": "1",
-      "real": "X",
-      "score": [
-        1,
-        1
-      ],
-      "hit": false
-    },
-    {
-      "date": "2026-06-29",
       "home": "Brazil",
       "away": "Japan",
       "pred": "1",
@@ -928,10 +916,10 @@
       "hit": true
     },
     {
-      "date": "2026-06-30",
-      "home": "Netherlands",
-      "away": "Morocco",
-      "pred": "2",
+      "date": "2026-06-29",
+      "home": "Germany",
+      "away": "Paraguay",
+      "pred": "1",
       "real": "X",
       "score": [
         1,
@@ -964,16 +952,16 @@
       "hit": true
     },
     {
-      "date": "2026-07-01",
-      "home": "Belgium",
-      "away": "Senegal",
-      "pred": "1",
-      "real": "1",
+      "date": "2026-06-30",
+      "home": "Netherlands",
+      "away": "Morocco",
+      "pred": "2",
+      "real": "X",
       "score": [
-        3,
-        2
+        1,
+        1
       ],
-      "hit": true
+      "hit": false
     },
     {
       "date": "2026-07-01",
@@ -996,6 +984,30 @@
       "score": [
         2,
         1
+      ],
+      "hit": true
+    },
+    {
+      "date": "2026-07-01",
+      "home": "Belgium",
+      "away": "Senegal",
+      "pred": "1",
+      "real": "1",
+      "score": [
+        3,
+        2
+      ],
+      "hit": true
+    },
+    {
+      "date": "2026-07-02",
+      "home": "United States",
+      "away": "Bosnia and Herzegovina",
+      "pred": "1",
+      "real": "1",
+      "score": [
+        2,
+        0
       ],
       "hit": true
     },
@@ -1024,9 +1036,9 @@
       "hit": true
     },
     {
-      "date": "2026-07-02",
-      "home": "United States",
-      "away": "Bosnia and Herzegovina",
+      "date": "2026-07-03",
+      "home": "Switzerland",
+      "away": "Algeria",
       "pred": "1",
       "real": "1",
       "score": [
@@ -1060,13 +1072,13 @@
       "hit": true
     },
     {
-      "date": "2026-07-03",
-      "home": "Switzerland",
-      "away": "Algeria",
+      "date": "2026-07-04",
+      "home": "Colombia",
+      "away": "Ghana",
       "pred": "1",
       "real": "1",
       "score": [
-        2,
+        1,
         0
       ],
       "hit": true
@@ -1096,18 +1108,6 @@
       "hit": true
     },
     {
-      "date": "2026-07-04",
-      "home": "Colombia",
-      "away": "Ghana",
-      "pred": "1",
-      "real": "1",
-      "score": [
-        1,
-        0
-      ],
-      "hit": true
-    },
-    {
       "date": "2026-07-05",
       "home": "Brazil",
       "away": "Norway",
@@ -1116,6 +1116,18 @@
       "score": [
         1,
         2
+      ],
+      "hit": false
+    },
+    {
+      "date": "2026-07-06",
+      "home": "Mexico",
+      "away": "England",
+      "pred": "1",
+      "real": "2",
+      "score": [
+        2,
+        3
       ],
       "hit": false
     }

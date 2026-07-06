@@ -21,12 +21,24 @@
     {
       "player": "Harry Kane",
       "team": "England",
-      "goals": 5,
-      "assists": 0
+      "goals": 6,
+      "assists": 1
+    },
+    {
+      "player": "Julián Quiñones",
+      "team": "Mexico",
+      "goals": 4,
+      "assists": 1
     },
     {
       "player": "Vinicius Junior",
       "team": "Brazil",
+      "goals": 4,
+      "assists": 1
+    },
+    {
+      "player": "Jude Bellingham",
+      "team": "England",
       "goals": 4,
       "assists": 1
     },
@@ -49,26 +61,14 @@
       "assists": 1
     },
     {
-      "player": "Julián Quiñones",
+      "player": "Raúl Jiménez",
       "team": "Mexico",
       "goals": 3,
-      "assists": 1
+      "assists": 0
     },
     {
       "player": "Folarin Balogun",
       "team": "United States",
-      "goals": 3,
-      "assists": 0
-    },
-    {
-      "player": "Ismael Saibari",
-      "team": "Morocco",
-      "goals": 3,
-      "assists": 0
-    },
-    {
-      "player": "Kai Havertz",
-      "team": "Germany",
       "goals": 3,
       "assists": 0
     }
@@ -99,5 +99,5 @@
       "matches": 3
     }
   ],
-  "n_ref_matches": 89
+  "n_ref_matches": 90
 }
