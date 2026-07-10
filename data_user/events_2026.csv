@@ -2236,7 +2236,7 @@ gameId,minute,type,team,player,text
 760474,57',Substitution,Senegal,Nicolas Jackson,"Substitution, Senegal. Nicolas Jackson replaces Lamine Camara."
 760474,57',Substitution,Senegal,Pape Gueye,"Substitution, Senegal. Pape Gueye replaces Habib Diarra."
 760474,58',Substitution,Iraq,Ahmed Maknazi,"Substitution, Iraq. Ahmed Maknzi replaces Ali Jasim."
-760474,58',Substitution,Iraq,Ali Yousif,"Substitution, Iraq. Ali Yousif replaces Ali Al Hamadi."
+760474,58',Substitution,Iraq,Hashim Ali,"Substitution, Iraq. Ali Yousif replaces Ali Al Hamadi."
 760474,58',Substitution,Senegal,Pathé Ciss,"Substitution, Senegal. Pathé Ciss replaces Abdoulaye Seck."
 760474,59',Goal,Senegal,Pape Gueye,"Goal! Senegal 3, Iraq 0. Pape Gueye (Senegal) left footed shot from outside the box to the top left corner. Assisted by Ismaïla Sarr."
 760474,67',Substitution,Iraq,Kevin Yakob,"Substitution, Iraq. Kevin Yakob replaces Zidane Iqbal."
@@ -3365,7 +3365,7 @@ gameId,minute,type,team,player,text
 760505,26',End Delay,England,,
 760505,36',Goal - Header,England,Jude Bellingham,"Goal! Mexico 0, England 1. Jude Bellingham (England) header from very close range to the bottom left corner. Assisted by Bukayo Saka with a cross."
 760505,38',Goal,England,Jude Bellingham,"Goal! Mexico 0, England 2. Jude Bellingham (England) right footed shot from very close range to the bottom left corner. Assisted by Harry Kane."
-760505,42',Goal - Volley,Mexico,Julián Quiñones,"Goal! Mexico 1, England 2. Julián Quiñones (Mexico) right footed shot from the centre of the box to the high centre of the goal following a set piece situation."
+760505,42',Goal,Mexico,Julián Quiñones,"Goal! Mexico 1, England 2. Julián Quiñones (Mexico) right footed shot from the centre of the box to the high centre of the goal following a set piece situation."
 760505,45'+6',Halftime,,,
 760505,45',Substitution,Mexico,Edson Álvarez,"Substitution, Mexico. Edson Álvarez replaces César Montes."
 760505,45',Start 2nd Half,,,
@@ -3400,3 +3400,207 @@ gameId,minute,type,team,player,text
 760505,90'+8',Yellow Card,Mexico,Johan Vásquez,Johan Vásquez (Mexico) is shown the yellow card.
 760505,90'+8',Yellow Card,England,Jordan Henderson,Jordan Henderson (England) is shown the yellow card.
 760505,90'+13',End Regular Time,,,"Second Half ends, Mexico 2, England 3."
+760506,,Kickoff,,,First Half begins.
+760506,23',Start Delay,Spain,,Delay in match for a drinks break.
+760506,23',Start Delay,Portugal,,
+760506,26',End Delay,Spain,,Delay over. They are ready to continue.
+760506,26',End Delay,Portugal,,
+760506,37',Start Delay,Portugal,,Delay in match because of an injury João Félix (Portugal).
+760506,37',Start Delay,Spain,,
+760506,38',End Delay,Portugal,,Delay over. They are ready to continue.
+760506,38',End Delay,Spain,,
+760506,45'+7',Halftime,,,"First Half ends, Portugal 0, Spain 0."
+760506,45',Start 2nd Half,,,
+760506,54',Start Delay,Portugal,,Delay in match because of an injury Nuno Mendes (Portugal).
+760506,54',Start Delay,Spain,,
+760506,55',End Delay,Portugal,,Delay over. They are ready to continue.
+760506,55',End Delay,Spain,,
+760506,56',Substitution,Portugal,Nélson Semedo,"Substitution, Portugal. Nélson Semedo replaces Nuno Mendes because of an injury."
+760506,68',Start Delay,Spain,,Delay in match for a drinks break.
+760506,68',Start Delay,Portugal,,
+760506,71',End Delay,Spain,,Delay over. They are ready to continue.
+760506,71',End Delay,Portugal,,
+760506,71',Substitution,Portugal,Diogo Dalot,"Substitution, Portugal. Diogo Dalot replaces João Cancelo."
+760506,71',Substitution,Portugal,Rafael Leão,"Substitution, Portugal. Rafael Leão replaces João Félix."
+760506,75',Substitution,Spain,Ferran Torres,"Substitution, Spain. Ferran Torres replaces Álex Baena."
+760506,83',Substitution,Portugal,Francisco Conceição,"Substitution, Portugal. Francisco Conceição replaces Pedro Neto."
+760506,83',Substitution,Portugal,Bernardo Silva,"Substitution, Portugal. Bernardo Silva replaces Vitinha."
+760506,85',Substitution,Spain,Fabián Ruiz,"Substitution, Spain. Fabián Ruiz replaces Pedri."
+760506,85',Substitution,Spain,Mikel Merino,"Substitution, Spain. Mikel Merino replaces Dani Olmo."
+760506,89',Yellow Card,Portugal,Bernardo Silva,Bernardo Silva (Portugal) is shown the yellow card for a bad foul.
+760506,90'+1',Goal,Spain,Mikel Merino,"Goal! Portugal 0, Spain 1. Mikel Merino (Spain) left footed shot from the centre of the box to the bottom left corner. Assisted by Ferran Torres with a through ball."
+760506,90'+4',Yellow Card,Portugal,Renato Veiga,Renato Veiga (Portugal) is shown the yellow card for a bad foul.
+760506,90'+7',Substitution,Spain,Borja Iglesias,"Substitution, Spain. Borja Iglesias replaces Mikel Oyarzabal."
+760506,90'+8',Yellow Card,Spain,Ferran Torres,Ferran Torres (Spain) is shown the yellow card for a bad foul.
+760506,90'+9',End Regular Time,,,"Second Half ends, Portugal 0, Spain 1."
+760507,,Kickoff,,,First Half begins.
+760507,9',Goal,Belgium,Charles De Ketelaere,"Goal! USA 0, Belgium 1. Charles De Ketelaere (Belgium) right footed shot from very close range to the centre of the goal. Assisted by Nicolas Raskin."
+760507,13',Start Delay,United States,,Delay in match because of an injury Chris Richards (USA).
+760507,13',Start Delay,Belgium,,
+760507,13',End Delay,United States,,Delay over. They are ready to continue.
+760507,13',End Delay,Belgium,,
+760507,17',Start Delay,Belgium,,Delay in match because of an injury Amadou Onana (Belgium).
+760507,17',Start Delay,United States,,
+760507,18',End Delay,Belgium,,Delay over. They are ready to continue.
+760507,18',End Delay,United States,,
+760507,20',Start Delay,Belgium,,Delay in match because of an injury Brandon Mechele (Belgium).
+760507,20',Start Delay,United States,,
+760507,21',Substitution,Belgium,Hans Vanaken,"Substitution, Belgium. Hans Vanaken replaces Amadou Onana because of an injury."
+760507,21',End Delay,Belgium,,Delay over. They are ready to continue.
+760507,21',End Delay,United States,,
+760507,24',Start Delay,Belgium,,Delay in match for a drinks break.
+760507,24',Start Delay,United States,,
+760507,26',End Delay,Belgium,,Delay over. They are ready to continue.
+760507,26',End Delay,United States,,
+760507,31',Goal - Free-kick,United States,Malik Tillman,"Goal! USA 1, Belgium 1. Malik Tillman (USA) from a free kick with a right footed shot to the high centre of the goal."
+760507,33',Goal - Header,Belgium,Charles De Ketelaere,"Goal! USA 1, Belgium 2. Charles De Ketelaere (Belgium) header from very close range to the top right corner. Assisted by Leandro Trossard with a cross."
+760507,35',Yellow Card,United States,Weston McKennie,Weston McKennie (USA) is shown the yellow card for a bad foul.
+760507,45'+1',Start Delay,United States,,
+760507,45'+1',End Delay,United States,,
+760507,45'+7',Halftime,,,"First Half ends, USA 1, Belgium 2."
+760507,45',Substitution,United States,Giovanni Reyna,"Substitution, USA. Giovanni Reyna replaces Sergiño Dest."
+760507,45',Start 2nd Half,,,
+760507,53',Start Delay,United States,,Delay in match because of an injury Christian Pulisic (USA).
+760507,53',Start Delay,Belgium,,
+760507,53',End Delay,United States,,Delay over. They are ready to continue.
+760507,53',End Delay,Belgium,,
+760507,57',Goal,Belgium,Hans Vanaken,"Goal! USA 1, Belgium 3. Hans Vanaken (Belgium) right footed shot from outside the box to the bottom right corner. Assisted by Charles De Ketelaere."
+760507,59',Substitution,United States,Sebastian Berhalter,"Substitution, USA. Sebastian Berhalter replaces Christian Pulisic because of an injury."
+760507,67',Substitution,Belgium,Jérémy Doku,"Substitution, Belgium. Jérémy Doku replaces Dodi Lukébakio."
+760507,67',Substitution,Belgium,Romelu Lukaku,"Substitution, Belgium. Romelu Lukaku replaces Charles De Ketelaere."
+760507,69',Yellow Card,United States,Malik Tillman,Malik Tillman (USA) is shown the yellow card for a bad foul.
+760507,69',Start Delay,United States,,Delay in match for a drinks break.
+760507,69',Start Delay,Belgium,,
+760507,71',End Delay,United States,,Delay over. They are ready to continue.
+760507,71',End Delay,Belgium,,
+760507,72',Substitution,United States,Ricardo Pepi,"Substitution, USA. Ricardo Pepi replaces Tyler Adams."
+760507,89',Substitution,Belgium,Alexis Saelemaekers,"Substitution, Belgium. Alexis Saelemaekers replaces Leandro Trossard."
+760507,89',Substitution,Belgium,Axel Witsel,"Substitution, Belgium. Axel Witsel replaces Nicolas Raskin."
+760507,90'+2',Substitution,United States,Max Arfsten,"Substitution, USA. Max Arfsten replaces Antonee Robinson."
+760507,90'+2',Substitution,United States,Haji Wright,"Substitution, USA. Haji Wright replaces Folarin Balogun."
+760507,90'+3',Goal,Belgium,Romelu Lukaku,"Goal! USA 1, Belgium 4. Romelu Lukaku (Belgium) right footed shot from the left side of the box to the bottom right corner. Assisted by Hans Vanaken."
+760507,90'+5',End Regular Time,,,"Second Half ends, USA 1, Belgium 4."
+760509,,Kickoff,,,
+760509,15',Goal - Header,Egypt,Yasser Ibrahim,"Goal! Argentina 0, Egypt 1. Yasser Ibrahim (Egypt) header from the centre of the box to the bottom right corner. Assisted by Marwan Attia with a cross following a corner."
+760509,21',Penalty - Saved,Argentina,Lionel Messi,Penalty saved. Lionel Messi (Argentina) left footed shot saved in the bottom right corner by Mostafa Shobeir (Egypt).
+760509,23',Start Delay,Argentina,,Delay in match for a drinks break.
+760509,23',Start Delay,Egypt,,
+760509,26',End Delay,Argentina,,Delay over. They are ready to continue.
+760509,26',End Delay,Egypt,,
+760509,31',Start Delay,Argentina,,
+760509,32',End Delay,Argentina,,
+760509,39',Start Delay,Egypt,,Delay in match because of an injury Mostafa Shobeir (Egypt).
+760509,39',Start Delay,Argentina,,
+760509,41',End Delay,Egypt,,Delay over. They are ready to continue.
+760509,41',End Delay,Argentina,,
+760509,45'+3',Start Delay,Egypt,,Delay in match because of an injury Ramy Rabia (Egypt).
+760509,45'+3',Start Delay,Argentina,,
+760509,45'+4',End Delay,Egypt,,Delay over. They are ready to continue.
+760509,45'+4',End Delay,Argentina,,
+760509,45'+7',Halftime,,,"First Half ends, Argentina 0, Egypt 1."
+760509,45',Substitution,Egypt,Hamdy Fathy,"Substitution, Egypt. Hamdi Fathy replaces Emam Ashour because of an injury."
+760509,45',Start 2nd Half,,,
+760509,54',Start Delay,Argentina,,Delay in match (Argentina).
+760509,54',Start Delay,Egypt,,
+760509,54',End Delay,Argentina,,Delay over. They are ready to continue.
+760509,54',End Delay,Egypt,,
+760509,59',Start Delay,Egypt,,
+760509,60',End Delay,Egypt,,
+760509,66',Substitution,Argentina,Nico González,"Substitution, Argentina. Nico González replaces Nicolás Tagliafico."
+760509,66',Substitution,Argentina,Lautaro Martínez,"Substitution, Argentina. Lautaro Martínez replaces Rodrigo De Paul."
+760509,67',Goal,Egypt,Mostafa Zico,"Goal! Argentina 0, Egypt 2. Mostafa Zico (Egypt) right footed shot from the centre of the box to the centre of the goal. Assisted by Haissem Hassan following a fast break."
+760509,71',Start Delay,Argentina,,Delay in match for a drinks break.
+760509,71',Start Delay,Egypt,,
+760509,73',End Delay,Argentina,,Delay over. They are ready to continue.
+760509,73',End Delay,Egypt,,
+760509,73',Substitution,Argentina,Gonzalo Montiel,"Substitution, Argentina. Gonzalo Montiel replaces Nahuel Molina."
+760509,73',Substitution,Egypt,Trézéguet,"Substitution, Egypt. Trezeguet replaces Haissem Hassan because of an injury."
+760509,79',Goal - Header,Argentina,Cristian Romero,"Goal! Argentina 1, Egypt 2. Cristian Romero (Argentina) header from the centre of the box to the top right corner. Assisted by Lionel Messi with a cross."
+760509,80',Substitution,Egypt,Omar Marmoush,"Substitution, Egypt. Omar Marmoush replaces Mostafa Zico."
+760509,83',Goal,Argentina,Lionel Messi,"Goal! Argentina 2, Egypt 2. Lionel Messi (Argentina) left footed shot from the centre of the box to the high centre of the goal. Assisted by Gonzalo Montiel."
+760509,90'+2',Goal - Header,Argentina,Enzo Fernández,"Goal! Argentina 3, Egypt 2. Enzo Fernández (Argentina) header from the centre of the box to the bottom right corner. Assisted by Lautaro Martínez with a cross following a fast break."
+760509,90'+3',Yellow Card,Egypt,Mostafa Shoubir,Mostafa Shobeir (Egypt) is shown the yellow card.
+760509,90'+4',Yellow Card,Egypt,Hamdy Fathy,Hamdi Fathy (Egypt) is shown the yellow card.
+760509,90'+5',Substitution,Argentina,Facundo Medina,"Substitution, Argentina. Facundo Medina replaces Julián Alvarez."
+760509,90'+5',Substitution,Argentina,Nicolás Otamendi,"Substitution, Argentina. Nicolás Otamendi replaces Cristian Romero."
+760509,90'+6',Substitution,Egypt,Zizo,"Substitution, Egypt. Zizo replaces Mohanad Lasheen."
+760509,90'+8',Yellow Card,Egypt,Marawan Attia,Marwan Attia (Egypt) is shown the yellow card for a bad foul.
+760509,90'+12',End Regular Time,,,
+760509,90'+12',Yellow Card,Egypt,Haissem Hassan,Haissem Hassan (Egypt) is shown the yellow card.
+760508,,Kickoff,,,
+760508,23',Start Delay,Colombia,,Delay in match for a drinks break.
+760508,23',Start Delay,Switzerland,,
+760508,26',End Delay,Colombia,,Delay over. They are ready to continue.
+760508,26',End Delay,Switzerland,,
+760508,40',Start Delay,Colombia,,
+760508,40',End Delay,Colombia,,
+760508,45'+4',Halftime,,,"First Half ends, Switzerland 0, Colombia 0."
+760508,45',Substitution,Switzerland,Djibril Sow,"Substitution, Switzerland. Djibril Sow replaces Ardon Jashari."
+760508,45',Start 2nd Half,,,
+760508,51',Yellow Card,Switzerland,Granit Xhaka,Granit Xhaka (Switzerland) is shown the yellow card for a bad foul.
+760508,59',Yellow Card,Switzerland,Denis Zakaria,Denis Zakaria (Switzerland) is shown the yellow card for a bad foul.
+760508,60',Yellow Card,Colombia,Luis Suárez,Luis Suárez (Colombia) is shown the yellow card for a bad foul.
+760508,66',Substitution,Colombia,Juan Fernando Quintero,"Substitution, Colombia. Juan Fernando Quintero replaces James Rodríguez."
+760508,66',Substitution,Colombia,Jáminton Campaz,"Substitution, Colombia. Jaminton Campaz replaces Jhon Arias."
+760508,68',Start Delay,Switzerland,,Delay in match for a drinks break.
+760508,68',Start Delay,Colombia,,
+760508,70',End Delay,Switzerland,,Delay over. They are ready to continue.
+760508,70',End Delay,Colombia,,
+760508,71',Substitution,Switzerland,Miro Muheim,"Substitution, Switzerland. Miro Muheim replaces Ricardo Rodríguez."
+760508,73',Start Delay,Colombia,,Delay in match because of an injury Camilo Vargas (Colombia).
+760508,73',Start Delay,Switzerland,,Delay in match because of an injury Breel Embolo (Switzerland).
+760508,74',End Delay,Switzerland,,Delay over. They are ready to continue.
+760508,74',End Delay,Colombia,,
+760508,77',Start Delay,Switzerland,,Delay in match because of an injury Manuel Akanji (Switzerland).
+760508,77',Start Delay,Colombia,,
+760508,77',End Delay,Switzerland,,Delay over. They are ready to continue.
+760508,77',End Delay,Colombia,,
+760508,82',Substitution,Colombia,Richard Ríos,"Substitution, Colombia. Richard Ríos replaces Jefferson Lerma."
+760508,82',Substitution,Colombia,Cucho Hernández,"Substitution, Colombia. Cucho Hernández replaces Luis Suárez."
+760508,87',Substitution,Switzerland,Silvan Widmer,"Substitution, Switzerland. Silvan Widmer replaces Denis Zakaria."
+760508,87',Substitution,Switzerland,Cedric Itten,"Substitution, Switzerland. Cedric Itten replaces Breel Embolo."
+760508,90'+2',Substitution,Switzerland,Rubén Vargas,"Substitution, Switzerland. Rubén Vargas replaces Dan Ndoye."
+760508,90'+6',End Regular Time,,,"Second Half ends, Switzerland 0, Colombia 0."
+760508,90',Start Extra Time,,,
+760508,95',Yellow Card,Colombia,Davinson Sánchez,Davinson Sánchez (Colombia) is shown the yellow card for a bad foul.
+760508,103',Substitution,Switzerland,Zeki Amdouni,"Substitution, Switzerland. Zeki Amdouni replaces Fabian Rieder."
+760508,105',Yellow Card,Switzerland,Miro Muheim,Miro Muheim (Switzerland) is shown the yellow card for a bad foul.
+760508,105'+2',Halftime Extra Time,,,
+760508,105',Start 2nd Half Extra Time,,,
+760508,117',Start Delay,Colombia,,Delay in match because of an injury Jhon Lucumí (Colombia).
+760508,117',Start Delay,Switzerland,,
+760508,119',End Delay,Colombia,,Delay over. They are ready to continue.
+760508,119',End Delay,Switzerland,,
+760508,119',Substitution,Colombia,Yerry Mina,"Substitution, Colombia. Yerry Mina replaces Jhon Lucumí because of an injury."
+760508,120'+2',End Extra Time,,,"Second Half Extra Time ends, Switzerland 0, Colombia 0."
+760508,120',Start Shootout,,,"Penalty Shootout begins Switzerland 0, Colombia 0."
+760508,120',End Match,,,
+760510,,Kickoff,,,First Half begins.
+760510,28',Penalty - Saved,France,Kylian Mbappé,Penalty saved. Kylian Mbappé (France) right footed shot saved in the bottom right corner by Yassine Bounou (Morocco).
+760510,29',Start Delay,France,,Delay in match for a drinks break.
+760510,29',Start Delay,Morocco,,
+760510,32',End Delay,France,,Delay over. They are ready to continue.
+760510,32',End Delay,Morocco,,
+760510,45'+5',Halftime,,,"First Half ends, France 0, Morocco 0."
+760510,45',Start 2nd Half,,,
+760510,60',Goal,France,Kylian Mbappé,"Goal! France 1, Morocco 0. Kylian Mbappé (France) right footed shot from the left side of the box to the top right corner. Assisted by Désiré Doué."
+760510,62',Substitution,Morocco,Soufiane Rahimi,"Substitution, Morocco. Soufiane Rahimi replaces Bilal El Khannouss."
+760510,62',Substitution,Morocco,Sofyan Amrabat,"Substitution, Morocco. Sofyan Amrabat replaces Ayyoub Bouaddi."
+760510,63',Yellow Card,Morocco,Issa Diop,Issa Diop (Morocco) is shown the yellow card for a bad foul.
+760510,66',Goal,France,Ousmane Dembélé,"Goal! France 2, Morocco 0. Ousmane Dembélé (France) right footed shot from outside the box to the bottom right corner. Assisted by Kylian Mbappé."
+760510,67',Start Delay,France,,Delay in match for a drinks break.
+760510,67',Start Delay,Morocco,,Delay in match for a drinks break.
+760510,70',End Delay,France,,Delay over. They are ready to continue.
+760510,70',End Delay,Morocco,,Delay over. They are ready to continue.
+760510,71',Substitution,France,Warren Zaïre-Emery,"Substitution, France. Warren Zaïre-Emery replaces Manu Koné."
+760510,74',Substitution,Morocco,Zakaria El Ouahdi,"Substitution, Morocco. Zakaria El Ouahdi replaces Anass Salah-Eddine."
+760510,74',Substitution,Morocco,Gessime Yassine,"Substitution, Morocco. Gessime Yassine replaces Brahim Díaz."
+760510,76',Start Delay,France,,Delay in match because of an injury Kylian Mbappé (France).
+760510,76',Start Delay,Morocco,,
+760510,77',End Delay,France,,Delay over. They are ready to continue.
+760510,77',End Delay,Morocco,,
+760510,77',Substitution,France,Jean-Philippe Mateta,"Substitution, France. Jean-Philippe Mateta replaces Kylian Mbappé because of an injury."
+760510,77',Substitution,France,Bradley Barcola,"Substitution, France. Bradley Barcola replaces Désiré Doué."
+760510,85',Substitution,Morocco,Amine Sbaï,"Substitution, Morocco. Amine Sbaï replaces Chemsdine Talbi."
+760510,87',Substitution,France,Malo Gusto,"Substitution, France. Malo Gusto replaces Jules Koundé."
+760510,90'+7',End Regular Time,,,

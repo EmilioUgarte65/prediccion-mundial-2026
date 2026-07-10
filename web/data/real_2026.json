@@ -3,8 +3,14 @@
     {
       "player": "Kylian Mbappé",
       "team": "France",
-      "goals": 7,
+      "goals": 8,
       "assists": 2
+    },
+    {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "goals": 8,
+      "assists": 1
     },
     {
       "player": "Erling Haaland",
@@ -13,16 +19,16 @@
       "assists": 0
     },
     {
-      "player": "Lionel Messi",
-      "team": "Argentina",
-      "goals": 7,
-      "assists": 0
-    },
-    {
       "player": "Harry Kane",
       "team": "England",
       "goals": 6,
       "assists": 1
+    },
+    {
+      "player": "Ousmane Dembélé",
+      "team": "France",
+      "goals": 5,
+      "assists": 2
     },
     {
       "player": "Julián Quiñones",
@@ -49,12 +55,6 @@
       "assists": 1
     },
     {
-      "player": "Ousmane Dembélé",
-      "team": "France",
-      "goals": 4,
-      "assists": 2
-    },
-    {
       "player": "Ismaïla Sarr",
       "team": "Senegal",
       "goals": 4,
@@ -75,7 +75,15 @@
   ],
   "referees": [
     {
+      "referee": "Adham Makhadmeh",
+      "matches": 4
+    },
+    {
       "referee": "Wilton Sampaio",
+      "matches": 3
+    },
+    {
+      "referee": "Facundo Tello",
       "matches": 3
     },
     {
@@ -89,15 +97,7 @@
     {
       "referee": "Slavko Vinčič",
       "matches": 3
-    },
-    {
-      "referee": "Jesús Valenzuela",
-      "matches": 3
-    },
-    {
-      "referee": "Jalal Jayed",
-      "matches": 3
     }
   ],
-  "n_ref_matches": 90
+  "n_ref_matches": 95
 }
