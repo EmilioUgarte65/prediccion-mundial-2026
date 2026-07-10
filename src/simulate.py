@@ -747,6 +747,22 @@ def build_bets(engine):
     def _lines(lam, Ls):
         return [{"l": L, "over": round(float(1 - poisson.cdf(int(L), lam)), 3)} for L in Ls]
 
+    # Fiabilidad MEDIDA (para etiquetas honestas): recomendamos en la línea VALIDADA
+    # -> tarjetas O/U 3.5 y goles O/U 2.5 (que es donde medimos el acierto).
+    try:
+        from cards2026 import walkforward_ou
+        cards_acc = round(walkforward_ou(3.5)["ou_acc"] * 100)
+    except Exception:  # noqa: BLE001
+        cards_acc = 75
+    goals_acc = 74
+    try:
+        import json as _json
+        _bt = _json.load(open(os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                              "web", "data", "backtest.json"), encoding="utf-8"))
+        goals_acc = round(_bt["metrics_eligible"]["markets"]["goals"]["ens"]["ou_acc"] * 100)
+    except Exception:  # noqa: BLE001
+        pass
+
     bets = []
     for key, od in raw.items():
         a, b = od["home"], od["away"]          # orientación de la casa
@@ -762,11 +778,15 @@ def build_bets(engine):
         # devig 1X2: prob REAL de la casa (sin margen) y ventaja del modelo
         imp = [1.0 / o for o in odds]; sdev = sum(imp) or 1.0
         fair = [x / sdev for x in imp]
-        evs = [{"sel": sels[i], "name": names[i], "prob": round(probs[i], 3),
-                "odd": round(odds[i], 2), "ev": round(probs[i] * odds[i] - 1, 3),
-                "fair": round(fair[i], 3), "edge": round(probs[i] - fair[i], 3)}
-               for i in range(3)]
-        best = max(evs, key=lambda e: e["ev"])
+        # prob y cuota YA redondeadas -> ev/edge reconcilian con lo que se muestra
+        pr = [round(probs[i], 3) for i in range(3)]
+        fr = [round(fair[i], 3) for i in range(3)]
+        orr = [round(odds[i], 2) for i in range(3)]
+        evs = [{"sel": sels[i], "name": names[i], "prob": pr[i], "odd": orr[i],
+                "ev": round(pr[i] * orr[i] - 1, 3), "fair": fr[i],
+                "edge": round(pr[i] - fr[i], 3)} for i in range(3)]
+        # 'best' con piso anti-longshot (prob>=0.40); si ninguno, el más probable
+        best = max([e for e in evs if e["prob"] >= 0.40] or evs, key=lambda e: e["ev"])
         # Resultado a 90 min (mercado 1X2 de la casa): gana local / empate / gana visita
         oi = max(range(3), key=lambda i: probs[i])
         result90 = {"pick": ["1", "X", "2"][oi],
@@ -778,13 +798,18 @@ def build_bets(engine):
         cards_lines = _lines(ce, (1.5, 2.5, 3.5, 4.5))
         corn_lines = _lines(kk, (8.5, 9.5, 10.5, 11.5))
         btts = float((1 - np.exp(-lh)) * (1 - np.exp(-la)))
-        goals = _main_line(goals_lines, ou["exp"]); goals["exp"] = ou["exp"]
-        cards = _main_line(cards_lines, ce); cards["exp"] = round(ce, 1)
+        # RECOMENDACIÓN en la LÍNEA VALIDADA (goles O/U 2.5, tarjetas O/U 3.5), con
+        # la fiabilidad MEDIDA real de esa línea (no etiquetas inventadas).
+        go = ou["o25"]
+        goals = {"pick": "Más de 2.5" if go >= 0.5 else "Menos de 2.5",
+                 "prob": round(go if go >= 0.5 else 1 - go, 3), "line": 2.5, "exp": ou["exp"]}
+        c35 = next(l["over"] for l in cards_lines if l["l"] == 3.5)
+        cards = {"pick": "Más de 3.5" if c35 >= 0.5 else "Menos de 3.5",
+                 "prob": round(c35 if c35 >= 0.5 else 1 - c35, 3), "line": 3.5, "exp": round(ce, 1)}
         corners = _main_line(corn_lines, kk); corners["exp"] = round(kk, 1)
-        # recomendación por partido (qué conviene, con fiabilidad medida)
         rec = [
-            {"m": "⚽ Goles", "pick": goals["pick"], "prob": goals["prob"], "rel": "80%"},
-            {"m": "🟨 Tarjetas", "pick": cards["pick"], "prob": cards["prob"], "rel": "76%"},
+            {"m": "⚽ Goles", "pick": goals["pick"], "prob": goals["prob"], "rel": f"{goals_acc}%"},
+            {"m": "🟨 Tarjetas", "pick": cards["pick"], "prob": cards["prob"], "rel": f"{cards_acc}%"},
             {"m": "🤝 Ambos anotan", "pick": "Sí" if btts >= 0.5 else "No",
              "prob": round(max(btts, 1 - btts), 3), "rel": "media"},
         ]
@@ -817,10 +842,9 @@ def build_bets(engine):
         top = max(b["x12"]["all"], key=lambda e: e["prob"])
         safe.append({"home": b["home"], "away": b["away"], **top})
     safe = sorted(safe, key=lambda s: s["prob"], reverse=True)
-    # LA MEJOR: un favorito confiable que ADEMÁS tiene valor positivo sobre la casa.
-    strong = sorted([s for s in safe if s["ev"] > 0 and s["prob"] >= 0.55],
-                    key=lambda s: s["ev"], reverse=True)
-    top = strong[0] if strong else (safe[0] if safe else None)
+    # LA MEJOR: SOLO una apuesta con VALOR REAL (+EV y prob plausible). Si no hay
+    # ninguna con ventaja sobre la casa, NO se promociona nada (top=None).
+    top = value[0] if value else None
     # CONFIANZA en mercados (goles/tarjetas/córners más probables)
     conf = []
     for b in bets:

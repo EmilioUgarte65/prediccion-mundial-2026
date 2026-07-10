@@ -73,10 +73,11 @@ let V2026 = null;         // validación del modelo solo-2026
 let TMODEL = "ens";       // modelo elegido para comparar en el modal del torneo
 let CURRENT_MT = null;    // partido abierto en el modal
 let BMODEL = "ens";       // modelo que arma el CUADRO de eliminatorias
+let GMODEL = "ens";       // modelo para la tabla de grupos jugados vs realidad
 let BET_STAKE = 200;      // monto que el usuario quiere apostar (apartado Apuestas)
 // devuelve HTML con lo que ganarías: recibes total y ganancia neta, para una cuota
 function winHTML(odd) {
-  const ret = Math.round(BET_STAKE * odd), profit = Math.round(BET_STAKE * (odd - 1));
+  const ret = Math.round(BET_STAKE * odd), profit = ret - BET_STAKE;  // consistentes
   return `<span class="win"><b>$${ret}</b> <small>(ganas $${profit})</small></span>`;
 }
 function setStake(v) {
@@ -175,13 +176,25 @@ function mById(round) {
   return m;
 }
 
+function koAccModel(model) {
+  const br = DATA.brackets && DATA.brackets[model];
+  if (!br) return null;
+  let hit = 0, tot = 0;
+  ["R32", "R16", "QF", "SF", "Final", "third"].forEach(rnd =>
+    (br[rnd] || []).forEach(m => { if (m.real) { tot++; if (m.hit) hit++; } }));
+  return tot ? { hit, tot } : null;
+}
 function bracketModelSelHTML() {
   if (!DATA.brackets) return "";
   const champ = (DATA.champions && DATA.champions[BMODEL]) || "";
-  const btns = ["ens", "xgb", "stat", "elo", "y2026"].map(m =>
-    `<button class="mdl-btn${m === BMODEL ? " on" : ""}" onclick="setBModel('${m}')">${VMODELS[m].n}</button>`).join("");
+  const ka = koAccModel(BMODEL);
+  const btns = ["ens", "xgb", "stat", "elo", "y2026"].map(m => {
+    const a = koAccModel(m);
+    return `<button class="mdl-btn${m === BMODEL ? " on" : ""}" onclick="setBModel('${m}')" ${a ? `title="${a.hit}/${a.tot} aciertos en eliminatorias"` : ""}>${VMODELS[m].n}</button>`;
+  }).join("");
   return `<div class="bmsel">
     <span class="bmsel-lbl">Modelo del cuadro:</span> ${btns}
+    ${ka ? `<span class="bmsel-acc">✓ <b>${ka.hit}/${ka.tot}</b> aciertos en eliminatorias</span>` : ""}
     ${champ ? `<span class="bmsel-champ">🏆 Campeón: <b>${esName(champ)}</b></span>` : ""}
   </div>`;
 }
@@ -302,12 +315,16 @@ function renderBets() {
   const mk = BT && BT.metrics_eligible && BT.metrics_eligible.markets;
   const t = B.top;
   const hero = t ? `<div class="bet-hero">
-    <div class="bh-label">⭐ La mejor apuesta ahora mismo</div>
+    <div class="bh-label">⭐ La mejor apuesta de valor ahora</div>
     <div class="bh-main">${flag(t.home)} ${esName(t.home)} <span class="vs">vs</span> ${flag(t.away)} ${esName(t.away)}</div>
     <div class="bh-pick">${_pickLabel(t.name)} <b>@ ${t.odd}</b></div>
     <div class="bh-meta">Prob. del modelo <b>${pct(t.prob)}</b> · ${_evTag(t.ev)}</div>
     <div class="bh-win">Con $${BET_STAKE} recibes ${winHTML(t.odd)}</div>
-  </div>` : "";
+  </div>` : `<div class="bet-hero nohero">
+    <div class="bh-label">⭐ La mejor apuesta de valor</div>
+    <div class="bh-main">Ahora mismo no hay valor claro en el 1X2</div>
+    <div class="bh-meta">La casa está bien ajustada. La ventaja del modelo está en los <b>mercados de goles/tarjetas</b> por partido — ábrelos abajo.</div>
+  </div>`;
   const stakeBox = `<div class="stake-box">
     <span class="stake-lbl">💵 ¿Cuánto quieres apostar?</span>
     <span class="stake-in">$ <input id="stakeInput" type="number" min="1" step="10" value="${BET_STAKE}"
@@ -316,23 +333,7 @@ function renderBets() {
       `<button class="sq ${v === BET_STAKE ? "on" : ""}" onclick="setStake(${v})">$${v}</button>`).join("")}</span>
     <span class="stake-hint">Las ganancias se calculan con este monto.</span>
   </div>`;
-  const rel = mk ? `<div class="bet-note">📊 <b>Fiabilidad medida</b> (validación walk-forward): ganador <b>~85%</b> <small>(cuando hay favorito claro)</small> · goles O/U <b>${pct(mk.goals.ens.ou_acc)}</b> · tarjetas <b>${pct(mk.cards.ou_acc)}</b> <small>(tiende a sobrestimar)</small> · córners <b>${pct(mk.corners.ens.ou_acc)}</b> <small>(poco fiable, evítalo)</small>.</div>` : "";
-
-  const valueHTML = B.value && B.value.length ? B.value.map(v => `
-    <div class="bet-row"><span class="br-teams">${flag(v.home)} ${esName(v.home)} <small>vs</small> ${flag(v.away)} ${esName(v.away)}</span>
-      <span class="br-pick">${_pickLabel(v.name)} @ ${v.odd}</span>
-      <span class="br-prob">${pct(v.prob)}</span>${_evTag(v.ev)}</div>`).join("")
-    : `<p class="bet-empty">Sin apuestas de valor claras ahora (la casa está ajustada). Mira las seguras y los mercados.</p>`;
-
-  const safeHTML = B.safe.slice(0, 6).map(s => `
-    <div class="bet-row"><span class="br-teams">${flag(s.home)} ${esName(s.home)} <small>vs</small> ${flag(s.away)} ${esName(s.away)}</span>
-      <span class="br-pick">${_pickLabel(s.name)} @ ${s.odd}</span>
-      <span class="br-prob">${pct(s.prob)}</span>${_evTag(s.ev)}</div>`).join("");
-
-  const confHTML = B.confidence.filter(c => c.market !== "corners").slice(0, 8).map(c => `
-    <div class="bet-row"><span class="br-teams">${c.ico} ${flag(c.home)} ${esName(c.home)} <small>vs</small> ${flag(c.away)} ${esName(c.away)}</span>
-      <span class="br-pick">${c.pick} <small>(esp. ${c.exp})</small></span>
-      <span class="br-prob">${pct(c.prob)}</span></div>`).join("");
+  const rel = mk ? `<div class="bet-note">📊 <b>Fiabilidad medida</b> (validación walk-forward): ganador <b>~85%</b> <small>(cuando hay favorito claro)</small> · goles O/U 2.5 <b>${pct(mk.goals.ens.ou_acc)}</b> · tarjetas O/U 3.5 <b>${pct(mk.cards.ou_acc)}</b> <small>(calibrada 2026)</small> · córners <b>${pct(mk.corners.ens.ou_acc)}</b> <small>(poco fiable, evítalo)</small>.</div>` : "";
 
   // Tarjetas por partido (clic -> cuadro completo de qué conviene)
   const matchesHTML = B.matches.map((m, i) => {
@@ -364,13 +365,16 @@ function renderBets() {
         ${_evTag(x.ev)}</div>
     </div>`;
   };
-  const combosHTML = C ? `
+  const comboBlock = (title, arr) => arr && arr.length
+    ? `<div class="bet-block"><h4 class="combo-h">${title}</h4>${arr.slice(0, 4).map(comboRow).join("")}</div>` : "";
+  const comboBlocks = C ? [
+    comboBlock("🛡️ Más seguras", C.safest),
+    comboBlock("⚖️ Mejor equilibrio <small>(segura + paga bien)</small>", C.balanced),
+    comboBlock("💰 Mayor pago <small>(más riesgo)</small>", C.payout),
+  ].filter(Boolean) : [];
+  const combosHTML = comboBlocks.length ? `
     <h3 class="bet-h" style="margin-top:22px">🧮 Combinaciones — más pago sin perder seguridad <small>(con $${BET_STAKE})</small></h3>
-    <div class="bet-2col">
-      <div class="bet-block"><h4 class="combo-h">🛡️ Más seguras</h4>${C.safest.slice(0,4).map(comboRow).join("")}</div>
-      <div class="bet-block"><h4 class="combo-h">⚖️ Mejor equilibrio <small>(segura + paga bien)</small></h4>${(C.balanced.length?C.balanced:C.safest).slice(0,4).map(comboRow).join("")}</div>
-    </div>
-    <div class="bet-block"><h4 class="combo-h">💰 Mayor pago <small>(más riesgo)</small></h4>${C.payout.slice(0,4).map(comboRow).join("")}</div>
+    ${comboBlocks.length > 1 ? `<div class="bet-2col">${comboBlocks.join("")}</div>` : comboBlocks[0]}
     <p class="bet-note" style="margin-top:6px">La prob. conjunta es el producto de cada partido (son independientes): a más partidos, más pago pero menos seguro. Una combinada falla entera si falla UNA pata.</p>` : "";
 
   el.innerHTML = stakeBox + hero + rel + `
@@ -492,25 +496,44 @@ function renderGroupPlayed() {
   const wrap = document.getElementById("groupPlayedWrap");
   const el = document.getElementById("groupPlayedEl");
   if (!BT || !BT.matches || !el) { if (wrap) wrap.style.display = "none"; return; }
-  const ms = BT.matches.slice().sort((a, b) => a.date.localeCompare(b.date));
-  let hit = 0, tot = 0;
-  let body = "";
+  // SOLO fase de grupos (la eliminatoria arrancó el 28/06); no mezclar KO aquí.
+  const ms = BT.matches.filter(m => m.date < "2026-06-28")
+    .sort((a, b) => a.date.localeCompare(b.date));
+  const pref = VMODELS[GMODEL].p;                 // prefijo de probs del modelo elegido
+  const labels = ["1", "X", "2"];
+  const predOf = (m) => {
+    const pv = [m[pref + "1"], m[pref + "x"], m[pref + "2"]];
+    return { p: labels[pv.indexOf(Math.max(...pv))], top: Math.max(...pv) };
+  };
+  let hit = 0, tot = 0, body = "";
   ms.forEach(m => {
-    const top = Math.max(m.e1, m.ex, m.e2);  // ensemble (coherente con m.pred y m.hit)
-    const ok = m.hit;
+    const { p, top } = predOf(m);
+    const ok = p === m.real;
     if (m.eligible) { tot++; hit += ok ? 1 : 0; }
     body += `<tr class="${ok ? "row-hit" : "row-miss"}">
       <td class="l mono">${m.date.slice(5)}</td>
       <td class="l">${flag(m.home)} ${esName(m.home)} <span class="vs">vs</span> ${flag(m.away)} ${esName(m.away)}</td>
-      <td class="mono">${m.pred} ${pct(top)}</td>
+      <td class="mono">${p} ${pct(top)}</td>
       <td class="mono real">${m.real_score[0]}-${m.real_score[1]}</td>
       <td>${ok ? '<span class="ok">✓</span>' : '<span class="miss">✗</span>'}</td></tr>`;
   });
   el.innerHTML = `<thead><tr><th class="l">Fecha</th><th class="l">Partido</th>
-    <th>Mi pred.</th><th>Real</th><th>✓</th></tr></thead><tbody>${body}</tbody>`;
-  const h3 = document.querySelector("#groupPlayedWrap h3");
-  if (h3 && tot) h3.textContent += `  —  acierto ${hit}/${tot} (${(hit / tot * 100).toFixed(0)}%)`;
+    <th>Pred. ${VMODELS[GMODEL].n}</th><th>Real</th><th>✓</th></tr></thead><tbody>${body}</tbody>`;
+  // selector de modelo + contador de aciertos (arriba de la tabla)
+  let selEl = document.getElementById("groupPlayedSel");
+  if (!selEl) {
+    selEl = document.createElement("div");
+    selEl.id = "groupPlayedSel";
+    const advw = el.closest(".adv-wrap");
+    if (advw) advw.before(selEl);
+  }
+  const btns = ["ens", "xgb", "stat", "elo", "y2026"].map(m =>
+    `<button class="mdl-btn${m === GMODEL ? " on" : ""}" onclick="setGModel('${m}')">${VMODELS[m].n}</button>`).join("");
+  selEl.className = "bmsel";
+  selEl.innerHTML = `<span class="bmsel-lbl">Modelo:</span> ${btns}
+    ${tot ? `<span class="bmsel-acc">✓ <b>${hit}/${tot}</b> (${(hit / tot * 100).toFixed(0)}%) aciertos</span>` : ""}`;
 }
+function setGModel(m) { GMODEL = m; renderGroupPlayed(); }
 
 /* ---------- Predicciones de partidos de grupo por jugar ---------- */
 function renderGroupPredictions() {
