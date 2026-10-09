@@ -11,3 +11,9 @@ sb_competitions.json
 
 # Backups locales de modelos (no van al repo)
 backups/
+
+# Logs y archivos locales (contienen rutas de la PC)
+*.log
+downloaded_files/
+.env
+venv/

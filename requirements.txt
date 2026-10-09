@@ -1,5 +1,7 @@
-pandas>=2.2
-numpy>=1.26
-scipy>=1.11
-scikit-learn>=1.4
-xgboost>=2.0
+# Dependencias del modelo y de la web (build.py, fetch_all.py y src/).
+# Versiones probadas con Python 3.14.2 (funciona desde Python 3.11).
+pandas==3.0.3
+numpy==2.5.0
+scipy==1.18.0
+scikit-learn==1.9.0
+xgboost==3.3.0

@@ -1,0 +1,5 @@
+# Solo para los recolectores de FBref (src/fetch_fbref*.py, src/fetch_referees.py).
+# soccerdata instala además seleniumbase/selenium y necesita Google Chrome.
+# El pipeline normal (build.py) NO lo necesita: lee los CSV ya cacheados en data_user/.
+-r requirements.txt
+soccerdata==1.9.0

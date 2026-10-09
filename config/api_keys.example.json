@@ -1,0 +1,7 @@
+{
+  "_comment": "Copia este archivo como config/api_keys.json (ignorado por git) y pon tus llaves. Solo hacen falta para refrescar datos (fetch_*.py); build.py no usa ninguna.",
+  "api_football": "",
+  "football_data_org": "",
+  "the_odds_api": "",
+  "rapidapi": ""
+}

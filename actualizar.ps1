@@ -1,6 +1,7 @@
 # Actualizacion nocturna: baja resultados nuevos + cuotas y re-genera predicciones.
 $ErrorActionPreference = "Continue"
-$proj = "C:\Users\carlo\Pictures\Desarollos para usuarios\Emilio\Predictivo"
+# Carpeta del proyecto = donde vive este script (funciona en cualquier PC).
+$proj = $PSScriptRoot
 $py = Join-Path $proj ".venv\Scripts\python.exe"
 $log = Join-Path $proj "actualizacion.log"
 $env:PYTHONUTF8 = "1"
